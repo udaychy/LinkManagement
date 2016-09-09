@@ -1,0 +1,244 @@
+﻿@*@model LinkManagement.ViewModels.HomePageModel*@
+@model IEnumerable<LinkManagement.Topic>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+   
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   
+    <link href="~/Content/Home.css" rel="stylesheet" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+   
+    <link href="~/Content/StarRating.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="~/Script/Home.js"></script>
+    <script src="~/Script/clipboard.min.js"></script>
+    <title>Index</title>
+</head>
+
+    <body>
+   
+   @* <span id="successNotification"><i class="fa fa-check-circle" style="color:green;font-size:30px;" aria-hidden="true"></i><span></span></span>
+    <span id="errorNotification"><i class="fa fa-icon-warning-sign" style="color:#ff6a00;font-size:30px;" aria-hidden="true"></i><span></span></span>*@
+
+    <div class="container">
+
+        
+        <div class="modal fade" id="addLinkForm">
+                       
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><i class="fa fa-external-link" aria-hidden="true"></i> Add New Link</h4>
+                    </div>
+                    <div class="modal-body">
+
+                         <div class="form-group">
+                            <label class="control-label col-sm-3" >Topic<span class="mandatoryFeild">*</span>:</label>
+                             <div class="col-sm-9">
+                                    <select id="topic"  data-live-search="true" data-size="auto">
+                                        <option value='0'>Nothing Selected</option>
+                                    </select>
+                                 
+                                    @* <script id="topicTemplate" type="html/text">
+                                       
+                                            <option value="{{:TopicID}}">{{:TopicName}}</option>
+                                       
+                                    </script>*@
+                                    &nbsp
+                                 <span id="addTopic"><i class="fa fa-plus" aria-hidden="true"></i>Add Topic</span>
+                             </div>
+                             
+                          </div>
+                       
+
+                         <div class="form-group collapse">
+                             <label class="control-label col-sm-3" > Topic Name: <span class="mandatoryFeild">*</span>:</label>
+                             <div class="col-sm-8">
+                                 <input type="text" id="newTopic" maxlength="150" class="form-control" >
+                                 
+                             </div>
+                             <div class="col-sm-1">
+                                 <i id="hideTopic" class="fa fa-times" aria-hidden="true"></i>
+                             </div>
+                           </div>
+
+                           <div class="form-group">
+                             <label class="control-label col-sm-3" >Link: <span class="mandatoryFeild">*</span>:</label>
+                             <div class="col-sm-9">
+                                 <input type="text" id="link" maxlength="250" class="form-control" >
+                             </div>
+                           </div>
+
+                         <div class="form-group">
+                             <label class="control-label col-sm-3" >Link Heading: <span class="mandatoryFeild">*</span>:</label>
+                             <div class="col-sm-9">
+                                 <input type="text" id="linkHeading" maxlength="150" class="form-control" >
+                             </div>
+                           </div>
+                          <div class="form-group">
+                             <label class="control-label col-sm-3" ">Link Detail<span class="mandatoryFeild">*</span>:</label>
+                             <div class="col-sm-9"> 
+                               <textarea class="form-control" rows="5" id="linkDetails"></textarea>
+                             </div>
+                           </div>
+                             
+                        <div class="help-block"><span class="mandatoryFeild">*</span> marks feilds are mandatory </div>
+                        <div id="errorMsg"></div>
+                    </div>
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                        &nbsp &nbsp<button type="button" class="btn btn-warning" id="saveLinkBtn">Add</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+  <h2>Important Links</h2>
+
+
+  <ul class="nav nav-tabs" id="tab">
+
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    @foreach(var topic in Model)
+       {
+           var topicId = "#topic" + @topic.TopicID;
+          <li><a data-toggle="tab" href= @topicId> @topic.TopicName <span class="badge">@topic.Links.Count </span></a></li>
+             
+       }
+
+  </ul>
+      
+
+
+  <div class="tab-content" id="LinkTabContent">
+    <div id="home" class="tab-pane fade in active">
+      <h3>HOME</h3>
+      <input type="button" class="btn btn-info" id="addLinkBtn" value="Add new Link">
+	   
+    </div>
+ 
+       @foreach(var topic in Model)
+        {
+
+            var topicId = "topic" + @topic.TopicID;
+           
+                     
+          <div id=@topicId class="tab-pane fade">
+            <h3>@topic.TopicName</h3>
+            @foreach(var link in topic.Links)
+            {
+                var linkId = "link" + @link.LinkID;
+              <div class="list-group" >
+                <div class="list-group-item" id= @linkId>
+                    
+			        <a href="@link.Link1" target="_blank">
+                        <h4  class="list-group-item-heading">@link.LinkHeading</h4>
+                    </a>
+                    <a class="copyLink pull-right" data-clipboard-text="@link.Link1">copy link</a>
+			        <p class="list-group-item-text">@link.LinkDetail</p>
+                    <div>
+                         <i class="fa fa-eye" data-toggle="tooltip" title="no. of times visited" aria-hidden="true">
+                            @link.NoOfTimesVisited
+                         </i>&nbsp
+                         <label>Last Visited:</label>
+                          <span class="lastVisited">@link.LastVisited</span>
+                    </div>
+                     
+                    <div id="ratingsForm" class="pull-right ">
+	                  <div class="stars" rating=@link.Rating>
+                          
+		                  <input type="radio" name="@linkId" value="1"  class="star-1" />
+		                  <label class="star-1">1</label>            
+		                  <input type="radio" name="@linkId" value="2" class="star-2" />
+		                  <label class="star-2">2</label>            
+		                  <input type="radio" name="@linkId" value="3" class="star-3" />
+		                  <label class="star-3">3</label>            
+		                  <input type="radio" name="@linkId" value="4" class="star-4" />
+		                  <label class="star-4">4</label>            
+		                  <input type="radio" name="@linkId" value="5" class="star-5" />
+		                  <label class="star-5">5</label>
+		                  <span></span>
+	                  </div>
+  
+                    </div>
+			       </div>
+			
+		      </div>
+            }
+          </div>
+   }
+  </div>
+   
+
+</div>
+   
+</body>
+
+
+
+@*<body>
+    <table>
+       
+       @foreach(var topic in Model)
+       {
+           foreach(var link in topic.Links)
+           {
+                <tr>
+                   <td>@link.LinkDetail</td>
+                   <td>@link.LinkHeading</td>
+                   <td>@link.Topic</td>
+                   <td>@link.Link1</td>
+                </tr>
+           }
+       }
+    </table>
+    --------------------------------------
+      <table>
+       
+       @foreach(var topic in Model)
+       {
+          
+           {
+                <tr>
+                   <td>@topic.User.FName</td>
+                   <td>@topic.User.LName</td>
+                   <td>@topic.User.Phone</td>
+                   
+                </tr>
+           }
+       }
+    </table>
+    -----------------------------------------
+    <table>
+        <tr>
+            <td>TopicName</td>
+            <td>userid</td>
+            
+        </tr>
+       @foreach(var topic in Model)
+       {
+           <tr>
+            <td>@topic.TopicName</td>
+            <td>@topic.UserID</td>
+            
+        </tr>
+       }
+    </table>
+</body>*@
+</html>

@@ -1,0 +1,23 @@
+﻿@model LinkManagement.ViewModels.TopicTree
+
+@if (Model.topics.Where(s => s.ParentID == Model.seed).Any())
+{
+    <ul>
+        @foreach (var node in Model.topics)
+        {
+            if (node.ParentID == Model.seed)
+            {
+                LinkManagement.ViewModels.SeededTopicList inner = new LinkManagement.ViewModels.SeededTopicList { seed = node.TopicID, topics = Model.topics };
+                
+                <li>
+                    <span>
+                        <i class="glyphicon"></i>
+                         @node.TopicName
+                    </span>
+                     
+                    @Html.Partial("_TopicList", inner)
+                </li>
+            }
+        }
+    </ul>
+}

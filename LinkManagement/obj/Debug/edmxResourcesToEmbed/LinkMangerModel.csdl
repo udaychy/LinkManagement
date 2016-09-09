@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LinkManagerModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="LinkManagerContext" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Links" EntityType="LinkManagerModel.Link" />
+    <EntitySet Name="Topics" EntityType="LinkManagerModel.Topic" />
+    <EntitySet Name="Users" EntityType="LinkManagerModel.User" />
+    <AssociationSet Name="FK_Link_Topic" Association="LinkManagerModel.FK_Link_Topic">
+      <End Role="Topic" EntitySet="Topics" />
+      <End Role="Link" EntitySet="Links" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Topic_User" Association="LinkManagerModel.FK_Topic_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Topic" EntitySet="Topics" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="LinkID" />
+    </Key>
+    <Property Name="LinkID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="LinkHeading" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="LinkDetail" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="LastVisited" Type="DateTime" Precision="3" />
+    <Property Name="NoOfTimesVisited" Type="Int32" />
+    <Property Name="TopicID" Type="Int32" Nullable="false" />
+    <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Link" ToRole="Topic" />
+  </EntityType>
+  <EntityType Name="Topic">
+    <Key>
+      <PropertyRef Name="TopicID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="TopicID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TopicName" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Topic" ToRole="Link" />
+    <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_Topic_User" FromRole="Topic" ToRole="User" />
+    <Property Type="Int32" Name="ParentID" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="FName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="12" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Topics" Relationship="LinkManagerModel.FK_Topic_User" FromRole="User" ToRole="Topic" />
+  </EntityType>
+  <Association Name="FK_Link_Topic">
+    <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="1" />
+    <End Role="Link" Type="LinkManagerModel.Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topic">
+        <PropertyRef Name="TopicID" />
+      </Principal>
+      <Dependent Role="Link">
+        <PropertyRef Name="TopicID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Topic_User">
+    <End Role="User" Type="LinkManagerModel.User" Multiplicity="1" />
+    <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Topic">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

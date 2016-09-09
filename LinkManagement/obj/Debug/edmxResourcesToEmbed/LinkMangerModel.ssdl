@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LinkManagerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LinkManagerModelStoreContainer">
+    <EntitySet Name="Link" EntityType="LinkManagerModel.Store.Link" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Topic" EntityType="LinkManagerModel.Store.Topic" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="LinkManagerModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Link_Topic" Association="LinkManagerModel.Store.FK_Link_Topic">
+      <End Role="Topic" EntitySet="Topic" />
+      <End Role="Link" EntitySet="Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Topic_User" Association="LinkManagerModel.Store.FK_Topic_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Topic" EntitySet="Topic" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="LinkID" />
+    </Key>
+    <Property Name="LinkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LinkHeading" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="LinkDetail" Type="nvarchar" MaxLength="250" />
+    <Property Name="Rating" Type="int" />
+    <Property Name="LastVisited" Type="datetime" />
+    <Property Name="NoOfTimesVisited" Type="int" />
+    <Property Name="TopicID" Type="int" Nullable="false" />
+    <Property Name="Link" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsPublic" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Topic">
+    <Key>
+      <PropertyRef Name="TopicID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TopicName" Type="varchar" Nullable="false" MaxLength="80" />
+    <Property Name="ParentID" Type="int" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="12" />
+  </EntityType>
+  <Association Name="FK_Link_Topic">
+    <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />
+    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topic">
+        <PropertyRef Name="TopicID" />
+      </Principal>
+      <Dependent Role="Link">
+        <PropertyRef Name="TopicID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Topic_User">
+    <End Role="User" Type="LinkManagerModel.Store.User" Multiplicity="1" />
+    <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Topic">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
