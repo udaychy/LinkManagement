@@ -1,4 +1,10 @@
 ﻿$(document).ready(function () {
+
+    AddTreeViewControl();
+});
+
+function AddTreeViewControl()
+{
     $("li").hide();
     $("ul:first-child > li").show();
     $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch').find(' > i').addClass("glyphicon-plus-sign")
@@ -14,4 +20,4 @@
         }
         e.stopPropagation();
     });
-});
+}

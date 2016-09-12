@@ -3,32 +3,14 @@
 color:red;
 }
 
-/* border on top of tab*/
-#tab .active {
-    
-    border-top-color:red;
-    border-top-width:2px;
-    border-top-style:solid;
-   
+#LinkTabContent > .tab-pane > h3::after {
+
+    content:'';
+    height:1px;
+    width:100%;
+    background-color:red;
 }
-/* down arrow on tab*/
-#tab .active:after {
-      left:36%;
-      content:"";
-      width: 0; 
-      height: 0; 
-      border-left:  10px solid transparent;
-      border-right: 10px solid transparent;
-      position:absolute;
-      border-top: 10px solid #f00;
-    }
-/*red line on tab*/
-#LinkTabContent {
-    
-    border-top-color:red;
-    border-top-width:2px;
-    border-top-style:solid;
-}
+
 /*making the link list heading inline*/
 .list-group-item-heading {
     display:inline-block;
@@ -45,7 +27,6 @@ color:red;
 
 /*red border on hover */
 .list-group:hover {
-     
     
     border-left-color:red;
     border-left-style:solid;

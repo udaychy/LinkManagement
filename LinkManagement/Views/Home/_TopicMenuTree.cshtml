@@ -7,7 +7,7 @@
         {
             if (node.ParentID == Model.seed)
             {
-                LinkManagement.ViewModels.SeededTopicList inner = new LinkManagement.ViewModels.SeededTopicList { seed = node.TopicID, topics = Model.topics };
+                LinkManagement.ViewModels.TopicTree inner = new LinkManagement.ViewModels.TopicTree { seed = node.TopicID, topics = Model.topics };
                 
                 <li>
                     <span>
@@ -15,7 +15,7 @@
                          @node.TopicName
                     </span>
                      
-                    @Html.Partial("_TopicList", inner)
+                    @Html.Partial("_TopicMenuTree", inner)
                 </li>
             }
         }

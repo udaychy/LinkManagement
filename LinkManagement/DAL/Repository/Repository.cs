@@ -6,7 +6,7 @@ using System.Web;
 using LinkManagement.DAL.Interfaces;
 using System.Linq.Expressions;
 
-namespace LinkManagement.DAL.Repository.Generic
+namespace LinkManagement.DAL.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

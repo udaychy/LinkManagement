@@ -25,11 +25,11 @@ namespace LinkManagement.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<LinkManagerContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new LinkManagerContext())
                     {
                         if (!context.Database.Exists())
                         {

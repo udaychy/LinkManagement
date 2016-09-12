@@ -1,8 +1,9 @@
 ﻿.tree {
+    
     min-height:20px;
-    padding:19px;
-    margin-bottom:20px;
-    background-color:#fbfbfb;
+    padding:0px;
+    margin-top:20px;
+    background-color:white;
     border:1px solid #999;
     -webkit-border-radius:4px;
     -moz-border-radius:4px;

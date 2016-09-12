@@ -17,21 +17,17 @@ namespace LinkManagement.BL
         }
 
 
-        public HomePageModel GetContents()
-        {
-            return(new HomePageModel()
-                         {
-                             users = unitOfWork.user.GetAll(),
-                             topics = unitOfWork.topic.GetAll(),
-                             links = unitOfWork.link.GetAll()
-                         }
-                  ); 
-        }
-
-
         public IEnumerable<Topic> GetTopicList()
         {
             return(unitOfWork.topic.GetAll());
+        }
+
+
+        public IEnumerable<TopicNode> GetTopicListTree()
+        {
+           
+            //change the TopicTree name to SeededTopicList
+            return null;
         }
     }
 }

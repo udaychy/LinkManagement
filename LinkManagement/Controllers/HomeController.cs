@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using LinkManagement.BL;
 using LinkManagement.ViewModels;
+using LinkManagement.Models;
 
 namespace LinkManagement.Controllers
 {
@@ -12,36 +13,66 @@ namespace LinkManagement.Controllers
     {
         public ActionResult FlatLinkView()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "Flat view of all the links";
 
-            return View(new Home().GetTopicList());
+            return View( new Home().GetTopicList());
         }
+
+
+        public JsonResult GetTopicListTree()
+        {
+            List<TopicNode> topicNodeList = new List<TopicNode>();
+            var topicList = new Home().GetTopicList().ToList();
+
+            foreach(var topic in topicList)
+            {
+                topicNodeList.Add(
+                    new TopicNode() { 
+
+                        TopicID = topic.TopicID,
+                        TopicName = topic.TopicName,
+                        ParentID = (int)topic.ParentID,
+                        UserID = topic.UserID
+                    
+                 });
+            }
+
+            /////////////////
+            Action<TopicNode> SetChildren = null;
+            SetChildren = parent =>
+            {
+                parent.subTopics = topicNodeList
+                    .Where(childItem => childItem.ParentID == parent.TopicID)
+                    .ToList();
+
+                //Recursively call the SetChildren method for each child.
+                parent.subTopics
+                    .ForEach(SetChildren);
+            };
+
+            //Initialize the hierarchical list to root level items
+            List<TopicNode> TopicNodeTree = topicNodeList
+                .Where(rootItem => rootItem.ParentID == 0)
+                .ToList();
+
+            //Call the SetChildren method to set the children on each root level item.
+            TopicNodeTree.ForEach(SetChildren);
+            ///////////////////
+            return Json(TopicNodeTree, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public List<TopicNode> CreateTopicHierarchy()
+        {
+            return null;
+        }
+
 
         public ActionResult Index()
         {
             Home homeData = new Home();
 
-            TopicTree topicTree = 
-                new TopicTree()
-                {
-                    seed = 0,
-                    topics = homeData.GetTopicList()
-                };
-
-            return View(topicTree);
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(new Home().GetTopicList());
         }
     }
 }

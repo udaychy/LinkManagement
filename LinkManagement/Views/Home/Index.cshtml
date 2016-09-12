@@ -1,4 +1,4 @@
-﻿@model LinkManagement.ViewModels.TopicTree
+﻿@model IEnumerable<LinkManagement.Topic>
 
 @{
     Layout = null;
@@ -14,24 +14,111 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
    
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-   
+
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/TopicTreeView.css" rel="stylesheet" />
+    <link href="~/Content/StarRating.css" rel="stylesheet" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/clipboard.min.js"></script>
 
-    <script src="~/Scripts/TopicTreeView.js"></script>
-    <link href="~/Content/TopicTreeView.css" rel="stylesheet" />
+    <script src="~/Scripts/Custom/TopicTreeView.js"></script>
+    <script src="~/Scripts/Custom/Home.js"></script>
 
     <title>Home</title>
 </head>
-<body>
+<body ng-app ="HomeModule">
     <div class="container">
-        <div class="col-sm-4 tree">
+        @*<div class="col-sm-4 tree">
            @Html.Partial("_TopicMenuTree", Model)
 
-        </div>
-        <div class="col-sm-8">
+        </div>*@
+       
+        <script type="text/ng-template" id="subTopicList">
+            
+             <span>
+                <i class="glyphicon"></i>
+                <a href="#topic{{topic.TopicID}}" data-toggle="tab">
+                    {{topic.TopicName}}
+                    <span class="badge">{{topic.Links.length}}</span>
+                </a>
+             </span>
+             <ul class="test">
+                 <li ng-repeat="topic in topic.subTopics" ng-include="'subTopicList'"></li>
+             </ul>
+        </script>
 
+        @*Side Navbar for Topic List*@
+        <div class="col-sm-3 tree">
+            <ul ng-controller="TopicList">
+                <li ng-repeat="topic in topicList" ng-include="'subTopicList'"></li>
+            </ul>
         </div>
+
+        @*Div contains the Links associated to the selected topic*@
+        <div class="col-sm-9">
+            
+          <div class="tab-content" id="LinkTabContent">
+            <div id="home" class="tab-pane fade in active">
+              <h3>HOME</h3>
+              <input type="button" class="btn btn-info" id="addLinkBtn" value="Add new Link">
+	   
+            </div>
+ 
+               @foreach(var topic in Model)
+                {
+                    var topicId = "topic" + @topic.TopicID;
+               
+                  <div id=@topicId class="tab-pane fade">
+                    <h3>@topic.TopicName</h3>
+
+                    @foreach(var link in topic.Links)
+                    {
+                        var linkId = "link" + @link.LinkID;
+                      <div class="list-group" >
+                        <div class="list-group-item" id= @linkId>
+                    
+			                <a href="@link.Link1" target="_blank">
+                                <h4  class="list-group-item-heading">@link.LinkHeading</h4>
+                            </a>
+                            <a class="copyLink pull-right" data-clipboard-text="@link.Link1">copy link</a>
+			                <p class="list-group-item-text">@link.LinkDetail</p>
+                            <div>
+                                 <i class="fa fa-eye" data-toggle="tooltip" title="no. of times visited" aria-hidden="true">
+                                    @link.NoOfTimesVisited
+                                 </i>&nbsp
+                                 <label>Last Visited:</label>
+                                  <span class="lastVisited">@link.LastVisited</span>
+                            </div>
+                     
+                            <div id="ratingsForm" class="pull-right ">
+	                          <div class="stars" rating=@link.Rating>
+                          
+		                          <input type="radio" name="@linkId" value="1"  class="star-1" />
+		                          <label class="star-1">1</label>            
+		                          <input type="radio" name="@linkId" value="2" class="star-2" />
+		                          <label class="star-2">2</label>            
+		                          <input type="radio" name="@linkId" value="3" class="star-3" />
+		                          <label class="star-3">3</label>            
+		                          <input type="radio" name="@linkId" value="4" class="star-4" />
+		                          <label class="star-4">4</label>            
+		                          <input type="radio" name="@linkId" value="5" class="star-5" />
+		                          <label class="star-5">5</label>
+		                          <span></span>
+	                          </div>
+  
+                            </div>
+			               </div>
+			
+		              </div>
+                    }
+                  </div>
+           }
+          </div>
+
     </div>
+</div>
 </body>
 </html>
