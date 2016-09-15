@@ -25,7 +25,9 @@
     <Property Name="NoOfTimesVisited" Type="int" />
     <Property Name="TopicID" Type="int" Nullable="false" />
     <Property Name="Link" Type="nvarchar" MaxLength="250" />
-    <Property Name="IsPublic" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Order" Type="int" />
+    <Property Name="IsVideoLink" Type="bit" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -35,6 +37,9 @@
     <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TopicName" Type="varchar" Nullable="false" MaxLength="80" />
     <Property Name="ParentID" Type="int" />
+    <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+    <Property Name="About" Type="nvarchar" MaxLength="250" />
+    <Property Name="Order" Type="int" />
   </EntityType>
   <EntityType Name="User">
     <Key>

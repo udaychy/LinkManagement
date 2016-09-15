@@ -25,8 +25,10 @@
     <Property Name="NoOfTimesVisited" Type="Int32" />
     <Property Name="TopicID" Type="Int32" Nullable="false" />
     <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-    <Property Name="IsPublic" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Link" ToRole="Topic" />
+    <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Order" />
+    <Property Type="Boolean" Name="IsVideoLink" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -38,6 +40,9 @@
     <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Topic" ToRole="Link" />
     <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_Topic_User" FromRole="Topic" ToRole="User" />
     <Property Type="Int32" Name="ParentID" />
+    <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="About" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Order" />
   </EntityType>
   <EntityType Name="User">
     <Key>

@@ -4,6 +4,9 @@
     <EntitySetMapping Name="Links">
       <EntityTypeMapping TypeName="LinkManagerModel.Link">
         <MappingFragment StoreEntitySet="Link">
+          <ScalarProperty Name="IsVideoLink" ColumnName="IsVideoLink" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="LinkID" ColumnName="LinkID" />
           <ScalarProperty Name="LinkHeading" ColumnName="LinkHeading" />
           <ScalarProperty Name="LinkDetail" ColumnName="LinkDetail" />
@@ -12,13 +15,15 @@
           <ScalarProperty Name="NoOfTimesVisited" ColumnName="NoOfTimesVisited" />
           <ScalarProperty Name="TopicID" ColumnName="TopicID" />
           <ScalarProperty Name="Link1" ColumnName="Link" />
-          <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Topics">
       <EntityTypeMapping TypeName="LinkManagerModel.Topic">
         <MappingFragment StoreEntitySet="Topic">
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="About" ColumnName="About" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
           <ScalarProperty Name="ParentID" ColumnName="ParentID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="TopicID" ColumnName="TopicID" />

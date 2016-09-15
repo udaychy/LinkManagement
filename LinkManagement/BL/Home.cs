@@ -7,13 +7,11 @@ using LinkManagement.DAL.UnitOfWork;
 
 namespace LinkManagement.BL
 {
-    public class Home
+    public class Home : UnitOfWorkInitializer
     {
-        readonly private UnitOfWork unitOfWork;
-
+      
         public Home()
         {
-            unitOfWork = new UnitOfWork(new LinkManagerContext());
         }
 
 
@@ -25,9 +23,63 @@ namespace LinkManagement.BL
 
         public IEnumerable<TopicNode> GetTopicListTree()
         {
+         
+            var topicNodeList = unitOfWork.topic.GetAll()
+                                .Select( x => new TopicNode()
+                                    {
+                                        TopicID = x.TopicID,
+                                        TopicName = x.TopicName,
+                                        ParentID = (int)x.ParentID,
+                                        UserID = x.UserID
+                                    })
+                                    .ToList();
            
-            //change the TopicTree name to SeededTopicList
-            return null;
+            return (CreateTopicTree(topicNodeList)); 
+        }
+
+
+        public List<TopicNode> CreateTopicTree(List<TopicNode> topicNodeList)
+        {
+            Action<TopicNode> setChildren = null;
+
+            setChildren = parent =>
+            {
+                parent.subTopics = topicNodeList
+                    .Where(childItem => childItem.ParentID == parent.TopicID)
+                    .ToList();
+
+                parent.subTopics
+                    .ForEach(setChildren);
+            };
+
+            List<TopicNode> topicNodeTree = topicNodeList
+                .Where(rootItem => rootItem.ParentID == 0)
+                .ToList();
+
+            topicNodeTree.ForEach(setChildren);
+
+            return topicNodeTree;
+        }
+
+
+        public IEnumerable<TopicNode> GetRootTopicList()
+        {
+            return CastTopicToTopicNodeList(unitOfWork.topic.GetAllRootNode());
+        }
+
+
+        public List<TopicNode> CastTopicToTopicNodeList(IEnumerable<Topic> topicList)
+        {
+            return topicList.Select( x => new TopicNode()
+                                    {
+                                        TopicID = x.TopicID,
+                                        TopicName = x.TopicName,
+                                        ParentID = (int)x.ParentID,
+                                        UserID = x.UserID,
+                                        Icon = x.Icon,
+                                        About = x.About
+                                    })
+                                    .ToList();
         }
     }
 }

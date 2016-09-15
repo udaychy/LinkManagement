@@ -1,0 +1,70 @@
+﻿/* error msg on validation*/
+.errorMsg , .mandatoryFeild {
+color:red;
+}
+
+#LinkTabContent > .tab-pane > h3::after {
+
+    content:'';
+    height:1px;
+    width:100%;
+    background-color:red;
+}
+
+/*making the link list heading inline*/
+.list-group-item-heading {
+    display:inline-block;
+}
+
+/*setting the left border of the link to white so that it is not visible */
+/*NOTE: changing the border width on hover flikers that link*/
+.list-group {
+         
+    border-left-color:white;
+    border-left-style:solid;
+    border-left-width:3px;
+}
+
+/*red border on hover */
+.list-group:hover {
+    
+    border-left-color:red;
+    border-left-style:solid;
+    border-left-width:3px;
+}
+
+/*copy link*/
+.copyLink {
+    font-size:12px;
+    text-decoration:none;
+    margin-top:-10px;
+}
+/*notifiction msg Div*/
+#successNotification {
+    border-color:#337abd;
+    border-width:2px;
+    border-style:solid;
+    position:fixed;
+    top:0px;
+    left:45%;
+    font-size:17px;
+    box-shadow: 5px 5px 2px #93b8db;
+    
+    padding:5px 10px 5px 10px;
+    border-radius:2px;
+    display:none;
+}
+#errorNotification {
+    border-color:#ff6a00;
+    border-width:2px;
+    border-style:solid;
+    position:fixed;
+    top:0px;
+    left:45%;
+    font-size:17px;
+    box-shadow: 5px 5px 2px #f79898;
+    
+    padding:5px 10px 5px 10px;
+    border-radius:2px;
+    display:none;
+}

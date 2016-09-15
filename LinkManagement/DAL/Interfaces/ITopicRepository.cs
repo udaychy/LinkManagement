@@ -8,5 +8,6 @@ namespace LinkManagement.DAL.Interfaces
 {
     public interface ITopicRepository : IRepository<Topic>
     {
+         IEnumerable<Topic> GetAllRootNode();
     }
 }

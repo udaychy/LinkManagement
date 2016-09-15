@@ -18,5 +18,13 @@ namespace LinkManagement.DAL.Repository
         {
             get { return context as LinkManagerContext; }
         }
+
+
+        public IEnumerable<Topic> GetAllRootNode()
+        {
+            return LinkManagerContext.Topics
+                    .Where(topics => topics.ParentID == 0)
+                        .OrderByDescending(topic => topic.Order);
+        }
     }
 }

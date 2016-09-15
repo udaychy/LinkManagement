@@ -23,6 +23,9 @@ namespace LinkManagement
         public int TopicID { get; set; }
         public string TopicName { get; set; }
         public Nullable<int> ParentID { get; set; }
+        public string Icon { get; set; }
+        public string About { get; set; }
+        public Nullable<int> Order { get; set; }
     
         public virtual ICollection<Link> Links { get; set; }
         public virtual User User { get; set; }

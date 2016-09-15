@@ -30,7 +30,9 @@
           <Property Name="NoOfTimesVisited" Type="int" />
           <Property Name="TopicID" Type="int" Nullable="false" />
           <Property Name="Link" Type="nvarchar" MaxLength="250" />
-          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Order" Type="int" />
+          <Property Name="IsVideoLink" Type="bit" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -40,6 +42,9 @@
           <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TopicName" Type="varchar" Nullable="false" MaxLength="80" />
           <Property Name="ParentID" Type="int" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="About" Type="nvarchar" MaxLength="250" />
+          <Property Name="Order" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -106,8 +111,10 @@
           <Property Name="NoOfTimesVisited" Type="Int32" />
           <Property Name="TopicID" Type="Int32" Nullable="false" />
           <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Link" ToRole="Topic" />
+          <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Order" />
+          <Property Type="Boolean" Name="IsVideoLink" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -119,6 +126,9 @@
           <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Topic" ToRole="Link" />
           <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_Topic_User" FromRole="Topic" ToRole="User" />
           <Property Type="Int32" Name="ParentID" />
+          <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="About" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Order" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -166,6 +176,9 @@
           <EntitySetMapping Name="Links">
             <EntityTypeMapping TypeName="LinkManagerModel.Link">
               <MappingFragment StoreEntitySet="Link">
+                <ScalarProperty Name="IsVideoLink" ColumnName="IsVideoLink" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="LinkID" ColumnName="LinkID" />
                 <ScalarProperty Name="LinkHeading" ColumnName="LinkHeading" />
                 <ScalarProperty Name="LinkDetail" ColumnName="LinkDetail" />
@@ -174,13 +187,15 @@
                 <ScalarProperty Name="NoOfTimesVisited" ColumnName="NoOfTimesVisited" />
                 <ScalarProperty Name="TopicID" ColumnName="TopicID" />
                 <ScalarProperty Name="Link1" ColumnName="Link" />
-                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Topics">
             <EntityTypeMapping TypeName="LinkManagerModel.Topic">
               <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="TopicID" ColumnName="TopicID" />

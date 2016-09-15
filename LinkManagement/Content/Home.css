@@ -1,70 +1,166 @@
-﻿/* error msg on validation*/
-.errorMsg , .mandatoryFeild {
-color:red;
-}
+﻿@import url(//fonts.googleapis.com/css?family=Nunito|Shadows+Into+Light);
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
 
-#LinkTabContent > .tab-pane > h3::after {
-
-    content:'';
-    height:1px;
+/******* Nav Bar *******/
+.top-nav-bar {
+    position:fixed;
     width:100%;
-    background-color:red;
+    background-color:white;
+    -webkit-box-shadow: inset 0px -31px 51px -40px #14cec8;
+    -moz-box-shadow: inset 0px -31px 51px -40px #14cec8;
+    box-shadow: inset 0px -31px 51px -40px #14cec8;
+    z-index:1;
 }
-
-/*making the link list heading inline*/
-.list-group-item-heading {
-    display:inline-block;
-}
-
-/*setting the left border of the link to white so that it is not visible */
-/*NOTE: changing the border width on hover flikers that link*/
-.list-group {
-         
-    border-left-color:white;
-    border-left-style:solid;
-    border-left-width:3px;
-}
-
-/*red border on hover */
-.list-group:hover {
+#brand-logo {
     
-    border-left-color:red;
-    border-left-style:solid;
-    border-left-width:3px;
-}
+    color: #14cec8;
+    font-family:cursive;
+    font-size:40px;
+    font-size-adjust:0.4;
+    font-weight:700;
 
-/*copy link*/
-.copyLink {
-    font-size:12px;
+    
+}
+#brand-logo > span:nth-child(2):hover{
+    -ms-transform: rotate(0deg); /* IE 9 */
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+    transform: rotate(0deg);
+    transition:0.2s ease-in-out;
+    
+}
+#brand-logo > span:nth-child(2) {
+    margin-left: -6px;
+    position:absolute;
+    -ms-transform: rotate(30deg); /* IE 9 */
+    -webkit-transform: rotate(30deg); /* Chrome, Safari, Opera */
+    transform: rotate(30deg);
+    transition:0.3s ease-in-out;
+   
+}
+#navigation-links > div:first-child {
+    color:#8fafae;
+    font-size:16px;
+    font-family:cursive;
+    cursor:pointer;
+    padding:0px 2px 0px 2px;
+    margin-top:10px;
+    margin-left:15px;
+}
+#navigation-links > div:nth-child(2) > a{
+    color:#14cec8;
     text-decoration:none;
-    margin-top:-10px;
+    /* padding and margin is added so 
+        that <a> occupy the full area of parent <div>*/ 
+    padding: 4px 0px;
+    margin: 0px -5px;
 }
-/*notifiction msg Div*/
-#successNotification {
-    border-color:#337abd;
-    border-width:2px;
+#navigation-links > div:nth-child(2) > a:hover{
+    color:white;
+}
+#navigation-links > div:nth-child(2) {
+    color:#14cec8;
+    font-size:20px;
+    border-color:#14cec8;
     border-style:solid;
-    position:fixed;
-    top:0px;
-    left:45%;
-    font-size:17px;
-    box-shadow: 5px 5px 2px #93b8db;
-    
-    padding:5px 10px 5px 10px;
-    border-radius:2px;
-    display:none;
+    border-radius:8px;
+    border-width:1px;
+    font-family:cursive;
+    padding:3px 6px 4px 5px;
+    margin-top:4px;
+    cursor:pointer;
 }
-#errorNotification {
-    border-color:#ff6a00;
-    border-width:2px;
-    border-style:solid;
-    position:fixed;
-    top:0px;
-    left:45%;
-    font-size:17px;
-    box-shadow: 5px 5px 2px #f79898;
+#navigation-links > div:nth-child(2):hover{
+   
+    font-weight:600;
+    background-color:#14cec8;
+    color:white;
     
-    padding:5px 10px 5px 10px;
-    border-radius:2px;
-    display:none;
 }
+#navigation-links > div:first-child:hover {
+    color:black;
+}
+
+.popover-title {
+    background-color:#14cec8;
+    font-family:'Nunito';
+    color:white;
+}
+.popover {   
+    -webkit-box-shadow:inset 11px 9px 39px -13px #14cec8;
+    -moz-box-shadow:inset 11px 9px 39px -13px #14cec8;
+    box-shadow:inset 11px 9px 39px -13px #14cec8;
+    
+}
+.popover-content {
+    color:#808080;
+    font-family:'Nunito';
+}
+.arrow {
+    border-color:#14cec8;
+}
+/******Tag Line*****/
+#tag-line {
+    
+    padding-top:60px;
+    background-color:#14cec8;
+    color:white;
+    font-family:"Shadows Into Light";
+    font-size:23px;
+    text-align:center;
+}
+
+#content {
+    height:2000px;
+}
+@media only screen and (max-width: 767px) {
+   #tag-line  {
+       padding-top:100px;
+    }
+}
+
+/****** main topic lists*****/
+#main-topic-list {
+    background-color:#e3f2f2;
+}
+
+#main-topic-list > div > div {
+    background-color:white;
+    margin:10px;
+    transition:0.2s linear;
+
+}
+#main-topic-list > div > div:hover {
+    box-shadow: 10px 10px 5px #ccc;
+    -moz-box-shadow: 10px 10px 5px #ccc;
+    -webkit-box-shadow: 10px 10px 5px #ccc;
+    transform:scale(1.05,1.05);
+    background-color:#11b2ad;/*#10a5a0,*/
+    transition:0.3s ease-in-out;
+    color:white;
+}
+#main-topic-list > div > div:hover > a {
+    color:white;
+}
+#main-topic-list > div > div:hover > a > h3 {
+    font-weight:700;
+}
+#main-topic-list > div > div > a {
+    text-decoration:none;
+    cursor:pointer;
+    text-align:center;
+    font-size:15px;
+    color:#403737
+}
+#main-topic-list > div > div > a > h3{
+    font-weight:500;
+}
+
+#main-topic-list img {
+    max-height:100px;
+   
+    display:block;
+    margin:auto;
+    
+}
+
+

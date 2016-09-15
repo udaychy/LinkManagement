@@ -22,7 +22,9 @@ namespace LinkManagement
         public Nullable<int> NoOfTimesVisited { get; set; }
         public int TopicID { get; set; }
         public string Link1 { get; set; }
-        public bool IsPublic { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> Order { get; set; }
+        public Nullable<bool> IsVideoLink { get; set; }
     
         public virtual Topic Topic { get; set; }
     }
