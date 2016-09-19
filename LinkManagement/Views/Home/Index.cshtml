@@ -40,17 +40,31 @@
    </div>
 
    <div id="tag-line">
-       <h1>Spreading Knowledge</h1>
-       <p>Our Goal is to provide you the collection of best tutorials along with our expertise knowledge <b>:)</b></p>
+       <h1>Spreading Knowledge <b><span class="smiley">:)</span></b></h1>
+       <p>Our Goal is to provide you the collection of best tutorials along with our expertise knowledge</p>
    </div>
     
    <div id="main-topic-list" class="container" ng-controller="HomeController">
+       <br/>
+       <div class="head-section row">
+           <i id="search-icon" class="fa fa-search"></i>
+           <input id="search-feild" type="text" ng-model="searchKeyword.TopicName" placeholder="search">
+           <h3>choose a technology...</h3>
+       </div>
+   
        <div class="row">
-            <div class="col-sm-3" ng-repeat="topic in rootTopicList">
+            <div class="col-sm-3" ng-repeat="topic in rootTopicList | filter:searchKeyword">
                 <a href="#">
                  <img ng-src="~/Content/Icons/{{topic.Icon}}"/>
-                 <h3>{{topic.TopicName}}</h3>
+                 <h3>{{topic.TopicName}} <span class="arrow">>>></span></h3>
                  <p>{{topic.About}}</p>
+                </a>
+            </div>
+            <div id="suggestion-block" class="col-sm-3">
+                 <a href="#">
+                 <img ng-src="~/Content/Images/help.jpg"/>
+                 <h3>Tell us what more you wanna learn</h3>
+                 <p>You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
                 </a>
             </div>
        </div>     

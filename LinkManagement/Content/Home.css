@@ -1,6 +1,9 @@
-﻿@import url(//fonts.googleapis.com/css?family=Nunito|Shadows+Into+Light);
+﻿@import url(//fonts.googleapis.com/css?family=Amatic+SC|Nunito|Bad+Script|Shadows+Into+Light|Chewy|Handlee);
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 
+body {
+    background-color:#e9ffff;
+}
 /******* Nav Bar *******/
 .top-nav-bar {
     position:fixed;
@@ -95,10 +98,10 @@
     color:#808080;
     font-family:'Nunito';
 }
-.arrow {
-    border-color:#14cec8;
-}
+
+
 /******Tag Line*****/
+
 #tag-line {
     
     padding-top:60px;
@@ -108,9 +111,13 @@
     font-size:23px;
     text-align:center;
 }
-
-#content {
-    height:2000px;
+#tag-line:hover .smiley{
+    -webkit-animation-name: smiley; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: smiley;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 @media only screen and (max-width: 767px) {
    #tag-line  {
@@ -119,28 +126,129 @@
 }
 
 /****** main topic lists*****/
+#search-icon {
+    margin-right:-23px;
+    position:relative;
+    color:#afafaf;
+    font-weight:700;
+}
+#search-feild {
+    
+    background-color:#e9ffff;
+    padding-left:25px;
+    width: 100px;
+    border-radius: 20px;
+    font-size: 16px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+#search-feild:focus {
+    width:30%;
+    outline:none;
+    border-color:none;
+    color:#666;
+    font-size:18px;
+}
+
 #main-topic-list {
-    background-color:#e3f2f2;
+    background-color:#b6dbdb;/*#e3f2f2;*/
 }
-
+#main-topic-list > .head-section > h3 {
+    font-family:'Handlee';
+    text-align:center;
+    font-weight: 700;
+    font-size: 28px;
+    margin-top:-7px;
+    color: #e9ffff;
+}
+#main-topic-list > div {
+ /*shifting the topic divs to right to put them in center */   
+    margin-left:30px;
+    padding-left:30px;
+    
+}
+@media (max-width: 767px) {
+  #main-topic-list > div {
+    margin-left:-20px;
+    
+    }
+   
+}
 #main-topic-list > div > div {
-    background-color:white;
-    margin:10px;
+    background-color:#e9ffff;
+    margin:10px 25px 10px 25px;
     transition:0.2s linear;
-
+    overflow:hidden;
+    height:280px;
+    
 }
+
 #main-topic-list > div > div:hover {
     box-shadow: 10px 10px 5px #ccc;
     -moz-box-shadow: 10px 10px 5px #ccc;
     -webkit-box-shadow: 10px 10px 5px #ccc;
     transform:scale(1.05,1.05);
-    background-color:#11b2ad;/*#10a5a0,*/
+    background-color:#11b2ad;
     transition:0.3s ease-in-out;
     color:white;
 }
 #main-topic-list > div > div:hover > a {
     color:white;
 }
+
+/***** Arrow ********/
+@keyframes arrow {
+    0%   {left:0px; top:0px;}
+    50%  {left:10px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+#main-topic-list .arrow {
+    display:none;
+    position:relative;
+}
+
+
+#main-topic-list > div > div:hover .arrow{
+    display:inline;
+    -webkit-animation-name: arrow; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: arrow;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+/*******  Smiley **********/
+@keyframes smiley {
+
+    0% {transform: rotate(90deg);}
+    25% {transform: rotate(45deg);}
+    50%  { transform: rotate(90deg);}
+    75% { transform: rotate(135deg);}
+    100% { transform: rotate(90deg);}
+}
+ .smiley {
+    
+    margin-left:10px;
+    position:absolute;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari */
+    transform: rotate(90deg);
+}
+
+#main-topic-list > div > div:hover .smiley{
+    display:inline;
+    -webkit-animation-name: smiley; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    animation-name: smiley;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+#main-topic-list > div > div > a > h3{
+    font-weight:500;
+}
+
 #main-topic-list > div > div:hover > a > h3 {
     font-weight:700;
 }
@@ -151,16 +259,21 @@
     font-size:15px;
     color:#403737
 }
-#main-topic-list > div > div > a > h3{
-    font-weight:500;
-}
 
 #main-topic-list img {
     max-height:100px;
-   
     display:block;
     margin:auto;
+    margin-top:10px;
     
+}
+#suggestion-block img {
+    margin-top:0px;
+}
+#suggestion-block :hover img{
+
+border-radius:50%;
+transition:1s ease-in-out;
 }
 
 

@@ -212,9 +212,12 @@
     <Content Include="Content\Icons\AngularJs.png" />
     <Content Include="Content\Icons\AspDotNet.png" />
     <Content Include="Content\Icons\Chrome.png" />
+    <Content Include="Content\Icons\css.png" />
     <Content Include="Content\Icons\HTML.png" />
     <Content Include="Content\Icons\Jquery.png" />
+    <Content Include="Content\Icons\JS.png" />
     <Content Include="Content\Icons\sql.png" />
+    <Content Include="Content\Images\help.jpg" />
     <Content Include="Content\LinkNavTab.css" />
     <Content Include="Content\Images\stars.png" />
     <Content Include="Content\StarRating.css" />
