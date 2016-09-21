@@ -26,5 +26,13 @@ namespace LinkManagement.DAL.Repository
                     .Where(topics => topics.ParentID == 0)
                         .OrderByDescending(topic => topic.Order);
         }
+
+
+        public IEnumerable<Topic> GetImmediateChildren(int parentID)
+        {
+            return LinkManagerContext.Topics
+                    .Where(topics => topics.ParentID == parentID)
+                        .OrderByDescending(topic => topic.Order);
+        }
     }
 }

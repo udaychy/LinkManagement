@@ -40,7 +40,9 @@ body {
     transition:0.3s ease-in-out;
    
 }
-#navigation-links > div:first-child {
+#sign-in, #home {
+  
+    display:inline-block;
     color:#8fafae;
     font-size:16px;
     font-family:cursive;
@@ -49,7 +51,11 @@ body {
     margin-top:10px;
     margin-left:15px;
 }
-#navigation-links > div:nth-child(2) > a{
+#home:hover{
+    text-decoration:none;
+    color:black;
+}
+#sign-up > a{
     color:#14cec8;
     text-decoration:none;
     /* padding and margin is added so 
@@ -57,10 +63,10 @@ body {
     padding: 4px 0px;
     margin: 0px -5px;
 }
-#navigation-links > div:nth-child(2) > a:hover{
+#sign-up > a:hover{
     color:white;
 }
-#navigation-links > div:nth-child(2) {
+#sign-up {
     color:#14cec8;
     font-size:20px;
     border-color:#14cec8;
@@ -72,14 +78,14 @@ body {
     margin-top:4px;
     cursor:pointer;
 }
-#navigation-links > div:nth-child(2):hover{
+#sign-up:hover{
    
     font-weight:600;
     background-color:#14cec8;
     color:white;
     
 }
-#navigation-links > div:first-child:hover {
+#sign-in:hover {
     color:black;
 }
 

@@ -93,6 +93,6 @@ D:\Projects\LinkManagement\LinkManagement\bin\DotNetOpenAuth.OAuth.Consumer.xml
 D:\Projects\LinkManagement\LinkManagement\bin\DotNetOpenAuth.OAuth.xml
 D:\Projects\LinkManagement\LinkManagement\bin\DotNetOpenAuth.OpenId.xml
 D:\Projects\LinkManagement\LinkManagement\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-D:\Projects\LinkManagement\LinkManagement\obj\Debug\LinkManagement.csprojResolveAssemblyReference.cache
 D:\Projects\LinkManagement\LinkManagement\obj\Debug\LinkManagement.dll
 D:\Projects\LinkManagement\LinkManagement\obj\Debug\LinkManagement.pdb
+D:\Projects\LinkManagement\LinkManagement\obj\Debug\LinkManagement.csprojResolveAssemblyReference.cache

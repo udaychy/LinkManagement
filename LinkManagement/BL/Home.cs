@@ -9,7 +9,7 @@ namespace LinkManagement.BL
 {
     public class Home : UnitOfWorkInitializer
     {
-      
+ 
         public Home()
         {
         }
@@ -17,24 +17,19 @@ namespace LinkManagement.BL
 
         public IEnumerable<Topic> GetTopicList()
         {
-            return(unitOfWork.topic.GetAll());
+            return( unitOfWork.topic.GetAll() );
         }
 
 
         public IEnumerable<TopicNode> GetTopicListTree()
+        {         
+            return ( CreateTopicTree( new CastModel().TopicToTopicNodeList( unitOfWork.topic.GetAll() ) ) ); 
+        }
+
+
+        public IEnumerable<TopicNode> GetRootTopicList()
         {
-         
-            var topicNodeList = unitOfWork.topic.GetAll()
-                                .Select( x => new TopicNode()
-                                    {
-                                        TopicID = x.TopicID,
-                                        TopicName = x.TopicName,
-                                        ParentID = (int)x.ParentID,
-                                        UserID = x.UserID
-                                    })
-                                    .ToList();
-           
-            return (CreateTopicTree(topicNodeList)); 
+            return ( new CastModel().TopicToTopicNodeList( unitOfWork.topic.GetAllRootNode() ) );
         }
 
 
@@ -61,25 +56,5 @@ namespace LinkManagement.BL
             return topicNodeTree;
         }
 
-
-        public IEnumerable<TopicNode> GetRootTopicList()
-        {
-            return CastTopicToTopicNodeList(unitOfWork.topic.GetAllRootNode());
-        }
-
-
-        public List<TopicNode> CastTopicToTopicNodeList(IEnumerable<Topic> topicList)
-        {
-            return topicList.Select( x => new TopicNode()
-                                    {
-                                        TopicID = x.TopicID,
-                                        TopicName = x.TopicName,
-                                        ParentID = (int)x.ParentID,
-                                        UserID = x.UserID,
-                                        Icon = x.Icon,
-                                        About = x.About
-                                    })
-                                    .ToList();
-        }
     }
 }

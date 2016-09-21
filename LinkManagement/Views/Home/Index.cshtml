@@ -16,9 +16,11 @@
     <script src="~/Scripts/Custom/JqueryHome.js"></script>
 
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="~/Scripts/ngApp/Module.js"></script>
+    <script src="~/Scripts/ngApp/Routes.js"></script>
     <script src="~/Scripts/ngApp/Home/HomeController.js"></script>
-
+    <script src="~/Scripts/ngApp/SubTopics/SubTopicController.js"></script>
     <title>Home</title>
 </head>
 
@@ -32,8 +34,10 @@
                     <span>m</span>
                 </div>
                 <div id="navigation-links" class=" col-sm-10">
-                    <div class="pull-right">Sign In</div>
-                    <div class="pull-right"><a id="sign-up">Sign Up</a></div>
+                    <a id="home" href="#/">Home</a>
+                    <div class="pull-right" id="sign-in">Sign In</div>
+                    <div class="pull-right" id="sign-up"><a >Sign Up</a></div>
+
                 </div>
            </div>
        </div>
@@ -43,31 +47,6 @@
        <h1>Spreading Knowledge <b><span class="smiley">:)</span></b></h1>
        <p>Our Goal is to provide you the collection of best tutorials along with our expertise knowledge</p>
    </div>
-    
-   <div id="main-topic-list" class="container" ng-controller="HomeController">
-       <br/>
-       <div class="head-section row">
-           <i id="search-icon" class="fa fa-search"></i>
-           <input id="search-feild" type="text" ng-model="searchKeyword.TopicName" placeholder="search">
-           <h3>choose a technology...</h3>
-       </div>
-   
-       <div class="row">
-            <div class="col-sm-3" ng-repeat="topic in rootTopicList | filter:searchKeyword">
-                <a href="#">
-                 <img ng-src="~/Content/Icons/{{topic.Icon}}"/>
-                 <h3>{{topic.TopicName}} <span class="arrow">>>></span></h3>
-                 <p>{{topic.About}}</p>
-                </a>
-            </div>
-            <div id="suggestion-block" class="col-sm-3">
-                 <a href="#">
-                 <img ng-src="~/Content/Images/help.jpg"/>
-                 <h3>Tell us what more you wanna learn</h3>
-                 <p>You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
-                </a>
-            </div>
-       </div>     
-   </div>
+   <div ng-view></div>
 </body>
 </html>
