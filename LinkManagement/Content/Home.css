@@ -2,21 +2,22 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-    background-color:#e9ffff;
+    background-color:#f4fcfc !important;
+   
 }
 /******* Nav Bar *******/
 .top-nav-bar {
     position:fixed;
     width:100%;
     background-color:white;
-    -webkit-box-shadow: inset 0px -31px 51px -40px #14cec8;
-    -moz-box-shadow: inset 0px -31px 51px -40px #14cec8;
-    box-shadow: inset 0px -31px 51px -40px #14cec8;
+    -webkit-box-shadow: inset 0px -31px 51px -40px #11b2ad;
+    -moz-box-shadow: inset 0px -31px 51px -40px #11b2ad;
+    box-shadow: inset 0px -31px 51px -40px #11b2ad;
     z-index:1;
 }
 #brand-logo {
     
-    color: #14cec8;
+    color: #11b2ad;/*#14cec8;*/
     font-family:cursive;
     font-size:40px;
     font-size-adjust:0.4;
@@ -29,11 +30,12 @@ body {
     -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
     transform: rotate(0deg);
     transition:0.2s ease-in-out;
-    
+    color:#11b2ad;
 }
 #brand-logo > span:nth-child(2) {
     margin-left: -6px;
     position:absolute;
+     color:#e98f03;
     -ms-transform: rotate(30deg); /* IE 9 */
     -webkit-transform: rotate(30deg); /* Chrome, Safari, Opera */
     transform: rotate(30deg);
@@ -56,7 +58,7 @@ body {
     color:black;
 }
 #sign-up > a{
-    color:#14cec8;
+    color:#11b2ad;
     text-decoration:none;
     /* padding and margin is added so 
         that <a> occupy the full area of parent <div>*/ 
@@ -67,7 +69,7 @@ body {
     color:white;
 }
 #sign-up {
-    color:#14cec8;
+    color:#11b2ad;
     font-size:20px;
     border-color:#14cec8;
     border-style:solid;
@@ -111,16 +113,16 @@ body {
 #tag-line {
     
     padding-top:60px;
-    background-color:#14cec8;
+    background-color:#11b2ad;
     color:white;
     font-family:"Shadows Into Light";
     font-size:23px;
     text-align:center;
 }
 #tag-line:hover .smiley{
-    -webkit-animation-name: smiley; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-name: smiley;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite; 
     animation-name: smiley;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -216,9 +218,9 @@ body {
 
 #main-topic-list > div > div:hover .arrow{
     display:inline;
-    -webkit-animation-name: arrow; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-name: arrow; 
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite; 
     animation-name: arrow;
     animation-duration: 1s;
     animation-iteration-count: infinite;
@@ -236,16 +238,16 @@ body {
     
     margin-left:10px;
     position:absolute;
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -webkit-transform: rotate(90deg); /* Safari */
+    -ms-transform: rotate(90deg); 
+    -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
 #main-topic-list > div > div:hover .smiley{
     display:inline;
-    -webkit-animation-name: smiley; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-name: smiley; 
+    -webkit-animation-duration: 2s; 
+    -webkit-animation-iteration-count: infinite;
     animation-name: smiley;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -281,5 +283,4 @@ body {
 border-radius:50%;
 transition:1s ease-in-out;
 }
-
 

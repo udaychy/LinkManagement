@@ -4,11 +4,11 @@
     <EntitySet Name="Link" EntityType="LinkManagerModel.Store.Link" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Topic" EntityType="LinkManagerModel.Store.Topic" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User" EntityType="LinkManagerModel.Store.User" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Link_Topic" Association="LinkManagerModel.Store.FK_Link_Topic">
+    <AssociationSet Name="FK_Link_Topic1" Association="LinkManagerModel.Store.FK_Link_Topic1">
       <End Role="Topic" EntitySet="Topic" />
       <End Role="Link" EntitySet="Link" />
     </AssociationSet>
-    <AssociationSet Name="FK_Topic_User" Association="LinkManagerModel.Store.FK_Topic_User">
+    <AssociationSet Name="FK_TopicNew_User" Association="LinkManagerModel.Store.FK_TopicNew_User">
       <End Role="User" EntitySet="User" />
       <End Role="Topic" EntitySet="Topic" />
     </AssociationSet>
@@ -22,12 +22,12 @@
     <Property Name="LinkDetail" Type="nvarchar" MaxLength="250" />
     <Property Name="Rating" Type="int" />
     <Property Name="LastVisited" Type="datetime" />
-    <Property Name="NoOfTimesVisited" Type="int" />
+    <Property Name="NoOfTimesVisited" Type="int" Nullable="false" />
     <Property Name="TopicID" Type="int" Nullable="false" />
-    <Property Name="Link" Type="nvarchar" MaxLength="250" />
+    <Property Name="Link" Type="nvarchar" Nullable="false" MaxLength="250" />
     <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-    <Property Name="Order" Type="int" />
-    <Property Name="IsVideoLink" Type="bit" />
+    <Property Name="Order" Type="int" Nullable="false" />
+    <Property Name="LinkType" Type="nvarchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -35,11 +35,11 @@
     </Key>
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TopicName" Type="varchar" Nullable="false" MaxLength="80" />
-    <Property Name="ParentID" Type="int" />
+    <Property Name="TopicName" Type="nvarchar" Nullable="false" MaxLength="80" />
+    <Property Name="ParentID" Type="int" Nullable="false" />
     <Property Name="Icon" Type="nvarchar" MaxLength="50" />
     <Property Name="About" Type="nvarchar" MaxLength="250" />
-    <Property Name="Order" Type="int" />
+    <Property Name="Order" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -53,19 +53,19 @@
     <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="12" />
   </EntityType>
-  <Association Name="FK_Link_Topic">
+  <Association Name="FK_Link_Topic1">
     <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />
-    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="*" />
+    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Topic">
         <PropertyRef Name="TopicID" />
       </Principal>
       <Dependent Role="Link">
-        <PropertyRef Name="TopicID" />
+        <PropertyRef Name="LinkID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Topic_User">
+  <Association Name="FK_TopicNew_User">
     <End Role="User" Type="LinkManagerModel.Store.User" Multiplicity="1" />
     <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="*" />
     <ReferentialConstraint>

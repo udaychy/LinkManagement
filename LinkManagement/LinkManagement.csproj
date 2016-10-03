@@ -163,7 +163,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="BL\CastModel.cs" />
     <Compile Include="BL\Home.cs" />
     <Compile Include="BL\SubTopics.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -208,7 +207,6 @@
     <Compile Include="User.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\TopicNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Home.css" />
@@ -221,9 +219,9 @@
     <Content Include="Content\Icons\JS.png" />
     <Content Include="Content\Icons\sql.png" />
     <Content Include="Content\Images\help.jpg" />
-    <Content Include="Content\LinkNavTab.css" />
     <Content Include="Content\Images\stars.png" />
     <Content Include="Content\StarRating.css" />
+    <Content Include="Content\SubTopic.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -298,6 +296,8 @@
       <DependentUpon>LinkMangerModel.edmx</DependentUpon>
       <LastGenOutput>LinkMangerModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\Images\1.png" />
+    <Content Include="Resources\Images\2.png" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\Custom\JqueryHome.js" />
     <Content Include="Scripts\Custom\jquery.bootstrap-autohidingnavbar.js" />
@@ -333,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -9,7 +9,7 @@ namespace LinkManagement.DAL.UnitOfWork
     {
         UnitOfWork _unitOfWork;
 
-        public UnitOfWork unitOfWork
+        public UnitOfWork UnitOfWork
         {
             get 
             {

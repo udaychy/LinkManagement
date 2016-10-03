@@ -1,5 +1,4 @@
-﻿@model IEnumerable<LinkManagement.Topic>
-
+﻿
 <!DOCTYPE html>
 
 <html>
@@ -7,24 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="~/Content/Home.css" rel="stylesheet" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/Custom/jquery.bootstrap-autohidingnavbar.js"></script>
-    <script src="~/Scripts/Custom/JqueryHome.js"></script>
-
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-    <script src="~/Scripts/ngApp/Module.js"></script>
-    <script src="~/Scripts/ngApp/Routes.js"></script>
-    <script src="~/Scripts/ngApp/Home/HomeController.js"></script>
-    <script src="~/Scripts/ngApp/SubTopics/SubTopicController.js"></script>
+    <link href="~/Content/SubTopic.css" rel="stylesheet" />
+    <link href="~/Content/StarRating.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Bad+Script|Chewy|Handlee|Ubuntu|Nunito|Shadows+Into+Light|Lora|PT+Sans+Narrow" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
     <title>Home</title>
+
 </head>
 
-<body ng-app ="HomeModule">
+<body ng-app ="HomeModule" data-spy="scroll" data-target="#list-div" data-offset="15">
    
    <div class="top-nav-bar">
        <div class="container">
@@ -33,7 +25,7 @@
                     <span>L</span>
                     <span>m</span>
                 </div>
-                <div id="navigation-links" class=" col-sm-10">
+                <div id="navigation-links" class="col-sm-10">
                     <a id="home" href="#/">Home</a>
                     <div class="pull-right" id="sign-in">Sign In</div>
                     <div class="pull-right" id="sign-up"><a >Sign Up</a></div>
@@ -48,5 +40,20 @@
        <p>Our Goal is to provide you the collection of best tutorials along with our expertise knowledge</p>
    </div>
    <div ng-view></div>
+   <br>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/clipboard.min.js"></script>
+    <script src="~/Scripts/Custom/jquery.bootstrap-autohidingnavbar.js"></script>
+    <script src="~/Scripts/Custom/JqueryHome.js"></script>
+
+    @*Angular JS*@
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="~/Scripts/ngApp/Module.js"></script>
+    <script src="~/Scripts/ngApp/Routes.js"></script>
+    <script src="~/Scripts/ngApp/Home/HomeController.js"></script>
+    <script src="~/Scripts/ngApp/SubTopics/SubTopicController.js"></script>
 </body>
 </html>

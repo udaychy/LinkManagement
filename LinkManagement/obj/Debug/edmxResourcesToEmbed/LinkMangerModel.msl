@@ -4,7 +4,7 @@
     <EntitySetMapping Name="Links">
       <EntityTypeMapping TypeName="LinkManagerModel.Link">
         <MappingFragment StoreEntitySet="Link">
-          <ScalarProperty Name="IsVideoLink" ColumnName="IsVideoLink" />
+          <ScalarProperty Name="LinkType" ColumnName="LinkType" />
           <ScalarProperty Name="Order" ColumnName="Order" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="LinkID" ColumnName="LinkID" />

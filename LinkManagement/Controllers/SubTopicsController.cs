@@ -4,15 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LinkManagement.BL;
-using LinkManagement.ViewModels;
+using Newtonsoft.Json;
 
 namespace LinkManagement.Controllers
 {
     public class SubTopicsController : Controller
     {
-        public JsonResult GetImmediateChildren(int parentID)
+        public String GetImmediateChildren(int parentID)
         {
-            return Json(new SubTopics().GetImmediateChildren(parentID), JsonRequestBehavior.AllowGet);
+             return JsonConvert.SerializeObject(new SubTopics().GetImmediateChildren(parentID), Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                                    });
+             
         }
+
+        //public JsonResult GetAllParents(int topicID)
+        //{
+        //    return Json(new SubTopics().GetAllParents(topicID), JsonRequestBehavior.AllowGet);
+        //}
     }
 }

@@ -19,13 +19,14 @@ namespace LinkManagement
         public string LinkDetail { get; set; }
         public Nullable<int> Rating { get; set; }
         public Nullable<System.DateTime> LastVisited { get; set; }
-        public Nullable<int> NoOfTimesVisited { get; set; }
+        public int NoOfTimesVisited { get; set; }
         public int TopicID { get; set; }
         public string Link1 { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Order { get; set; }
-        public Nullable<bool> IsVideoLink { get; set; }
+        public int Order { get; set; }
+        public string LinkType { get; set; }
     
         public virtual Topic Topic { get; set; }
+        public virtual Topic Topic1 { get; set; }
     }
 }

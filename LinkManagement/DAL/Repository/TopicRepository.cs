@@ -30,9 +30,39 @@ namespace LinkManagement.DAL.Repository
 
         public IEnumerable<Topic> GetImmediateChildren(int parentID)
         {
-            return LinkManagerContext.Topics
+            return LinkManagerContext.Topics.Include("Links")
                     .Where(topics => topics.ParentID == parentID)
-                        .OrderByDescending(topic => topic.Order);
+                        .OrderBy(topic => topic.Order);
         }
+
+
+        public IEnumerable<Topic> GetImmediateParent(int topicID)
+        {
+        //    int parentTopicID = (int)LinkManagerContext.Topics
+        //                .Select(topics => topics.ParentID).Last();
+
+        //    return LinkManagerContext.Topics.Where(topic => topic.TopicID == parentTopicID);
+
+
+        //   /* List<Topic> parentList = new List<Topic>();
+        //    //return LinkManagerContext.Topics
+        //    //        .Where(topics => topics.TopicID == topicID);
+        //    if (topicID == 0)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        int parentTopicID = (int)LinkManagerContext.Topics
+        //                .Select(topics => topics.ParentID).Last();
+
+        //        return ((IEnumerable<Topic>)parentList.Add((Topic)GetAllParents(parentTopicID)));
+
+        //        parentList.Add((Topic)LinkManagerContext.Topics.Where(topics => topics.TopicID == topicID));
+        //        GetAllParents(parentTopicID);
+        //    }*/
+            return null;
+        }
+
     }
 }

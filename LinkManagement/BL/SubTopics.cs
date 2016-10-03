@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using LinkManagement.ViewModels;
 using LinkManagement.DAL.UnitOfWork;
 
 namespace LinkManagement.BL
 {
     public class SubTopics : UnitOfWorkInitializer
     {
-        public SubTopics()
+        
+        public List<Topic> GetImmediateChildren(int parentID)
         {
+            return (UnitOfWork.topic.GetImmediateChildren(parentID)).ToList();
         }
 
-
-        public List<TopicNode> GetImmediateChildren(int parentID)
-        {
-            return( new CastModel().TopicToTopicNodeList( unitOfWork.topic.GetImmediateChildren(parentID) )).ToList();
-        }
+        //public List<TopicNode> GetAllParents(int topicID)
+        //{
+        //    return (new CastModel().TopicToTopicNodeList(UnitOfWork.topic.GetImmediateParent(topicID))).ToList();
+        //}
     }
 }

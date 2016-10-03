@@ -1,0 +1,150 @@
+﻿
+ul::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+ul::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px #11b2ad; 
+   
+}
+ 
+ul::-webkit-scrollbar-thumb {
+    background-color:#11b2ad;   
+}
+
+#list-div {
+    /*background-color: #c9e6e6;
+    border-radius:10px;
+  
+   margin-left:20px;*/
+   
+}
+
+#list-div > ul {
+    list-style:none;
+   padding-left:0px;
+   overflow-y:scroll;
+   height:100%;
+   left:10px;
+   width:24%;
+   position:fixed;
+}
+#list-div > ul.affix {
+   
+    top:10px;
+    left:10px;
+    bottom:0px;
+    overflow-y:scroll;
+}
+
+#list-div > ul > li {
+    background-color: #11b2ad;/*#c9e6e6;*/
+    border-bottom-right-radius:10px;
+    border-top-right-radius:10px;
+    margin-left:0px;
+   
+    color:white;
+    width:80%;
+    padding-top:5px;
+    padding-left:10px;
+    /*margin:auto;*/
+    margin-top:10px;
+    transition:0.2s ease-in-out;
+    min-height: 35px;
+    font-size: 15px;
+    text-align: center;
+   
+}
+#list-div > ul > li:hover {
+  
+    font-weight:700;
+    width:95%;
+    background-color:#e98f03;/*#11b2ad;*/
+    color:white;
+}
+
+
+#sub-topic-list {
+    padding-left:40px;
+    padding-top:20px;
+}
+@media (max-width: 767px) {
+  #list-div {
+   display:none;
+    }
+
+    #sub-topic-list {
+    position:static;
+    padding-left:10px;
+    }
+}
+
+#sub-topic-list > div {
+    background-color:#ffffff;
+    margin-bottom:15px;
+    padding:15px;
+
+    font-size: 20px;
+    letter-spacing: 0.4px;
+    
+    border-radius:20px;
+    border-top-color:#eee;
+    border-top-style:solid;
+    border-top-width:1px;
+    border-left-color:#eee;
+    border-left-style:solid;
+    border-left-width:1px;
+    
+    box-shadow: 4px 4px 3px #19b4af;
+
+} 
+#sub-topic-list .topic-heading > a{
+   
+    display:block;
+    color: #444;
+    font-size:35px;
+    letter-spacing:1px;
+    font-weight:600;
+    font-family:"Ubuntu";
+    padding-bottom:10px;
+    padding-bottom:15px;
+    text-decoration:none;
+}
+#sub-topic-list .topic-heading > a > span.fa-link{
+   
+    color: #333;
+    visibility:hidden;
+}
+#sub-topic-list .topic-heading > a:hover > span.fa-link{
+    visibility:visible;
+}
+#sub-topic-list  .topic-body {
+   padding-left:30px;
+}
+.link-div {
+    background-color:#fefed6;
+    padding:10px;
+    margin-top:15px;
+
+    font-size:17px;
+    letter-spacing:0px;
+    font-family:sans-serif;
+}
+.link-div > a {
+    display:inline-block;
+}
+
+.link-div .copy-link {
+    font-size:12px;
+    cursor:pointer;
+}
+
+.image-div {
+    font-size:18px;
+
+}
+.image-div img {
+max-width:100%;
+max-height:400px;
+}
+

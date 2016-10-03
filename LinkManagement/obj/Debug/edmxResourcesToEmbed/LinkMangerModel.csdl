@@ -12,6 +12,10 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Topic" EntitySet="Topics" />
     </AssociationSet>
+    <AssociationSet Name="FK_Link_Topic1" Association="LinkManagerModel.FK_Link_Topic1">
+      <End Role="Topic" EntitySet="Topics" />
+      <End Role="Link" EntitySet="Links" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Link">
     <Key>
@@ -22,13 +26,14 @@
     <Property Name="LinkDetail" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
     <Property Name="Rating" Type="Int32" />
     <Property Name="LastVisited" Type="DateTime" Precision="3" />
-    <Property Name="NoOfTimesVisited" Type="Int32" />
+    <Property Name="NoOfTimesVisited" Type="Int32" Nullable="false" />
     <Property Name="TopicID" Type="Int32" Nullable="false" />
-    <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" Nullable="false" />
     <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Link" ToRole="Topic" />
     <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="Order" />
-    <Property Type="Boolean" Name="IsVideoLink" />
+    <Property Type="Int32" Name="Order" Nullable="false" />
+    <NavigationProperty Name="Topic1" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Link" ToRole="Topic" />
+    <Property Type="String" Name="LinkType" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -36,13 +41,14 @@
     </Key>
     <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="TopicID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="TopicName" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
+    <Property Name="TopicName" Type="String" Nullable="false" MaxLength="80" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Topic" ToRole="Link" />
     <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_Topic_User" FromRole="Topic" ToRole="User" />
-    <Property Type="Int32" Name="ParentID" />
+    <Property Type="Int32" Name="ParentID" Nullable="false" />
     <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="About" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="Order" />
+    <Property Type="Int32" Name="Order" Nullable="false" />
+    <NavigationProperty Name="Link" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Topic" ToRole="Link" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -78,6 +84,18 @@
       </Principal>
       <Dependent Role="Topic">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Link_Topic1">
+    <End Type="LinkManagerModel.Topic" Role="Topic" Multiplicity="1" />
+    <End Type="LinkManagerModel.Link" Role="Link" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Topic">
+        <PropertyRef Name="TopicID" />
+      </Principal>
+      <Dependent Role="Link">
+        <PropertyRef Name="LinkID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

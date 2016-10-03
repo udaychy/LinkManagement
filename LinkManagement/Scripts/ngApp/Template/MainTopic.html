@@ -1,25 +1,25 @@
-﻿ <div id="main-topic-list" class="container" >
-       <br/>
-       <div class="head-section row">
-           <i id="search-icon" class="fa fa-search"></i>
-           <input id="search-feild" type="text" ng-model="searchKeyword.TopicName" placeholder="search">
-           <h3>choose a technology...</h3>
-       </div>
-   
-       <div class="row">
-            <div class="col-sm-3" ng-repeat="topic in rootTopicList | filter:searchKeyword">
-                <a href="#/SubTopics/{{topic.TopicID}}">
-                 <img ng-src="/Scripts/ngApp/Images/{{topic.Icon}}"/>
-                 <h3>{{topic.TopicName}} <span class="arrow">>>></span></h3>
-                 <p>{{topic.About}}</p>
-                </a>
-            </div>
-            <div id="suggestion-block" class="col-sm-3">
-                 <a href="#">
-                 <img ng-src="/Scripts/ngApp/Images/help.jpg"/>
-                 <h3>Tell us what more you wanna learn</h3>
-                 <p>You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
-                </a>
-            </div>
-       </div>     
-   </div>
+﻿<div id="main-topic-list" class="container">
+    <br/>
+    <div class="head-section row">
+        <i id="search-icon" class="fa fa-search"></i>
+        <input id="search-feild" type="text" ng-model="searchKeyword.TopicName" placeholder="search">
+        <h3>choose a technology...</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3" ng-repeat="topic in rootTopicList | filter:searchKeyword">
+            <a ng-href="#/SubTopics/{{topic.TopicID}}">
+                <img ng-src="/Scripts/ngApp/Images/{{topic.Icon}}" />
+                <h3>{{topic.TopicName}} <span class="arrow">>>></span></h3>
+                <p>{{topic.About}}</p>
+            </a>
+        </div>
+        <div id="suggestion-block" class="col-sm-3">
+            <a href="#">
+                <img ng-src="/Scripts/ngApp/Images/help.jpg" />
+                <h3>Tell us what more you wanna learn</h3>
+                <p>You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
+            </a>
+        </div>
+    </div>
+</div>

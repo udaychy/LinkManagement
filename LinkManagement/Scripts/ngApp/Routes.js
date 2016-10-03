@@ -1,6 +1,6 @@
 ﻿linkApp.config(function ($routeProvider) {
-    $routeProvider
 
+    $routeProvider
         // route for the home page
         .when('/', {
             templateUrl: '/Scripts/ngApp/Template/MainTopic.html',
@@ -11,5 +11,10 @@
            templateUrl: '/Scripts/ngApp/Template/SubTopicList.html',
            controller: 'SubTopicController'
        })
+     
+}).filter('trustUrl', function ($sce) {
 
+    return function (url) {
+        return $sce.trustAsResourceUrl(url);
+    };
 });

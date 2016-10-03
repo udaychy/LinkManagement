@@ -10,5 +10,6 @@ namespace LinkManagement.DAL.Interfaces
     {
          IEnumerable<Topic> GetAllRootNode();
          IEnumerable<Topic> GetImmediateChildren(int parentID);
+         IEnumerable<Topic> GetImmediateParent(int topicID);
     }
 }
