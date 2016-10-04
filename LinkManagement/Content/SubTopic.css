@@ -19,7 +19,17 @@ ul::-webkit-scrollbar-thumb {
    margin-left:20px;*/
    
 }
-
+#parent-heading {
+    height:200px;
+    background-color:#11b2ad;
+}
+#parent-heading > p {
+    font-size:45px;
+    color:white;
+    margin-top:100px;
+    font-weight:900;
+    text-align:center;
+}
 #list-div > ul {
     list-style:none;
    padding-left:0px;
@@ -29,40 +39,65 @@ ul::-webkit-scrollbar-thumb {
    width:24%;
    position:fixed;
 }
-#list-div > ul.affix {
-   
-    top:10px;
-    left:10px;
-    bottom:0px;
-    overflow-y:scroll;
-}
 
 #list-div > ul > li {
     background-color: #11b2ad;/*#c9e6e6;*/
     border-bottom-right-radius:10px;
     border-top-right-radius:10px;
     margin-left:0px;
-   
+    clear:both;
     color:white;
     width:80%;
     padding-top:5px;
     padding-left:10px;
     /*margin:auto;*/
     margin-top:10px;
-    transition:0.2s ease-in-out;
+    transition:0.1s ease-in-out;
     min-height: 35px;
     font-size: 15px;
     text-align: center;
    
 }
+
+#parent-list > li {
+    float: left;
+    list-style:none;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    padding: 3px;
+    
+}
+#parent-list > li:first-child {
+    margin-left:-30px;
+}
+#parent-list > li > a {
+    color:white;
+    padding:2px;
+    background-color: #11b2ad;
+    border-radius: 5px;
+    text-decoration:none;
+}
+#parent-list > li:last-child > a {
+    color:white;
+    padding:2px;
+    background-color: #e98f03;
+    border-radius: 5px;
+    text-decoration:none;
+}
 #list-div > ul > li:hover {
   
     font-weight:700;
     width:95%;
+    color:white;
+}
+#list-div > ul > li.active {
+
+     font-weight:700;
+    width:95%;
     background-color:#e98f03;/*#11b2ad;*/
     color:white;
 }
-
 
 #sub-topic-list {
     padding-left:40px;
@@ -109,6 +144,9 @@ ul::-webkit-scrollbar-thumb {
     padding-bottom:10px;
     padding-bottom:15px;
     text-decoration:none;
+}
+#sub-topic-list .topic-heading > a.no-subtopics {
+    padding-left:25px;
 }
 #sub-topic-list .topic-heading > a > span.fa-link{
    

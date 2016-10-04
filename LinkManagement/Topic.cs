@@ -11,6 +11,7 @@ namespace LinkManagement
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class Topic
     {
@@ -26,7 +27,9 @@ namespace LinkManagement
         public string Icon { get; set; }
         public string About { get; set; }
         public int Order { get; set; }
-    
+        [NotMapped]
+        public int SubTopicCount { get; set; }
+        
         public virtual ICollection<Link> Links { get; set; }
         public virtual User User { get; set; }
         public virtual Link Link { get; set; }

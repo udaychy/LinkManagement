@@ -20,9 +20,9 @@ namespace LinkManagement.Controllers
              
         }
 
-        //public JsonResult GetAllParents(int topicID)
-        //{
-        //    return Json(new SubTopics().GetAllParents(topicID), JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult GetAllParents(int topicID)
+        {
+            return Json(new SubTopics().GetAllParents(topicID), JsonRequestBehavior.AllowGet);
+        }
     }
 }

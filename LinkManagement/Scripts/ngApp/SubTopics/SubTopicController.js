@@ -2,7 +2,7 @@
 linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, $location) {
 
     var parentID = parseInt($routeParams.parentID);
-
+    
     $http({
 
         method: "GET",
@@ -15,10 +15,11 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
     }).then(function (response) {
 
             $scope.subTopicList = response.data;
-
+            
             if ($scope.subTopicList.length < 1) {
                 goBack();
             }
+           
         },
           function (response) {
 
@@ -32,23 +33,23 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
     };
 
     /* Get all the parents list*/
-    //$http({
-    //    method: "GET",
-    //    url: "/SubTopics/GetAllParents",
-    //    params: {
-    //        topicID: 6
-    //    }
-    //}).then(function (response) {
+    $http({
+        method: "GET",
+        url: "/SubTopics/GetAllParents",
+        params: {
+            topicID: parentID
+        }
+    }).then(function (response) {
 
-    //    $scope.parentsList = response.data;
-    //},
-    //     function (response) {
+        $scope.parentsList = response.data;
+    },
+         function (response) {
 
-    //         $scope.error = response.data;
-    //     });
+             $scope.error = response.data;
+         });
 
 
-    var absoluteOffset = function (element) {
+    var absolutePosition = function (element) {
 
         var top = 0, left = 0;
 
@@ -66,9 +67,9 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
 
 
     $scope.scrollTo = function (idName) {
-
+ 
         var element = document.getElementById(idName);
-        var pos = absoluteOffset(element);
+        var pos = absolutePosition(element);
 
         $('html, body').animate({
             scrollTop : pos.top-60
@@ -76,10 +77,4 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
         
     };
 
-
-    $scope.copyLinkPopoverMsg = function ($event){
-
-        $(this).children('a').popover("show");
-        setTimeout(function () { $('.popover').fadeOut('slow') }, 2000);
-    }
 });

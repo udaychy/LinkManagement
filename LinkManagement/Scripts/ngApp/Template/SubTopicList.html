@@ -1,18 +1,42 @@
-﻿<div class="container-fluid">
+﻿
+<div class="container-fluid">
+    <div class="row" id="parent-heading">
+        <p> {{parentsList[parentsList.length-1].TopicName}}</p>
+    </div>
+    <br/>
     <div class="row">
-        <div id="list-div" class="col-sm-3">
+        <div id="list-div" ng-if = "subTopicList.length > 5" class="col-sm-3">
             <ul>
-                <li ng-repeat="topic in subTopicList" ng-click="scrollTo(topic.TopicID)">{{topic.TopicName}}</li>
+                <ul id="parent-list">
+                    <li><a href="#/">Home</a> > </li>
+                    <li ng-repeat ="parentTopic in parentsList">
+                        <a href="#/SubTopics/{{parentTopic.TopicID}}">{{parentTopic.TopicName}}</a> >
+                    </li>
+                </ul>
+
+                <li ng-repeat="topic in subTopicList" list-id="{{topic.TopicID}}" ng-click="scrollTo(topic.TopicID)">{{topic.TopicName}}</li>
 
             </ul>
             <br><br>
         </div>
 
-        <div id="sub-topic-list" class="col-sm-8">
-            <div ng-repeat="topic in subTopicList">
-                <h3 class="topic-heading" id="{{topic.TopicID}}">
-                    <a ng-href="#/SubTopics/{{topic.TopicID}}">
+        <div ng-if = "subTopicList.length <= 5">
+            <ul id="parent-list">
+                <li><a href="#/">Home</a> > </li>
+                <li ng-repeat ="parentTopic in parentsList">
+                    <a href="#/SubTopics/{{parentTopic.TopicID}}">{{parentTopic.TopicName}}</a> >
+                </li>
+            </ul>
+        </div>
+
+        <div id="sub-topic-list" class="col-sm-8" >
+            <div ng-repeat="topic in subTopicList" id="{{topic.TopicID}}">
+                <h3 class="topic-heading" >
+                    <a ng-if="topic.SubTopicCount > 0" ng-href="#/SubTopics/{{topic.TopicID}}">
                         <span class="fa fa-link"></span> {{topic.TopicName}}
+                    </a>
+                    <a ng-if="topic.SubTopicCount == 0" class="no-subtopics">
+                         {{topic.TopicName}}
                     </a>
                 </h3>
                 <div class="topic-body">
@@ -38,7 +62,7 @@
                             <a href="{{link.Link1}}" target="_blank">
                                 <h4>{{link.LinkHeading}}</h4>
                             </a>
-                            <span class="copy-link-parent pull-right" ng-click="copyLinkPopoverMsg($event)">
+                            <span class="copy-link-parent pull-right">
                                 <a class="copy-link pull-right" data-clipboard-text="{{link.Link1}}" data-toggle="popover" data-content="copied" data-placement="bottom" >copy link</a>
                             </span>
                             <p>{{link.LinkDetail}}</p>

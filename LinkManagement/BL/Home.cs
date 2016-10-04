@@ -14,10 +14,9 @@ namespace LinkManagement.BL
             return( UnitOfWork.topic.GetAll() );
         }
 
-
         public IEnumerable<Topic> GetRootTopicList()
         {
-            return ( UnitOfWork.topic.GetAllRootNode() );
+            return ( UnitOfWork.topic.GetImmediateChildren(0) );
         }
 
     }

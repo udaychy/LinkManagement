@@ -11,12 +11,29 @@ namespace LinkManagement.BL
         
         public List<Topic> GetImmediateChildren(int parentID)
         {
-            return (UnitOfWork.topic.GetImmediateChildren(parentID)).ToList();
+            var topicList = UnitOfWork.topic.GetImmediateChildren(parentID).ToList();
+
+            topicList.ForEach(topics => topics.SubTopicCount = UnitOfWork.topic.ChildCount(topics.TopicID));
+            return topicList;
+            
         }
 
-        //public List<TopicNode> GetAllParents(int topicID)
-        //{
-        //    return (new CastModel().TopicToTopicNodeList(UnitOfWork.topic.GetImmediateParent(topicID))).ToList();
-        //}
+        public List<Topic> GetAllParents(int topicID)
+        {
+
+            var parentsList = new List<Topic>();
+            var topic = UnitOfWork.topic.Get(topicID);
+            var parentID = topic.ParentID;
+
+            parentsList.Add(topic);
+
+            while (parentID != 0)
+            {
+                topic = UnitOfWork.topic.Get(parentID);
+                parentsList.Add(topic);
+                parentID = topic.ParentID;  
+            }
+            return parentsList.OrderBy(topics => topics.TopicID).ToList();
+        }
     }
 }

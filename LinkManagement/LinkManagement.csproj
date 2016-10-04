@@ -314,7 +314,6 @@
     <Content Include="Scripts\ngApp\Module.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\clipboard.min.js" />
-    <Content Include="Scripts\Custom\Home.js" />
     <Content Include="Scripts\Custom\RatingStar.js" />
     <Content Include="Scripts\Custom\TopicTreeView.js" />
     <Content Include="Scripts\ngApp\Routes.js" />
