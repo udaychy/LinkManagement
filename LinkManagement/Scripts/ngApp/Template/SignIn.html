@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+﻿<form novalidate name="SignInForm" ng-submit="Login()" class="row form form-horizontal" id="sign-in-form">
+    <div class="form-group">
+        <label>UserName:</label>
+        <input type="text" class="form-control" ng-model="LoginData.UserName"  maxlength="50" required/>
+    </div>
+    <div class="form-group">
+        <label>Password:</label>
+        <input type="password" class="form-control" ng-model="LoginData.Password" placeholder="******" maxlength="15" required/>
+    </div>
+    <input class="btn btn-warning" type="submit" value="Login"/>
+</form>

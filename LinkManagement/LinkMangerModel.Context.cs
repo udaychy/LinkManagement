@@ -18,7 +18,7 @@ namespace LinkManagement
         public LinkManagerContext()
             : base("name=LinkManagerContext")
         {
-            this.Configuration.LazyLoadingEnabled = false; 
+            this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false; 
         }
     

@@ -51,7 +51,7 @@
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="12" />
+    <Property Name="AccessToken" Type="uniqueidentifier" />
   </EntityType>
   <Association Name="FK_Link_Topic1">
     <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />

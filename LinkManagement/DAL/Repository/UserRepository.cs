@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LinkManagement.Model;
 using LinkManagement.DAL.Interfaces;
 
 namespace LinkManagement.DAL.Repository
@@ -13,6 +14,27 @@ namespace LinkManagement.DAL.Repository
         {
         }
 
+
+        public bool IsAuthenticatedToken(Guid token)
+        {
+            return LinkManagerContext.Users
+                .Where(u=> u.AccessToken == token).Select(u=> u.UserID).FirstOrDefault() > 0 ? true : false;
+
+        }
+
+        public User AddAccessToken(User logedInUser)
+        {
+            logedInUser.AccessToken = Guid.NewGuid();
+            return logedInUser;
+        }
+
+        
+        public User GetUser(LoginData loginCredential)
+        {
+        
+            return LinkManagerContext.Users
+                    .Where(u => u.UserName == loginCredential.UserName && u.Password == loginCredential.Password ).FirstOrDefault();
+        }
 
         public IEnumerable<User> GetListByName(string fName)
         {

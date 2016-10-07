@@ -48,6 +48,25 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
              $scope.error = response.data;
          });
 
+    var UpdateLinkStatus = function (topicID, linkID) {
+
+        $http({
+            method: "GET",
+            url: "/SubTopics/UpdateLinkStatus",
+            params: {
+                topicID: topicID,
+                linkID: linkID,
+                isChecked : true
+            }
+        }).then(function (response) {
+
+            alert("updated");
+        },
+        function (response) {
+
+           
+        });
+    }
 
     var absolutePosition = function (element) {
 

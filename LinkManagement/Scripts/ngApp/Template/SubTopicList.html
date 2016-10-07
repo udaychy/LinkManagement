@@ -20,7 +20,7 @@
             <br><br>
         </div>
 
-        <div ng-if = "subTopicList.length <= 5">
+        <div ng-if = "subTopicList.length <= 5" class="col-sm-12">
             <ul id="parent-list">
                 <li><a href="#/">Home</a> > </li>
                 <li ng-repeat ="parentTopic in parentsList">
@@ -29,7 +29,7 @@
             </ul>
         </div>
 
-        <div id="sub-topic-list" class="col-sm-8" >
+        <div id="sub-topic-list" ng-class="subTopicList.length <= 5 ? 'col-sm-12':'col-sm-8'" >
             <div ng-repeat="topic in subTopicList" id="{{topic.TopicID}}">
                 <h3 class="topic-heading" >
                     <a ng-if="topic.SubTopicCount > 0" ng-href="#/SubTopics/{{topic.TopicID}}">
@@ -62,6 +62,7 @@
                             <a href="{{link.Link1}}" target="_blank">
                                 <h4>{{link.LinkHeading}}</h4>
                             </a>
+                            <span><input type="checkbox" ng-bind="IsChecked" ng-click="UpdateLinkStatus(topic.TopicID, link.Link1)"/></span>
                             <span class="copy-link-parent pull-right">
                                 <a class="copy-link pull-right" data-clipboard-text="{{link.Link1}}" data-toggle="popover" data-content="copied" data-placement="bottom" >copy link</a>
                             </span>

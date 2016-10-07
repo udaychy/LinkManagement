@@ -5,20 +5,33 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
+    @*Font Awesome*@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    
+    @*Syntax Highlighter*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css" rel="stylesheet" />
+
+    @*Custom*@
     <link href="~/Content/Home.css" rel="stylesheet" />
     <link href="~/Content/SubTopic.css" rel="stylesheet" />
     <link href="~/Content/StarRating.css" rel="stylesheet" />
+    <link href="~/Content/SignIn.css" rel="stylesheet" />
+    <link href="~/Content/SignUp.css" rel="stylesheet" />
+
+    @*Google fonts*@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Bad+Script|Chewy|Handlee|Ubuntu|Nunito|Shadows+Into+Light|Lora|PT+Sans+Narrow" rel="stylesheet">
+    
+    @*Bootstrap*@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   
     <title>Home</title>
 
 </head>
 
-<body ng-app ="HomeModule" data-spy="scroll" data-target="#list-div" data-offset="15">
+<body ng-app ="HomeModule" >
    
-   <div class="top-nav-bar">
+   <div class="top-nav-bar" ng-controller="UserController" ng-init="init()">
        <div class="container">
            <div class="row">
                 <div id="brand-logo" class="col-sm-2">
@@ -27,9 +40,11 @@
                 </div>
                 <div id="navigation-links" class="col-sm-10">
                     <a id="home" href="#/">Home</a>
-                    <div class="pull-right" id="sign-in">Sign In</div>
-                    <div class="pull-right" id="sign-up"><a >Sign Up</a></div>
-
+                    <div ng-hide = "IsLogedIn" class = "pull-right" id="sign-in"><a href="#/SignIn">Sign In</a></div>
+                    <div ng-show = "IsLogedIn" class = "pull-right" id="sign-out" ng-click="SignOut()">Sign Out</div>
+                    <div ng-show = "IsLogedIn" class="pull-right"> Logged in as <strong>{{UserData.FName}}</strong></div>
+                    @*<div class="pull-right" id="sign-up"><a href="#/SignOut">Sign Up</a></div>*@
+                    
                 </div>
            </div>
        </div>
@@ -37,19 +52,38 @@
 
    <div ng-view></div>
    <br>
-
+   
+    @*Jquery*@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    @*Bootstrap*@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    @*ClipBoard*@
     <script src="~/Scripts/clipboard.min.js"></script>
+
+    @*AutoHiding navbar*@
     <script src="~/Scripts/Custom/jquery.bootstrap-autohidingnavbar.js"></script>
+
+    @*Custom Jquery*@
     <script src="~/Scripts/Custom/JqueryHome.js"></script>
+
+    @*Syntax Highlighter*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCSharp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.js"></script>
 
     @*Angular JS*@
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="//cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.5.0/angular-local-storage.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="~/Scripts/ngApp/Module.js"></script>
     <script src="~/Scripts/ngApp/Routes.js"></script>
+    <script src="~/Scripts/ngApp/Services/UserServices.js"></script>
     <script src="~/Scripts/ngApp/Home/HomeController.js"></script>
     <script src="~/Scripts/ngApp/SubTopics/SubTopicController.js"></script>
+    <script src="~/Scripts/ngApp/User/UserController.js"></script>
 </body>
 </html>

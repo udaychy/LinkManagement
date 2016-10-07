@@ -23,9 +23,9 @@ namespace LinkManagement
         public string FName { get; set; }
         public string LName { get; set; }
         public System.DateTime CreatedOn { get; set; }
-        public string UserName { get; set; }
         public string Password { get; set; }
-        public string Phone { get; set; }
+        public string UserName { get; set; }
+        public Nullable<System.Guid> AccessToken { get; set; }
     
         public virtual ICollection<Topic> Topics { get; set; }
     }

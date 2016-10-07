@@ -11,6 +11,23 @@
            templateUrl: '/Scripts/ngApp/Template/SubTopicList.html',
            controller: 'SubTopicController'
        })
+
+       .when('/SignIn', {
+           templateUrl: '/Scripts/ngApp/Template/SignIn.html',
+           controller: 'UserController'
+       })
+
+       .when('/SignUp', {
+           templateUrl: '/Scripts/ngApp/Template/SignUp.html',
+           controller: 'UserController'
+       },
+       
+       function (localStorageServiceProvider) {
+           localStorageServiceProvider
+             .setPrefix('lm')
+             .setStorageType('sessionStorage')
+             .setNotify(true, true)
+       });
      
 }).filter('trustUrl', function ($sce) {
 

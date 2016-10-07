@@ -7,6 +7,8 @@ body {
 }
 /******* Nav Bar *******/
 .top-nav-bar {
+    top:0px;
+
     position:fixed;
     width:100%;
     background-color:white;
@@ -42,7 +44,7 @@ body {
     transition:0.3s ease-in-out;
    
 }
-#sign-in, #home {
+#home ~ div, #home {
   
     display:inline-block;
     color:#8fafae;
@@ -57,37 +59,9 @@ body {
     text-decoration:none;
     color:black;
 }
-#sign-up > a{
-    color:#11b2ad;
-    text-decoration:none;
-    /* padding and margin is added so 
-        that <a> occupy the full area of parent <div>*/ 
-    padding: 4px 0px;
-    margin: 0px -5px;
-}
-#sign-up > a:hover{
-    color:white;
-}
-#sign-up {
-    color:#11b2ad;
-    font-size:20px;
-    border-color:#14cec8;
-    border-style:solid;
-    border-radius:8px;
-    border-width:1px;
-    font-family:cursive;
-    padding:3px 6px 4px 5px;
-    margin-top:4px;
-    cursor:pointer;
-}
-#sign-up:hover{
+
+#sign-in > a:hover, #sign-out:hover {
    
-    font-weight:600;
-    background-color:#14cec8;
-    color:white;
-    
-}
-#sign-in:hover {
     color:black;
 }
 

@@ -56,7 +56,7 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="12" />
+          <Property Name="AccessToken" Type="uniqueidentifier" />
         </EntityType>
         <Association Name="FK_Link_Topic1">
           <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />
@@ -144,10 +144,10 @@
           <Property Name="FName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="LName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="12" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Topics" Relationship="LinkManagerModel.FK_Topic_User" FromRole="User" ToRole="Topic" />
+          <Property Type="String" Name="UserName" Nullable="false" FixedLength="false" MaxLength="50" Unicode="true" />
+          <Property Type="Guid" Name="AccessToken" />
         </EntityType>
         <Association Name="FK_Link_Topic">
           <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="1" />
@@ -224,13 +224,13 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LinkManagerModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FName" ColumnName="FName" />
                 <ScalarProperty Name="LName" ColumnName="LName" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

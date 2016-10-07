@@ -53,5 +53,5 @@
         setTimeout(function () { $('.popover').fadeOut('slow') }, 2000);
     });
  
-
+     SyntaxHighlighter.all()
 });

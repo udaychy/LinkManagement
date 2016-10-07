@@ -10,6 +10,7 @@ namespace LinkManagement.Controllers
 {
     public class SubTopicsController : Controller
     {
+
         public String GetImmediateChildren(int parentID)
         {
              return JsonConvert.SerializeObject(new SubTopics().GetImmediateChildren(parentID), Formatting.Indented,

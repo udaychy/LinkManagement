@@ -9,6 +9,8 @@ namespace LinkManagement.DAL.Interfaces
     public interface ITopicRepository : IRepository<Topic>
     {
          IEnumerable<Topic> GetImmediateChildren(int parentID);
-         int ChildCount(int id);    
+         int ChildCount(int id);
+
+         void UpdateLinkStatus(int topicID, int linkID, bool isChecked);
     }
 }

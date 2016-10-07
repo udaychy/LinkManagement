@@ -163,10 +163,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BL\Helper.cs" />
     <Compile Include="BL\Home.cs" />
     <Compile Include="BL\SubTopics.cs" />
+    <Compile Include="BL\Users.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubTopicsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\Interfaces\ILinkRepository.cs" />
     <Compile Include="DAL\Interfaces\IRepository.cs" />
     <Compile Include="DAL\Interfaces\ITopicRepository.cs" />
@@ -200,6 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LinkMangerModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\LoginData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Topic.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
@@ -220,6 +224,8 @@
     <Content Include="Content\Icons\sql.png" />
     <Content Include="Content\Images\help.jpg" />
     <Content Include="Content\Images\stars.png" />
+    <Content Include="Content\SignIn.css" />
+    <Content Include="Content\SignUp.css" />
     <Content Include="Content\StarRating.css" />
     <Content Include="Content\SubTopic.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -276,7 +282,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\TopicTreeView.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <EntityDeploy Include="LinkMangerModel.edmx">
@@ -317,9 +322,13 @@
     <Content Include="Scripts\Custom\RatingStar.js" />
     <Content Include="Scripts\Custom\TopicTreeView.js" />
     <Content Include="Scripts\ngApp\Routes.js" />
+    <Content Include="Scripts\ngApp\Services\UserServices.js" />
     <Content Include="Scripts\ngApp\SubTopics\SubTopicController.js" />
     <Content Include="Scripts\ngApp\Template\MainTopic.html" />
+    <Content Include="Scripts\ngApp\Template\SignIn.html" />
+    <Content Include="Scripts\ngApp\Template\SignUp.html" />
     <Content Include="Scripts\ngApp\Template\SubTopicList.html" />
+    <Content Include="Scripts\ngApp\User\UserController.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
