@@ -11,6 +11,5 @@ namespace LinkManagement.DAL.Interfaces
          IEnumerable<Topic> GetImmediateChildren(int parentID);
          int ChildCount(int id);
 
-         void UpdateLinkStatus(int topicID, int linkID, bool isChecked);
     }
 }

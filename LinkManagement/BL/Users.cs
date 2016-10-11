@@ -35,8 +35,7 @@ namespace LinkManagement.BL
         {
             var sessionToken = HttpContext.Current.Session["AccessToken"] == null ? String.Empty : HttpContext.Current.Session["AccessToken"].ToString();
             
-            bool isAuthenticatedToken = (sessionToken == accessToken)
-                ? true : UnitOfWork.user.IsAuthenticatedToken(new Guid(accessToken));
+            bool isAuthenticatedToken = (sessionToken == accessToken)|| UnitOfWork.user.IsAuthenticatedToken(new Guid(accessToken));
 
             if (isAuthenticatedToken)
             {

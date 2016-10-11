@@ -19,6 +19,9 @@ ul::-webkit-scrollbar-thumb {
    margin-left:20px;*/
    
 }
+.topic-body h4 {
+    display:inline;
+}
 #parent-heading {
     height:200px;
     background-color:#11b2ad;
@@ -132,7 +135,19 @@ ul::-webkit-scrollbar-thumb {
     
     box-shadow: 4px 4px 3px #19b4af;
 
-} 
+}
+#sub-topic-list .read {
+    font-size: 30px;
+    color: white;
+    background-color: green;
+    border-radius: 30%;
+    padding: 1px 4px 1px 4px;
+}
+
+#sub-topic-list .not-read {
+    font-size:30px;
+    color:#ddd;
+}
 #sub-topic-list .topic-heading > a{
    
     display:block;
@@ -160,7 +175,11 @@ ul::-webkit-scrollbar-thumb {
    padding-left:30px;
 }
 .link-div {
-    background-color:#fefed6;
+    border: 1px solid #11b2ad;
+    border-radius: 5px;
+    background-color: #ffffe3;
+
+    /*background-color:#fefed6;*/
     padding:10px;
     margin-top:15px;
 
@@ -172,6 +191,9 @@ ul::-webkit-scrollbar-thumb {
     display:inline-block;
 }
 
+.link-div > input[type='checkbox'] {
+    display:none;
+}
 .link-div .copy-link {
     font-size:12px;
     cursor:pointer;
@@ -186,3 +208,60 @@ max-width:100%;
 max-height:400px;
 }
 
+.fa {
+    margin: 2px;
+    padding: 2px;  
+
+}
+.fa-pencil {
+    margin-top: -20px;
+    padding: 0px;
+    right: 10px;
+    font-size: 30px;
+    position: absolute;
+}
+.fa-eye {
+    border: 1px solid #e1e1d6;
+    border-radius:2px;
+    
+}
+.fa-file-text {
+ 
+    color: #57bb5f;
+    font-size: 20px;
+}
+.fa-pencil-square {
+
+    color: #e56971;
+    font-size: 25px;
+}
+.note {
+    min-height:200px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    border-top-left-radius:0px;
+    box-shadow: 5px 5px 10px #666;
+    padding:4px 4px 15px 4px;
+    transition:0.2s linear;
+}
+.note::before {
+    content:"";
+    width:0px;
+    position:absolute;
+    top: -8px;
+    left:0px;
+    border:10px solid transparent;
+    border-bottom-color:white;
+    border-top-width: 0px;
+
+}
+.note > textarea {
+    width:100% !important;
+    font-size:14px;
+    padding:10px;
+    min-height:200px;
+    background-color: white;
+    border-color: #eee;
+}

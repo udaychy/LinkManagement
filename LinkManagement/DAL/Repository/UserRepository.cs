@@ -18,7 +18,7 @@ namespace LinkManagement.DAL.Repository
         public bool IsAuthenticatedToken(Guid token)
         {
             return LinkManagerContext.Users
-                .Where(u=> u.AccessToken == token).Select(u=> u.UserID).FirstOrDefault() > 0 ? true : false;
+                .Where(u=> u.AccessToken == token).Select(u=> u.UserID).FirstOrDefault() > 0;
 
         }
 

@@ -14,6 +14,11 @@ namespace LinkManagement
     
     public partial class Link
     {
+        public Link()
+        {
+            this.LinkUserMappings = new HashSet<LinkUserMapping>();
+        }
+    
         public int LinkID { get; set; }
         public string LinkHeading { get; set; }
         public string LinkDetail { get; set; }
@@ -28,5 +33,6 @@ namespace LinkManagement
     
         public virtual Topic Topic { get; set; }
         public virtual Topic Topic1 { get; set; }
+        public virtual ICollection<LinkUserMapping> LinkUserMappings { get; set; }
     }
 }

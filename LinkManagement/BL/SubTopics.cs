@@ -35,5 +35,27 @@ namespace LinkManagement.BL
             }
             return parentsList.OrderBy(topics => topics.TopicID).ToList();
         }
+
+
+        public void UpdateLinkStatus(int userID, int linkID)
+        {
+            UnitOfWork.link.UpdateLinkStatus(userID, linkID);
+            UnitOfWork.Commit();
+        }
+
+
+        public void AddNote(int userID, int linkID, string note)
+        {
+            UnitOfWork.link.AddNote(userID, linkID, note);
+            UnitOfWork.Commit();
+        }
+
+
+        public void AddRating(int userID, int linkID, int rating)
+        {
+            UnitOfWork.link.AddRating(userID, linkID, rating);
+            UnitOfWork.Commit();
+        }
+
     }
 }

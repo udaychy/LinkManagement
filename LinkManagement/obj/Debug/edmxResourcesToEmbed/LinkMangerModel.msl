@@ -44,5 +44,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="LinkUserMappings">
+      <EntityTypeMapping TypeName="LinkManagerModel.LinkUserMapping">
+        <MappingFragment StoreEntitySet="LinkUserMapping">
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LinkID" ColumnName="LinkID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

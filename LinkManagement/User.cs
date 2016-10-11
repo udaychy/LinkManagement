@@ -17,6 +17,7 @@ namespace LinkManagement
         public User()
         {
             this.Topics = new HashSet<Topic>();
+            this.LinkUserMappings = new HashSet<LinkUserMapping>();
         }
     
         public int UserID { get; set; }
@@ -28,5 +29,6 @@ namespace LinkManagement
         public Nullable<System.Guid> AccessToken { get; set; }
     
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<LinkUserMapping> LinkUserMappings { get; set; }
     }
 }

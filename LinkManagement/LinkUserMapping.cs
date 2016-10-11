@@ -12,23 +12,16 @@ namespace LinkManagement
     using System;
     using System.Collections.Generic;
     
-    public partial class Topic
+    public partial class LinkUserMapping
     {
-        public Topic()
-        {
-            this.Links = new HashSet<Link>();
-        }
-    
+        public int ID { get; set; }
+        public int LinkID { get; set; }
+        public bool Status { get; set; }
         public int UserID { get; set; }
-        public int TopicID { get; set; }
-        public string TopicName { get; set; }
-        public int ParentID { get; set; }
-        public string Icon { get; set; }
-        public string About { get; set; }
-        public int Order { get; set; }
+        public string Note { get; set; }
+        public Nullable<int> Rating { get; set; }
     
-        public virtual ICollection<Link> Links { get; set; }
-        public virtual User User { get; set; }
         public virtual Link Link { get; set; }
+        public virtual User User { get; set; }
     }
 }

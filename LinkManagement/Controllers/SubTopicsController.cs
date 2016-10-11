@@ -25,5 +25,32 @@ namespace LinkManagement.Controllers
         {
             return Json(new SubTopics().GetAllParents(topicID), JsonRequestBehavior.AllowGet);
         }
+
+
+        public void UpdateLinkStatus(int linkID)
+        {
+            if (Session["UserID"] != null)
+            {
+                new SubTopics().UpdateLinkStatus((int)Session["UserID"], linkID);
+            }
+        }
+
+
+        public void AddNote(int linkID, string note)
+        {
+            if (Session["UserID"] != null)
+            {
+                new SubTopics().AddNote((int)Session["UserID"], linkID, note);
+            }
+        }
+
+
+        public void AddRating(int linkID, int rating)
+        {
+            if (Session["UserID"] != null)
+            {
+                new SubTopics().AddRating((int)Session["UserID"], linkID, rating);
+            }
+        }
     }
 }

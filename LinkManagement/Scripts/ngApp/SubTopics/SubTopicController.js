@@ -22,15 +22,14 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
            
         },
           function (response) {
-
                 $scope.error = response.data;
         });
 
 
     goBack = function () {
-    
        window.history.back();
     };
+
 
     /* Get all the parents list*/
     $http({
@@ -48,23 +47,56 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
              $scope.error = response.data;
          });
 
-    var UpdateLinkStatus = function (topicID, linkID) {
+
+    $scope.updateLinkStatus = function (linkID) {
 
         $http({
             method: "GET",
             url: "/SubTopics/UpdateLinkStatus",
             params: {
-                topicID: topicID,
-                linkID: linkID,
-                isChecked : true
+                linkID: linkID
             }
         }).then(function (response) {
-
-            alert("updated");
+            alert("Progress Updated");
         },
         function (response) {
+            alert("some error occured");
+        });
+    }
 
-           
+    $scope.AddNote = function (linkID, note) {
+
+
+        $http({
+            method: "GET",
+            url: "/SubTopics/AddNote",
+            params: {
+                linkID: linkID,
+                note:note
+            }
+        }).then(function (response) {
+            alert("Note Updated")
+        },
+        function (response) {
+            alert("some error occured");
+        });
+    }
+
+
+    $scope.AddRating = function (linkID, rating) {
+
+        $http({
+            method: "GET",
+            url: "/SubTopics/AddRating",
+            params: {
+                linkID: linkID,
+                rating: rating
+            }
+        }).then(function (response) {
+            alert("rating Updated")
+        },
+        function (response) {
+            alert("some error occured");
         });
     }
 

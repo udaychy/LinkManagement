@@ -188,6 +188,7 @@
     <Compile Include="Link.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LinkManagementContext\Topic.cs" />
     <Compile Include="LinkMangerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,6 +203,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LinkMangerModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkUserMapping.cs">
+      <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LoginData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -222,6 +226,7 @@
     <Content Include="Content\Icons\Jquery.png" />
     <Content Include="Content\Icons\JS.png" />
     <Content Include="Content\Icons\sql.png" />
+    <Content Include="Content\Images\note.png" />
     <Content Include="Content\Images\help.jpg" />
     <Content Include="Content\Images\stars.png" />
     <Content Include="Content\SignIn.css" />

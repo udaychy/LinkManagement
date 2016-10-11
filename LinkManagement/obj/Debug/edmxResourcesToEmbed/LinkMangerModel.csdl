@@ -16,6 +16,15 @@
       <End Role="Topic" EntitySet="Topics" />
       <End Role="Link" EntitySet="Links" />
     </AssociationSet>
+    <EntitySet Name="LinkUserMappings" EntityType="LinkManagerModel.LinkUserMapping" />
+    <AssociationSet Name="FK_LinkStatus_Link1" Association="LinkManagerModel.FK_LinkStatus_Link1">
+      <End Role="Link" EntitySet="Links" />
+      <End Role="LinkUserMapping" EntitySet="LinkUserMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LinkStatus_User1" Association="LinkManagerModel.FK_LinkStatus_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="LinkUserMapping" EntitySet="LinkUserMappings" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Link">
     <Key>
@@ -34,6 +43,7 @@
     <Property Type="Int32" Name="Order" Nullable="false" />
     <NavigationProperty Name="Topic1" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Link" ToRole="Topic" />
     <Property Type="String" Name="LinkType" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LinkUserMappings" Relationship="LinkManagerModel.FK_LinkStatus_Link1" FromRole="Link" ToRole="LinkUserMapping" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -62,6 +72,7 @@
     <NavigationProperty Name="Topics" Relationship="LinkManagerModel.FK_Topic_User" FromRole="User" ToRole="Topic" />
     <Property Type="String" Name="UserName" Nullable="false" FixedLength="false" MaxLength="50" Unicode="true" />
     <Property Type="Guid" Name="AccessToken" />
+    <NavigationProperty Name="LinkUserMappings" Relationship="LinkManagerModel.FK_LinkStatus_User1" FromRole="User" ToRole="LinkUserMapping" />
   </EntityType>
   <Association Name="FK_Link_Topic">
     <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="1" />
@@ -96,6 +107,43 @@
       </Principal>
       <Dependent Role="Link">
         <PropertyRef Name="LinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LinkUserMapping">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="LinkID" Nullable="false" />
+    <Property Type="Boolean" Name="Status" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Note" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Rating" />
+    <NavigationProperty Name="Link" Relationship="LinkManagerModel.FK_LinkStatus_Link1" FromRole="LinkUserMapping" ToRole="Link" />
+    <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_LinkStatus_User1" FromRole="LinkUserMapping" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_LinkStatus_Link1">
+    <End Type="LinkManagerModel.Link" Role="Link" Multiplicity="1" />
+    <End Type="LinkManagerModel.LinkUserMapping" Role="LinkUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkID" />
+      </Principal>
+      <Dependent Role="LinkUserMapping">
+        <PropertyRef Name="LinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LinkStatus_User1">
+    <End Type="LinkManagerModel.User" Role="User" Multiplicity="1" />
+    <End Type="LinkManagerModel.LinkUserMapping" Role="LinkUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="LinkUserMapping">
+        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

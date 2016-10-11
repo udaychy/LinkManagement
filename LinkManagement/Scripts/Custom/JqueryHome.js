@@ -2,6 +2,9 @@
     //top nav bar
     $('.top-nav-bar').autoHidingNavbar();
 
+    //initialize popover
+    $('[data-toggle="popover"]').popover();
+
     //fixed side list div relative to tagline
     $(document).scroll(function () {
         if ($(document).scrollTop() < 180) {
@@ -52,6 +55,7 @@
         $(this).children("a").popover("show");
         setTimeout(function () { $('.popover').fadeOut('slow') }, 2000);
     });
- 
-     SyntaxHighlighter.all()
+    
+    
+     //SyntaxHighlighter.all()
 });

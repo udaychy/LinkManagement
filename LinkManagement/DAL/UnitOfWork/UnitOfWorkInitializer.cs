@@ -13,7 +13,9 @@ namespace LinkManagement.DAL.UnitOfWork
         {
             get 
             {
-                return (_unitOfWork == null) ? (_unitOfWork = new UnitOfWork(new LinkManagerContext())) : _unitOfWork;
+                return _unitOfWork ?? (_unitOfWork = new UnitOfWork(new LinkManagerContext()));
+                //return (_unitOfWork == null) ? (_unitOfWork = new UnitOfWork(new LinkManagerContext())) : _unitOfWork;
+                //return _unitOfWork = new UnitOfWork(new LinkManagerContext());
             }
         }
     }

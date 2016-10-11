@@ -11,6 +11,9 @@
         <AssociationConnector Association="LinkManagerModel.FK_Link_Topic" ManuallyRouted="false" />
         <AssociationConnector Association="LinkManagerModel.FK_Topic_User" ManuallyRouted="false" />
         <AssociationConnector Association="LinkManagerModel.FK_Link_Topic1" />
+        <EntityTypeShape EntityType="LinkManagerModel.LinkUserMapping" Width="1.5" PointX="7.5" PointY="2.625" />
+        <AssociationConnector Association="LinkManagerModel.FK_LinkStatus_Link1" />
+        <AssociationConnector Association="LinkManagerModel.FK_LinkStatus_User1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

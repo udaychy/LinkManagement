@@ -2,11 +2,20 @@
 <Schema Namespace="LinkManagerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="LinkManagerModelStoreContainer">
     <EntitySet Name="Link" EntityType="LinkManagerModel.Store.Link" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LinkUserMapping" EntityType="LinkManagerModel.Store.LinkUserMapping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Topic" EntityType="LinkManagerModel.Store.Topic" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User" EntityType="LinkManagerModel.Store.User" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Link_Topic1" Association="LinkManagerModel.Store.FK_Link_Topic1">
       <End Role="Topic" EntitySet="Topic" />
       <End Role="Link" EntitySet="Link" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LinkStatus_Link" Association="LinkManagerModel.Store.FK_LinkStatus_Link">
+      <End Role="Link" EntitySet="Link" />
+      <End Role="LinkUserMapping" EntitySet="LinkUserMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LinkStatus_User" Association="LinkManagerModel.Store.FK_LinkStatus_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="LinkUserMapping" EntitySet="LinkUserMapping" />
     </AssociationSet>
     <AssociationSet Name="FK_TopicNew_User" Association="LinkManagerModel.Store.FK_TopicNew_User">
       <End Role="User" EntitySet="User" />
@@ -28,6 +37,17 @@
     <Property Name="Description" Type="nvarchar" MaxLength="1000" />
     <Property Name="Order" Type="int" Nullable="false" />
     <Property Name="LinkType" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="LinkUserMapping">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LinkID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Rating" Type="int" />
   </EntityType>
   <EntityType Name="Topic">
     <Key>
@@ -62,6 +82,30 @@
       </Principal>
       <Dependent Role="Link">
         <PropertyRef Name="LinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LinkStatus_Link">
+    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="1" />
+    <End Role="LinkUserMapping" Type="LinkManagerModel.Store.LinkUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Link">
+        <PropertyRef Name="LinkID" />
+      </Principal>
+      <Dependent Role="LinkUserMapping">
+        <PropertyRef Name="LinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LinkStatus_User">
+    <End Role="User" Type="LinkManagerModel.Store.User" Multiplicity="1" />
+    <End Role="LinkUserMapping" Type="LinkManagerModel.Store.LinkUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="LinkUserMapping">
+        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

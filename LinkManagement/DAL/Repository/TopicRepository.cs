@@ -30,11 +30,10 @@ namespace LinkManagement.DAL.Repository
 
         public IEnumerable<Topic> GetImmediateChildren(int parentID)
         {
-            return LinkManagerContext.Topics.Include("Links")
+            return LinkManagerContext.Topics.Include("Links").Include("Links.LinkUserMappings")
                     .Where(topic => topic.ParentID == parentID)
                         .OrderBy(topics => topics.Order);
        
         }
-
     }
 }

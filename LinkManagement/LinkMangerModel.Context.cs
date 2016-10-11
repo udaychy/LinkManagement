@@ -18,8 +18,8 @@ namespace LinkManagement
         public LinkManagerContext()
             : base("name=LinkManagerContext")
         {
+            this.Configuration.ProxyCreationEnabled = false;
             this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.ProxyCreationEnabled = false; 
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -30,5 +30,6 @@ namespace LinkManagement
         public DbSet<Link> Links { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<LinkUserMapping> LinkUserMappings { get; set; }
     }
 }
