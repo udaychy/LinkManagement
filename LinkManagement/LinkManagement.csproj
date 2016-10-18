@@ -163,10 +163,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BL\Editor.cs" />
     <Compile Include="BL\Helper.cs" />
     <Compile Include="BL\Home.cs" />
+    <Compile Include="BL\Link.cs" />
     <Compile Include="BL\SubTopics.cs" />
     <Compile Include="BL\Users.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubTopicsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -188,7 +191,7 @@
     <Compile Include="Link.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="LinkManagementContext\Topic.cs" />
+    <Compile Include="CustomLinkMangerModel\Topic.cs" />
     <Compile Include="LinkMangerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,6 +229,7 @@
     <Content Include="Content\Icons\Jquery.png" />
     <Content Include="Content\Icons\JS.png" />
     <Content Include="Content\Icons\sql.png" />
+    <Content Include="Content\Images\bkg1.jpg" />
     <Content Include="Content\Images\note.png" />
     <Content Include="Content\Images\help.jpg" />
     <Content Include="Content\Images\stars.png" />
@@ -306,11 +310,18 @@
       <DependentUpon>LinkMangerModel.edmx</DependentUpon>
       <LastGenOutput>LinkMangerModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\bootstrap.css" />
+    <Content Include="Resources\bootstrap.js" />
+    <Content Include="Resources\font-awesome.min.css" />
     <Content Include="Resources\Images\1.png" />
     <Content Include="Resources\Images\2.png" />
+    <Content Include="Resources\jquery.min.js" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <None Include="Scripts\ngApp\angular.intellisense.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\Custom\JqueryHome.js" />
     <Content Include="Scripts\Custom\jquery.bootstrap-autohidingnavbar.js" />
+    <Content Include="Scripts\ngApp\Editor\EditorController.js" />
     <Content Include="Scripts\ngApp\Home\HomeController.js" />
     <Content Include="Scripts\ngApp\Images\AngularJs.png" />
     <Content Include="Scripts\ngApp\Images\AspDotNet.png" />
@@ -327,8 +338,11 @@
     <Content Include="Scripts\Custom\RatingStar.js" />
     <Content Include="Scripts\Custom\TopicTreeView.js" />
     <Content Include="Scripts\ngApp\Routes.js" />
+    <Content Include="Scripts\ngApp\Services\AjaxService.js" />
+    <Content Include="Scripts\ngApp\Services\TopicServices.js" />
     <Content Include="Scripts\ngApp\Services\UserServices.js" />
     <Content Include="Scripts\ngApp\SubTopics\SubTopicController.js" />
+    <Content Include="Scripts\ngApp\Template\Editor.html" />
     <Content Include="Scripts\ngApp\Template\MainTopic.html" />
     <Content Include="Scripts\ngApp\Template\SignIn.html" />
     <Content Include="Scripts\ngApp\Template\SignUp.html" />
@@ -356,6 +370,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\angular.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

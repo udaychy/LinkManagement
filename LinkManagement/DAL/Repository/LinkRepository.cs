@@ -58,6 +58,7 @@ namespace LinkManagement.DAL.Repository
             
         }
 
+
         public void AddRating(int userID, int linkID, int rating)
         {
             LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings
@@ -77,9 +78,37 @@ namespace LinkManagement.DAL.Repository
                     UserID = userID
                 });
             }
-
+            
         }
 
+
+        public void UpdateOverallRating(int linkID)
+        {
+            //only taking those links whose rating is not null
+            var linkList = LinkManagerContext.LinkUserMappings
+                .Where(l => l.LinkID == linkID && l.Rating != null);
+
+            Link link = LinkManagerContext.Links
+                    .Where(l => l.LinkID == linkID)
+                    .FirstOrDefault();
+            var sum = (Double)linkList.Sum(r => r.Rating);
+            var count = linkList.Count();
+            link.OverallRating = (Double)linkList.Sum(r => r.Rating) / linkList.Count(); 
+        }
+
+
+        public void CountOneMoreVisitor(int linkID)
+        {
+            Link linkToBeUpdated = LinkManagerContext.Links
+                .Where(l => l.LinkID == linkID)
+                .FirstOrDefault();
+
+            if (linkToBeUpdated != null)
+            {
+                linkToBeUpdated.NoOfTimesVisited = linkToBeUpdated.NoOfTimesVisited + 1;
+            }
+            
+        }
         //void UpdateLinkUserMappingRow(LinkUserMapping updatedData)
         //{
         //    LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings

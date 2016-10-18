@@ -1,81 +1,78 @@
 ﻿/// <reference path="../../angular.js" />
-linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, $location) {
+linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, $location, AjaxService) {
 
     var parentID = parseInt($routeParams.parentID);
-    
-    $http({
 
-        method: "GET",
-        url: "/SubTopics/GetImmediateChildren",
-
-        params: {
-            parentID: parentID
-        }
-
-    }).then(function (response) {
-
+    AjaxService.Get( "/SubTopics/GetImmediateChildren", { parentID: parentID })
+        .then(function (response) {
             $scope.subTopicList = response.data;
-            
+
             if ($scope.subTopicList.length < 1) {
-                goBack();
+                window.history.back();
             }
-           
         },
           function (response) {
                 $scope.error = response.data;
         });
 
 
-    goBack = function () {
-       window.history.back();
-    };
-
-
     /* Get all the parents list*/
-    $http({
-        method: "GET",
-        url: "/SubTopics/GetAllParents",
-        params: {
-            topicID: parentID
-        }
-    }).then(function (response) {
-
-        $scope.parentsList = response.data;
-    },
-         function (response) {
-
-             $scope.error = response.data;
+    AjaxService.Get( "/SubTopics/GetBreadCrumbsList", {topicID: parentID})
+        .then(function (response) {
+            $scope.breadCrumbsList = response.data;
+         },
+           function (response) {
+               $scope.error = response.data;
          });
 
 
-    $scope.updateLinkStatus = function (linkID) {
-
-        $http({
-            method: "GET",
-            url: "/SubTopics/UpdateLinkStatus",
-            params: {
-                linkID: linkID
+    $scope.CountReadLinks = function (topicID) {
+        var countRead = 0;
+        angular.forEach($scope.subTopicList, function(value, key) {
+            if (value.TopicID == topicID) {
+                countRead = 0;
+                angular.forEach(value.Links, function (v, k) {
+                    if (v.LinkUserMappings[0] != null && v.LinkUserMappings[0].Status)
+                    countRead++;
+                })
             }
-        }).then(function (response) {
-            alert("Progress Updated");
+        });
+        return countRead;
+    }
+
+
+    $scope.updateLinkStatus = function (linkID) {
+        
+        AjaxService.Get( "/SubTopics/UpdateLinkStatus", { linkID: linkID })
+            .then(function (response) {
+                if (response.data == true) {
+                    alert("Progress Updated");
+                }
+                else {
+                    window.location.href = "#/SignIn";
+                }
         },
         function (response) {
             alert("some error occured");
         });
     }
 
+
     $scope.AddNote = function (linkID, note) {
 
-
-        $http({
-            method: "GET",
-            url: "/SubTopics/AddNote",
-            params: {
+         params = {
                 linkID: linkID,
                 note:note
-            }
-        }).then(function (response) {
-            alert("Note Updated")
+         }
+
+        AjaxService.Get("/SubTopics/AddNote", params)
+            .then(function (response) {
+                if (response.data == true) {
+                    alert("Note Updated");
+                }
+                else {
+                    window.location.href = "#/SignIn";
+                }
         },
         function (response) {
             alert("some error occured");
@@ -84,21 +81,38 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
 
 
     $scope.AddRating = function (linkID, rating) {
-
-        $http({
-            method: "GET",
-            url: "/SubTopics/AddRating",
-            params: {
-                linkID: linkID,
-                rating: rating
-            }
-        }).then(function (response) {
-            alert("rating Updated")
+        
+        params= {
+            linkID: linkID,
+            rating: rating
+        }
+        
+        AjaxService.Get("/SubTopics/AddRating", params)
+            .then(function (response) {
+                if (response.data == true) {
+                    alert("Rating Updated");
+                }
+                else {
+                    window.location.href = "#/SignIn";
+                }
         },
         function (response) {
             alert("some error occured");
         });
     }
+
+
+    $scope.CountOneMoreVisitor = function (linkID) {
+
+        AjaxService.Get("/SubTopics/CountOneMoreVisitor", {linkID: linkID})
+            .then(function (response) {
+            alert("count Updated")
+        },
+        function (response) {
+            alert("some error occured");
+        });
+    }
+
 
     var absolutePosition = function (element) {
 
@@ -124,8 +138,12 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
 
         $('html, body').animate({
             scrollTop : pos.top-60
-        }, 1000);
-        
+        }, 500);
+
+        setTimeout(function () {
+            $("#list-div > ul >li").removeClass("active");
+            $("[list-id=" + idName + "]").addClass("active");
+        },500);
     };
 
 });

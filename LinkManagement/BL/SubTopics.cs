@@ -11,12 +11,20 @@ namespace LinkManagement.BL
         
         public List<Topic> GetImmediateChildren(int parentID)
         {
-            var topicList = UnitOfWork.topic.GetImmediateChildren(parentID).ToList();
-
+            var topicList = UnitOfWork.topic.GetImmediateChildren(parentID, (int?)HttpContext.Current.Session["UserID"]).ToList();
             topicList.ForEach(topics => topics.SubTopicCount = UnitOfWork.topic.ChildCount(topics.TopicID));
-            return topicList;
             
+            return topicList;
         }
+
+
+        public List<Topic> GetBreadCrumbs(int topicID)
+        {
+            var parentsList = GetAllParents(topicID);
+            parentsList.Add(UnitOfWork.topic.Get(topicID));
+            return parentsList;
+        }
+
 
         public List<Topic> GetAllParents(int topicID)
         {
@@ -25,36 +33,14 @@ namespace LinkManagement.BL
             var topic = UnitOfWork.topic.Get(topicID);
             var parentID = topic.ParentID;
 
-            parentsList.Add(topic);
-
             while (parentID != 0)
             {
                 topic = UnitOfWork.topic.Get(parentID);
                 parentsList.Add(topic);
                 parentID = topic.ParentID;  
             }
-            return parentsList.OrderBy(topics => topics.TopicID).ToList();
-        }
-
-
-        public void UpdateLinkStatus(int userID, int linkID)
-        {
-            UnitOfWork.link.UpdateLinkStatus(userID, linkID);
-            UnitOfWork.Commit();
-        }
-
-
-        public void AddNote(int userID, int linkID, string note)
-        {
-            UnitOfWork.link.AddNote(userID, linkID, note);
-            UnitOfWork.Commit();
-        }
-
-
-        public void AddRating(int userID, int linkID, int rating)
-        {
-            UnitOfWork.link.AddRating(userID, linkID, rating);
-            UnitOfWork.Commit();
+            parentsList.Reverse();
+            return parentsList;
         }
 
     }

@@ -15,21 +15,21 @@ namespace LinkManagement.DAL.Repository
         }
 
 
-        public bool IsAuthenticatedToken(Guid token)
-        {
-            return LinkManagerContext.Users
-                .Where(u=> u.AccessToken == token).Select(u=> u.UserID).FirstOrDefault() > 0;
+        //public bool IsAuthenticatedToken(Guid token)
+        //{
+        //    return LinkManagerContext.Users
+        //        .Where(u=> u.AccessToken == token).Select(u=> u.UserID).FirstOrDefault() > 0;
 
-        }
+        //}
 
-        public User AddAccessToken(User logedInUser)
-        {
-            logedInUser.AccessToken = Guid.NewGuid();
-            return logedInUser;
-        }
+        //public User AddAccessToken(User logedInUser)
+        //{
+        //    logedInUser.AccessToken = Guid.NewGuid();
+        //    return logedInUser;
+        //}
 
         
-        public User GetUser(LoginData loginCredential)
+        public User GetUser(User loginCredential)
         {
         
             return LinkManagerContext.Users

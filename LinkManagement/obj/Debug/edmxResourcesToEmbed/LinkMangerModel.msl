@@ -4,13 +4,13 @@
     <EntitySetMapping Name="Links">
       <EntityTypeMapping TypeName="LinkManagerModel.Link">
         <MappingFragment StoreEntitySet="Link">
+          <ScalarProperty Name="OverallRating" ColumnName="OverallRating" />
           <ScalarProperty Name="LinkType" ColumnName="LinkType" />
           <ScalarProperty Name="Order" ColumnName="Order" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="LinkID" ColumnName="LinkID" />
           <ScalarProperty Name="LinkHeading" ColumnName="LinkHeading" />
           <ScalarProperty Name="LinkDetail" ColumnName="LinkDetail" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="LastVisited" ColumnName="LastVisited" />
           <ScalarProperty Name="NoOfTimesVisited" ColumnName="NoOfTimesVisited" />
           <ScalarProperty Name="TopicID" ColumnName="TopicID" />

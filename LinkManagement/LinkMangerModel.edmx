@@ -34,7 +34,6 @@
           <Property Name="LinkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="LinkHeading" Type="nvarchar" Nullable="false" MaxLength="150" />
           <Property Name="LinkDetail" Type="nvarchar" MaxLength="250" />
-          <Property Name="Rating" Type="int" />
           <Property Name="LastVisited" Type="datetime" />
           <Property Name="NoOfTimesVisited" Type="int" Nullable="false" />
           <Property Name="TopicID" Type="int" Nullable="false" />
@@ -42,6 +41,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="Order" Type="int" Nullable="false" />
           <Property Name="LinkType" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="OverallRating" Type="float" />
         </EntityType>
         <EntityType Name="LinkUserMapping">
           <Key>
@@ -163,7 +163,6 @@
           <Property Name="LinkID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="LinkHeading" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
           <Property Name="LinkDetail" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="Rating" Type="Int32" />
           <Property Name="LastVisited" Type="DateTime" Precision="3" />
           <Property Name="NoOfTimesVisited" Type="Int32" Nullable="false" />
           <Property Name="TopicID" Type="Int32" Nullable="false" />
@@ -174,6 +173,7 @@
           <NavigationProperty Name="Topic1" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Link" ToRole="Topic" />
           <Property Type="String" Name="LinkType" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LinkUserMappings" Relationship="LinkManagerModel.FK_LinkStatus_Link1" FromRole="Link" ToRole="LinkUserMapping" />
+          <Property Type="Double" Name="OverallRating" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -286,13 +286,13 @@
           <EntitySetMapping Name="Links">
             <EntityTypeMapping TypeName="LinkManagerModel.Link">
               <MappingFragment StoreEntitySet="Link">
+                <ScalarProperty Name="OverallRating" ColumnName="OverallRating" />
                 <ScalarProperty Name="LinkType" ColumnName="LinkType" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="LinkID" ColumnName="LinkID" />
                 <ScalarProperty Name="LinkHeading" ColumnName="LinkHeading" />
                 <ScalarProperty Name="LinkDetail" ColumnName="LinkDetail" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="LastVisited" ColumnName="LastVisited" />
                 <ScalarProperty Name="NoOfTimesVisited" ColumnName="NoOfTimesVisited" />
                 <ScalarProperty Name="TopicID" ColumnName="TopicID" />

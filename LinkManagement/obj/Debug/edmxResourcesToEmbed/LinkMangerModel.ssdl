@@ -29,7 +29,6 @@
     <Property Name="LinkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="LinkHeading" Type="nvarchar" Nullable="false" MaxLength="150" />
     <Property Name="LinkDetail" Type="nvarchar" MaxLength="250" />
-    <Property Name="Rating" Type="int" />
     <Property Name="LastVisited" Type="datetime" />
     <Property Name="NoOfTimesVisited" Type="int" Nullable="false" />
     <Property Name="TopicID" Type="int" Nullable="false" />
@@ -37,6 +36,7 @@
     <Property Name="Description" Type="nvarchar" MaxLength="1000" />
     <Property Name="Order" Type="int" Nullable="false" />
     <Property Name="LinkType" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="OverallRating" Type="float" />
   </EntityType>
   <EntityType Name="LinkUserMapping">
     <Key>

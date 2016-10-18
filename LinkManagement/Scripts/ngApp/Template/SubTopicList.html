@@ -1,7 +1,7 @@
 ﻿
 <div class="container-fluid">
     <div class="row" id="parent-heading">
-        <p> {{parentsList[parentsList.length-1].TopicName}}</p>
+        <p> {{breadCrumbsList[breadCrumbsList.length-1].TopicName}}</p>
     </div>
     <br/>
     <div class="row">
@@ -11,23 +11,27 @@
                 <!--BreadCrumbs-->
                 <ul id="parent-list">
                     <li><a href="#/">Home</a> > </li>
-                    <li ng-repeat ="parentTopic in parentsList">
+                    <li ng-repeat ="parentTopic in breadCrumbsList">
                         <a href="#/SubTopics/{{parentTopic.TopicID}}">{{parentTopic.TopicName}}</a> >
                     </li>
                 </ul>
 
                 <!--Navigation topic list-->
-                <li ng-repeat="topic in subTopicList" list-id="{{topic.TopicID}}" ng-click="scrollTo(topic.TopicID)">{{topic.TopicName}}</li>
+                <li ng-repeat="topic in subTopicList" list-id="{{topic.TopicID}}" ng-click="scrollTo(topic.TopicID)">
+                    {{topic.TopicName}}
+                    <i ng-show="IsLogedIn && topic.Links.length == CountReadLinks(topic.TopicID)" class="fa fa-check" aria-hidden="true"></i>
+                    <span ng-show="IsLogedIn" class="badge">{{CountReadLinks(topic.TopicID)}}/{{topic.Links.length}}</span>
+                </li>
 
             </ul>
-            <br><br>
+            <br/><br/>
         </div>
 
          <!--BreadCrumbs-->
         <div ng-if = "subTopicList.length <= 5" class="col-sm-12">
             <ul id="parent-list">
                 <li><a href="#/">Home</a> > </li>
-                <li ng-repeat ="parentTopic in parentsList">
+                <li ng-repeat ="parentTopic in breadCrumbsList">
                     <a href="#/SubTopics/{{parentTopic.TopicID}}">{{parentTopic.TopicName}}</a> >
                 </li>
             </ul>
@@ -36,14 +40,14 @@
         <!--Topic main content-->
         <div id="sub-topic-list" ng-class="subTopicList.length <= 5 ? 'col-sm-12':'col-sm-8'" >
             <div ng-repeat="topic in subTopicList" id="{{topic.TopicID}}">
-
+                <span class="progress-count-span pull-right" ng-show="IsLogedIn">{{CountReadLinks(topic.TopicID)}}/{{topic.Links.length}} completed</span>
                 <!--Topic Heading-->
-                <h3 class="topic-heading" >
+                <h3 class="topic-heading">
                     <a ng-if="topic.SubTopicCount > 0" ng-href="#/SubTopics/{{topic.TopicID}}">
                         <span class="fa fa-link"></span> {{topic.TopicName}}
                     </a>
                     <a ng-if="topic.SubTopicCount == 0" class="no-subtopics">
-                         {{topic.TopicName}}
+                         #{{topic.TopicName}}
                     </a>
                 </h3>
 
@@ -52,11 +56,14 @@
                     <p>{{topic.About}}</p>
 
                     <!--List of links inside each topic-->
-                    <div ng-repeat="link in topic.Links">
-
+                    <div ng-repeat="link in topic.Links" >
+                        
                         <!--Image link-->
                         <div ng-if="link.LinkType == 'image'" class="image-div">
-                            <h4>{{link.LinkHeading}}</h4>
+                            <h4>#{{link.LinkHeading}}</h4>
+                            <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
+                            <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
+                            <br/>
                             <p>{{link.LinkDetail}}</p>
                             <img ng-src="Resources/Images/{{link.Link1 | trustUrl}}" />
 
@@ -64,16 +71,21 @@
 
                         <!--Video Link-->
                         <div ng-if="link.LinkType == 'video'" class="video-div">
-                            <h4>{{link.LinkHeading}}</h4>
+                            <h4>#{{link.LinkHeading}}</h4>
+                            <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
+                            <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
+                            <br/>
                             <p>{{link.LinkDetail}}</p>
+                            <div ng-class="link.LinkUserMappings[0].Status ? 'video-seen' : ''">
                             <iframe width="100%" height="350" ng-src="{{link.Link1 | trustUrl}}" frameborder="0" allowfullscreen></iframe>
+                            </div>
                         </div>
 
                         <!--Url-->
                         <div ng-if="link.LinkType == 'url'" class="link-div" >
                             
-                            <a href="{{link.Link1}}" target="_blank">
-                                <h4>{{link.LinkHeading}}</h4>
+                            <a href="{{link.Link1}}" target="_blank" ng-click="link.NoOfTimesVisited = link.NoOfTimesVisited + 1; CountOneMoreVisitor(link.LinkID)">
+                                <h4>#{{link.LinkHeading}}</h4>
                             </a>
                             <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
                             <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
@@ -82,10 +94,11 @@
                                 <a class="copy-link pull-right" data-clipboard-text="{{link.Link1}}" data-toggle="popover" data-content="copied" data-placement="bottom" >copy link</a>
                             </span>
                             <p>{{link.LinkDetail}}</p>
-                            <div>
+                            <span>
                                 <i ng-hide="link.LinkUserMappings[0].Note == null || link.LinkUserMappings[0].Note == ''" ng-click="showNote=!showNote;editable=false" class="fa fa-file-text" aria-hidden="true"></i>
                                 <i ng-show="link.LinkUserMappings[0].Note == null || link.LinkUserMappings[0].Note == ''" data-toggle="tooltip" title="Add Note" ng-click="showNote=!showNote;editable=true" class="fa fa-pencil-square" aria-hidden="true"></i>
                                 <div class="note" ng-show="showNote">
+                                    <i class="fa fa-times" aria-hidden="true" ng-click="showNote=false;"></i>
                                     <textarea ng-disabled="!editable" ng-model="link.LinkUserMappings[0].Note">{{link.LinkUserMappings[0].Note}}</textarea>
                                     <button ng-show="editable" class="btn btn-sm btn-warning" ng-click="editable=false;showNote=false;AddNote(link.LinkID, link.LinkUserMappings[0].Note)">Add Note</button>
                                     <i class="fa fa-pencil" ng-hide="editable" ng-click="editable=true" aria-hidden="true"></i>
@@ -95,20 +108,34 @@
                                      {{link.NoOfTimesVisited}}
                                  </i>
                                 
-                            </div>
+                            </span>
+                            <span ng-click="showRating=!showRating" class="pull-right">
+                                <span ng-hide="IsLogedIn">
+                                    <i class="fa fa-star" aria-hidden="true" ng-class="link.LinkUserMappings[0].Rating >= 4 ?'yellow-star':''">{{link.OverallRating}}</i>
+                                </span>
+                                <span ng-show="IsLogedIn">
+                                    <i class="fa fa-star" aria-hidden="true" ng-class="link.LinkUserMappings[0].Rating >= 4 ?'yellow-star':''">{{link.LinkUserMappings[0].Rating}}</i>
+                                </span>
+                            </span>
 
-                            <div id="ratingsForm" class="pull-right ">
-                                <div class="stars" rating={{link.Rating}} ng-click="AddRating(link.LinkID, link.LinkUserMappings[0].Rating)">
+                            <div ng-show="IsLogedIn && showRating" id="ratingsForm" >
+                                <i class="fa fa-users" aria-hidden="true"> Public Rating</i>
+                                <i class="fa fa-star" aria-hidden="true">{{link.OverallRating}}</i>
+                                <br/>
+                                <i class="fa fa-user" aria-hidden="true"> My Rating</i> 
+                                <i class="fa fa-star" aria-hidden="true">{{link.LinkUserMappings[0].Rating}}</i>
 
-                                    <input type="radio" id="link{{link.LinkID}}1" name="link{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Rating" value="1" class="star-1" />
+                                <div class="stars" rating={{link.Rating}} >
+
+                                    <input type="radio" id="link{{link.LinkID}}1" name="{{link.LinkID}}" ng-change="showRating = false; AddRating(link.LinkID,1)" ng-model="link.LinkUserMappings[0].Rating" value="1" class="star-1" />
                                     <label class="star-1" for="link{{link.LinkID}}1">1</label>
-                                    <input type="radio" id="link{{link.LinkID}}2" name="link{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Rating" value="2" class="star-2" />
+                                    <input type="radio" id="link{{link.LinkID}}2" name="{{link.LinkID}}" ng-change="showRating = false; AddRating(link.LinkID,2)" ng-model="link.LinkUserMappings[0].Rating" value="2" class="star-2" />
                                     <label class="star-2" for="link{{link.LinkID}}2">2</label>
-                                    <input type="radio" id="link{{link.LinkID}}3" name="link{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Rating" value="3" class="star-3" />
+                                    <input type="radio" id="link{{link.LinkID}}3"  name="{{link.LinkID}}" ng-change="showRating = false; AddRating(link.LinkID,3)" ng-model="link.LinkUserMappings[0].Rating" value="3" class="star-3" />
                                     <label class="star-3" for="link{{link.LinkID}}3">3</label>
-                                    <input type="radio" id="link{{link.LinkID}}4" name="link{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Rating" value="4" class="star-4" />
+                                    <input type="radio" id="link{{link.LinkID}}4" name="{{link.LinkID}}" ng-change="showRating = false; AddRating(link.LinkID,4)" ng-model="link.LinkUserMappings[0].Rating" value="4" class="star-4" />
                                     <label class="star-4" for="link{{link.LinkID}}4">4</label>
-                                    <input type="radio" id="link{{link.LinkID}}5" name="link{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Rating" value="5" class="star-5" />
+                                    <input type="radio" id="link{{link.LinkID}}5" name="{{link.LinkID}}" ng-change="showRating = false; AddRating(link.LinkID,5)" ng-model="link.LinkUserMappings[0].Rating" value="5" class="star-5" />
                                     <label class="star-5" for="link{{link.LinkID}}5">5</label>
                                     <span></span>
                                 </div>

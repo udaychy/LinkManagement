@@ -17,9 +17,9 @@
            controller: 'UserController'
        })
 
-       .when('/SignUp', {
-           templateUrl: '/Scripts/ngApp/Template/SignUp.html',
-           controller: 'UserController'
+       .when('/Editor', {
+           templateUrl: '/Scripts/ngApp/Template/Editor.html',
+           controller: 'EditorController'
        },
        
        function (localStorageServiceProvider) {

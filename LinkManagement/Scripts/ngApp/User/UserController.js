@@ -23,11 +23,11 @@
 
                 if (response.data.UserID != null) {
 
-                    localStorageService.set('UserData', response.data);
                     $rootScope.IsLogedIn = true;
-                    $rootScope.UserData = localStorageService.get('UserData');
-                    $rootScope.UserData.AccessToken = "";
-
+                    $rootScope.UserData = response.data;
+                    localStorageService.set('userData', response.data);
+                    localStorageService.set('isLogedIn', true);
+                   
                     window.history.back();
                 }
                 else {
@@ -37,31 +37,29 @@
         }
     };
 
+
     $scope.SignOut = function () {
 
-        $rootScope.UserData = null;
-        $rootScope.IsLogedIn = false;
-        localStorageService.remove('UserData');
+        LoginService.LogOut().then(function (response) {
+            $rootScope.UserData = null;
+            $rootScope.IsLogedIn = false;
+            localStorageService.remove('userData', 'isLogedIn');
+
+            window.location.href = "#/";
+        });
     }
 
     $scope.init = function () {
-
-        var userData = localStorageService.get('UserData');
-        if (userData != null) {
-
-            LoginService.AuthenticateToken(userData.AccessToken).then(function (response) {
-
-                if (response.data == false) {
-                    $rootScope.IsLogedIn = false;
-                    $rootScope.UserData = null;
-                }
-                else {
-                    $rootScope.IsLogedIn = true;
-                    $rootScope.UserData = localStorageService.get('UserData');
-                    $rootScope.UserData.AccessToken = "";
-                }
-            });
-        }
+        LoginService.IsLogedIn().then(function (response) {
+            if (response.data) {
+                $rootScope.UserData = localStorageService.get('userData');
+                $rootScope.IsLogedIn = localStorageService.get('isLogedIn');
+            }
+            else {
+                $rootScope.UserData = null;
+                $rootScope.IsLogedIn = false;
+            }
+        });
     }
 
 });

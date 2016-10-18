@@ -1,0 +1,12 @@
+﻿<br><br><br><br><br><br><br><br><br><div>where to add </div>
+<!--<script type="text/ng-template" id="subtopicsDropdown.html">
+    <select ng-init="GetSubTopics(selectedTopic.TopicID)" ng-model="selectedTopic" ng-options="t.TopicName for t in SubTopics" ng-change="showMore{{selectedTopic.TopicID}} = true"></select>
+    <span ng-show="showMore{{selectedTopic.TopicID}}" ng-include="'subtopicsDropdown.html'"></span>
+</script>-->
+home<i>+</i>
+<div ng-init="GetSubTopics(0);" >
+    <select  ng-repeat ="subTopics in topics" ng-if="subTopics.length > 0" ng-model="selectedTopic" ng-options="t.TopicName for t in subTopics" ng-change="GetSubTopics(selectedTopic.TopicID)"></select>
+    
+</div>
+<br><br><br><br><br><br><br><br>
+{{selectedTopic.TopicID}}

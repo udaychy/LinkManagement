@@ -9,16 +9,16 @@
         });
     };
 
-    fac.AuthenticateToken = function(token){
-        return $http({
-            method: "GET",
-            url: '/User/AuthenticateToken',
-            params: {
-                token: token
-            }
-           
-        });
-    }
+
+    fac.LogOut = function () {
+        return $http.get('/User/LogOut');
+    };
+
+
+    fac.IsLogedIn = function () {
+        return $http.get('/User/IsLogedIn');
+    };
+
     return fac;
 
 });   

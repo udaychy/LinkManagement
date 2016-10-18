@@ -28,12 +28,25 @@ namespace LinkManagement.DAL.Repository
         }
 
 
-        public IEnumerable<Topic> GetImmediateChildren(int parentID)
+        public IEnumerable<Topic> GetImmediateChildren(int parentID, int? userID)
         {
-            return LinkManagerContext.Topics.Include("Links").Include("Links.LinkUserMappings")
+            var topicList = LinkManagerContext.Topics.Include("Links")
                     .Where(topic => topic.ParentID == parentID)
-                        .OrderBy(topics => topics.Order);
-       
+                        .OrderBy(topic => topic.Order).ToList();
+
+            if (userID != null)
+            {
+                foreach (var topic in topicList)
+                {
+                    foreach (var link in topic.Links)
+                    {
+                        link.LinkUserMappings = LinkManagerContext.LinkUserMappings
+                            .Where(l => l.UserID == userID && l.LinkID == link.LinkID).ToList();
+                    }
+
+                }
+            }
+            return topicList;
         }
     }
 }

@@ -2,7 +2,9 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-    background-color:#f4fcfc !important;
+    background-color:white !important;
+    /*background-image:url("/Content/Images/bkg1.jpg");
+    background-attachment:fixed;*/
    
 }
 /******* Nav Bar *******/

@@ -9,8 +9,6 @@ namespace LinkManagement.DAL.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        User GetUser(LoginData loginCredential);
-        User AddAccessToken(User logedInUser);
-        bool IsAuthenticatedToken(Guid token);
+        User GetUser(User loginCredential);
     }
 }

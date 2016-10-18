@@ -8,7 +8,7 @@ namespace LinkManagement.DAL.Interfaces
 {
     public interface ITopicRepository : IRepository<Topic>
     {
-         IEnumerable<Topic> GetImmediateChildren(int parentID);
+         IEnumerable<Topic> GetImmediateChildren(int parentID, int? userID);
          int ChildCount(int id);
 
     }

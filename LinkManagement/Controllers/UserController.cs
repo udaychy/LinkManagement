@@ -11,16 +11,22 @@ namespace LinkManagement.Controllers
 {
     public class UserController : Controller
     {
-        public JsonResult AuthenticateUser(LoginData data)
-        {
-            
-            return Json(new Users().AuthenticateUser(data));
+        public JsonResult AuthenticateUser(User data)
+        {    
+            return Json(new Users().AuthenticateUser(data), JsonRequestBehavior.AllowGet);
         }
 
 
-        public bool AuthenticateToken(string token)
+        public void LogOut()
         {
-            return new Users().IsAuthenticatedToken(token);
+             FormsAuthentication.SignOut();
+             Session["UserID"] = null;
+        }
+
+
+        public JsonResult IsLogedIn()
+        {
+            return Json(User.Identity.IsAuthenticated && (Session["UserID"] != null), JsonRequestBehavior.AllowGet);
         }
     }
 }

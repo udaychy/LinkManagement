@@ -22,7 +22,6 @@ namespace LinkManagement
         public int LinkID { get; set; }
         public string LinkHeading { get; set; }
         public string LinkDetail { get; set; }
-        public Nullable<int> Rating { get; set; }
         public Nullable<System.DateTime> LastVisited { get; set; }
         public int NoOfTimesVisited { get; set; }
         public int TopicID { get; set; }
@@ -30,6 +29,7 @@ namespace LinkManagement
         public string Description { get; set; }
         public int Order { get; set; }
         public string LinkType { get; set; }
+        public Nullable<double> OverallRating { get; set; }
     
         public virtual Topic Topic { get; set; }
         public virtual Topic Topic1 { get; set; }

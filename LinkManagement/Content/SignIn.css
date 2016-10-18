@@ -1,19 +1,33 @@
 ﻿#sign-in-form {
-    border:1px solid #11b2ad;
+    border:4px solid #11b2ad;
     border-radius:5px;
-    margin-top:200px;
+    margin-top:150px;
     margin-left:30%;
     width:50%;
+    color:#999;
+    padding:50px 10px 50px 30px; 
 
 }
-#sign-in-form > button {
+#sign-in-form > div:first-child{
+    border-right: 1px solid #ccc;
+}
+#sign-in-form  button {
     border:1px solid #e98f03;
 }
-#sign-in-form > button:hover {
+#sign-in-form  button:hover {
     background-color:#e98f03;
     color:white;
 }
-    #sign-in-form > input {
-        display:block;
-        margin:auto;
-    }
+#sign-in-form  input {
+    display:block;
+    margin:auto;
+}
+#sign-in-form label {
+    margin-bottom:20px;
+}
+#sign-in-form .form-group{
+    padding: 0px 40px;
+}
+#sign-in-form li {
+    padding-top:7px;
+}

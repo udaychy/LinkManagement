@@ -10,7 +10,7 @@ namespace LinkManagement.Controllers
 {
     public class SubTopicsController : Controller
     {
-
+        
         public String GetImmediateChildren(int parentID)
         {
              return JsonConvert.SerializeObject(new SubTopics().GetImmediateChildren(parentID), Formatting.Indented,
@@ -20,37 +20,48 @@ namespace LinkManagement.Controllers
                                     });
              
         }
-
-        public JsonResult GetAllParents(int topicID)
+        
+        public JsonResult GetBreadCrumbsList(int topicID)
         {
-            return Json(new SubTopics().GetAllParents(topicID), JsonRequestBehavior.AllowGet);
+            return Json(new SubTopics().GetBreadCrumbs(topicID), JsonRequestBehavior.AllowGet);
         }
 
-
-        public void UpdateLinkStatus(int linkID)
+        [Authorize]
+        public JsonResult UpdateLinkStatus(int linkID)
         {
             if (Session["UserID"] != null)
             {
-                new SubTopics().UpdateLinkStatus((int)Session["UserID"], linkID);
+                new BL.Link().UpdateLinkStatus((int)Session["UserID"], linkID);
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-
-        public void AddNote(int linkID, string note)
+        [Authorize]
+        public JsonResult AddNote(int linkID, string note)
         {
             if (Session["UserID"] != null)
             {
-                new SubTopics().AddNote((int)Session["UserID"], linkID, note);
+                new BL.Link().AddNote((int)Session["UserID"], linkID, note);
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-
-        public void AddRating(int linkID, int rating)
+        [Authorize]
+        public JsonResult AddRating(int linkID, int rating)
         {
             if (Session["UserID"] != null)
             {
-                new SubTopics().AddRating((int)Session["UserID"], linkID, rating);
+                new BL.Link().AddRating((int)Session["UserID"], linkID, rating);
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public void CountOneMoreVisitor(int linkID)
+        {
+            new BL.Link().CountOneMoreVisitor(linkID);   
         }
     }
 }
