@@ -191,7 +191,7 @@
     <Compile Include="Link.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomLinkMangerModel\Topic.cs" />
+    <Compile Include="Model\Partial\Topic.cs" />
     <Compile Include="LinkMangerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,7 +210,6 @@
     <Compile Include="LinkUserMapping.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LoginData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Topic.cs">
       <DependentUpon>LinkMangerModel.tt</DependentUpon>
@@ -335,7 +334,6 @@
     <Content Include="Scripts\ngApp\Module.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\clipboard.min.js" />
-    <Content Include="Scripts\Custom\RatingStar.js" />
     <Content Include="Scripts\Custom\TopicTreeView.js" />
     <Content Include="Scripts\ngApp\Routes.js" />
     <Content Include="Scripts\ngApp\Services\AjaxService.js" />
@@ -360,7 +358,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

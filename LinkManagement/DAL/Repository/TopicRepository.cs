@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using LinkManagement.DAL.Interfaces;
 
 namespace LinkManagement.DAL.Repository
@@ -43,10 +41,22 @@ namespace LinkManagement.DAL.Repository
                         link.LinkUserMappings = LinkManagerContext.LinkUserMappings
                             .Where(l => l.UserID == userID && l.LinkID == link.LinkID).ToList();
                     }
-
                 }
             }
             return topicList;
+        }
+
+
+        public Topic GetTopicContents(int topicID)
+        {
+            return LinkManagerContext.Topics.Include("Links")
+                .Where(topic => topic.TopicID == topicID).FirstOrDefault();
+        }
+
+
+        public void AddTopic(Topic newTopic)
+        {
+            LinkManagerContext.Topics.Add(newTopic);
         }
     }
 }

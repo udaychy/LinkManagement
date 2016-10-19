@@ -1,4 +1,4 @@
-﻿
+﻿<link href="~/Content/SubTopic.css" rel="stylesheet" />
 <div class="container-fluid">
     <div class="row" id="parent-heading">
         <p> {{breadCrumbsList[breadCrumbsList.length-1].TopicName}}</p>
@@ -18,7 +18,7 @@
 
                 <!--Navigation topic list-->
                 <li ng-repeat="topic in subTopicList" list-id="{{topic.TopicID}}" ng-click="scrollTo(topic.TopicID)">
-                    {{topic.TopicName}}
+                    <i ng-if="topic.SubTopicCount > 0" class="fa fa-link"></i>{{topic.TopicName}}
                     <i ng-show="IsLogedIn && topic.Links.length == CountReadLinks(topic.TopicID)" class="fa fa-check" aria-hidden="true"></i>
                     <span ng-show="IsLogedIn" class="badge">{{CountReadLinks(topic.TopicID)}}/{{topic.Links.length}}</span>
                 </li>

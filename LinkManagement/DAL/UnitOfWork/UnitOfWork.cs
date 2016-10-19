@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LinkManagement.DAL.Interfaces;
+﻿using LinkManagement.DAL.Interfaces;
 using LinkManagement.DAL.Repository;
 
 namespace LinkManagement.DAL.UnitOfWork

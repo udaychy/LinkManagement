@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using LinkManagement.DAL.UnitOfWork;
 
 namespace LinkManagement.BL
@@ -9,9 +7,9 @@ namespace LinkManagement.BL
     public class SubTopics : UnitOfWorkInitializer
     {
         
-        public List<Topic> GetImmediateChildren(int parentID)
+        public List<Topic> GetImmediateChildrenWithSubTopicCount(int parentID, int? userID)
         {
-            var topicList = UnitOfWork.topic.GetImmediateChildren(parentID, (int?)HttpContext.Current.Session["UserID"]).ToList();
+            var topicList = UnitOfWork.topic.GetImmediateChildren(parentID, userID).ToList();
             topicList.ForEach(topics => topics.SubTopicCount = UnitOfWork.topic.ChildCount(topics.TopicID));
             
             return topicList;

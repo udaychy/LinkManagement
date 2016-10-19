@@ -3,7 +3,7 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
 
     var parentID = parseInt($routeParams.parentID);
 
-    AjaxService.Get( "/SubTopics/GetImmediateChildren", { parentID: parentID })
+    AjaxService.Get("/SubTopics/GetImmediateChildrenWithSubTopicCount", { parentID: parentID })
         .then(function (response) {
             $scope.subTopicList = response.data;
 

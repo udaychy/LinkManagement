@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LinkManagement.DAL.Interfaces
 {
@@ -10,6 +6,7 @@ namespace LinkManagement.DAL.Interfaces
     {
          IEnumerable<Topic> GetImmediateChildren(int parentID, int? userID);
          int ChildCount(int id);
-
+         void AddTopic(Topic newTopic);
+         Topic GetTopicContents(int topicID);
     }
 }

@@ -1,5 +1,4 @@
-﻿/// <reference path="../../angular.js" />
-linkApp.controller("HomeController", function ($scope, $http, $rootScope) {
+﻿linkApp.controller("HomeController", function ($scope, $http, $rootScope) {
     var url = "/Home/GetRootTopicList";
     $http.get(url)
            .then(function (response) {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using LinkManagement.DAL.Interfaces;
 
 namespace LinkManagement.DAL.Repository
@@ -13,13 +12,18 @@ namespace LinkManagement.DAL.Repository
         { 
         }
 
+        public LinkUserMapping GetLinkAssociatedToUser(int userID, int linkID)
+        {
+            return LinkManagerContext.LinkUserMappings
+                                     .Where(l => l.LinkID == linkID && l.UserID == userID)
+                                     .FirstOrDefault();
+        }
 
         public void UpdateLinkStatus(int userID, int linkID)
         {
-           
-            LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings
-                                        .Where(l => l.LinkID == linkID && l.UserID == userID)
-                                        .FirstOrDefault();
+
+            var linkToBeUpdated = GetLinkAssociatedToUser(userID, linkID);
+
             if (linkToBeUpdated != null)
             {
                 linkToBeUpdated.Status = !linkToBeUpdated.Status;
@@ -32,15 +36,12 @@ namespace LinkManagement.DAL.Repository
                                         UserID = userID
                                       });
             }
-            
         }
 
 
         public void AddNote(int userID, int linkID, string note)
         {
-            LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings
-                .Where(l => l.LinkID == linkID && l.UserID == userID)
-                .FirstOrDefault();
+            var linkToBeUpdated = GetLinkAssociatedToUser(userID, linkID);
 
             if (linkToBeUpdated != null)
             {
@@ -55,15 +56,12 @@ namespace LinkManagement.DAL.Repository
                     UserID = userID
                 });
             }
-            
         }
 
 
         public void AddRating(int userID, int linkID, int rating)
         {
-            LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings
-                .Where(l => l.LinkID == linkID && l.UserID == userID)
-                .FirstOrDefault();
+            var linkToBeUpdated = GetLinkAssociatedToUser(userID, linkID);
 
             if (linkToBeUpdated != null)
             {
@@ -91,6 +89,7 @@ namespace LinkManagement.DAL.Repository
             Link link = LinkManagerContext.Links
                     .Where(l => l.LinkID == linkID)
                     .FirstOrDefault();
+
             var sum = (Double)linkList.Sum(r => r.Rating);
             var count = linkList.Count();
             link.OverallRating = (Double)linkList.Sum(r => r.Rating) / linkList.Count(); 
@@ -109,23 +108,7 @@ namespace LinkManagement.DAL.Repository
             }
             
         }
-        //void UpdateLinkUserMappingRow(LinkUserMapping updatedData)
-        //{
-        //    LinkUserMapping linkToBeUpdated = LinkManagerContext.LinkUserMappings
-        //        .Where(l => l.LinkID == updatedData.LinkID && l.UserID == updatedData.UserID)
-        //        .FirstOrDefault();
-
-        //    if (linkToBeUpdated != null)
-        //    {
-        //        linkToBeUpdated.Note = updatedData.Note ?? ;
-        //        linkToBeUpdated.Rating = updatedData.Rating??;
-        //        linkToBeUpdated.Status = 
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
+        
 
         public LinkManagerContext LinkManagerContext
         {

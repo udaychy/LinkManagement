@@ -1,22 +1,17 @@
-﻿linkApp.factory('LoginService', function ($http) {
+﻿linkApp.factory('LoginService', function (AjaxService) {
     var fac = {};
     fac.AuthenticateUser = function (data) {
-        return $http({
-            url: '/User/AuthenticateUser',
-            method: 'POST',
-            data: JSON.stringify(data),
-            headers: {'content-type':'application/json'}
-        });
+        AjaxService.Get('/User/AuthenticateUser', data);
     };
 
 
     fac.LogOut = function () {
-        return $http.get('/User/LogOut');
+        return AjaxService.Get('/User/LogOut');
     };
 
 
     fac.IsLogedIn = function () {
-        return $http.get('/User/IsLogedIn');
+        return AjaxService.Get('/User/IsLogedIn');
     };
 
     return fac;
