@@ -1,4 +1,4 @@
-﻿linkApp.controller("EditorController", function ($scope, $http, AjaxService) {
+﻿linkApp.controller("EditorController", function ($scope, $http, AjaxService, $rootScope) {
     $scope.topics = [];
     $scope.newTopic = {};
     var selectedTopicID = 0;
@@ -64,4 +64,30 @@
                 alert("error occured");
             });
     }
+
+    $scope.SaveChanges = function () {
+
+
+        var i = 0;
+        $(".link-div").each(function () {
+           
+            var order = $(".link-div").index(this) + 1;
+            var linkID = $(".link-div").attr("id");
+
+            $scope.selectedTopicContent.Links.forEach(function (value, index) {
+                if (value.LinkID == linkID) {
+                    value.Order = order;
+                }
+            });
+        });
+
+        var params = { updatedTopic: $scope.selectedTopicContent }
+        AjaxService.Get("Editor/UpdateTopicContent", params)
+            .then(function (response) {
+                alert("updated");
+            }, function () {
+                alert("error occured");
+            });
+    }
+
 });

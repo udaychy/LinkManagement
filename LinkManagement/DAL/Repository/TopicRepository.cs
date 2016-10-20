@@ -31,6 +31,7 @@ namespace LinkManagement.DAL.Repository
             var topicList = LinkManagerContext.Topics.Include("Links")
                     .Where(topic => topic.ParentID == parentID)
                         .OrderBy(topic => topic.Order).ToList();
+            topicList.ForEach(t => t.Links = t.Links.OrderBy(l => l.Order).ToList());
 
             if (userID != null)
             {
@@ -49,14 +50,24 @@ namespace LinkManagement.DAL.Repository
 
         public Topic GetTopicContents(int topicID)
         {
-            return LinkManagerContext.Topics.Include("Links")
-                .Where(topic => topic.TopicID == topicID).FirstOrDefault();
+             var topicContent = LinkManagerContext.Topics.Include("Links")
+                .Where(topic => topic.TopicID == topicID).ToList();
+             topicContent.ForEach(t => t.Links = t.Links.OrderBy(l => l.Order).ToList());
+
+             return topicContent.FirstOrDefault();
         }
 
 
         public void AddTopic(Topic newTopic)
         {
             LinkManagerContext.Topics.Add(newTopic);
+        }
+
+
+        public void UpdateTopic(Topic updatedTopic)
+        {
+            var topicToBeUpdated = LinkManagerContext.Topics.Find(updatedTopic.TopicID);
+            LinkManagerContext.Entry(topicToBeUpdated).CurrentValues.SetValues(updatedTopic);
         }
     }
 }

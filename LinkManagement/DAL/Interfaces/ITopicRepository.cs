@@ -8,5 +8,6 @@ namespace LinkManagement.DAL.Interfaces
          int ChildCount(int id);
          void AddTopic(Topic newTopic);
          Topic GetTopicContents(int topicID);
+         void UpdateTopic(Topic updatedTopic);
     }
 }

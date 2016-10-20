@@ -23,7 +23,21 @@ namespace LinkManagement.BL
 
         public Topic GetTopicContents(int topicID)
         {
-            return UnitOfWork.topic.GetTopicContents(topicID);
+             return UnitOfWork.topic.GetTopicContents(topicID);
+        }
+
+        public void UpdateTopicContents(Topic updatedTopic)
+        {
+            UnitOfWork.topic.UpdateTopic(updatedTopic);
+            
+            if (updatedTopic.Links != null)
+            {
+                foreach (var link in updatedTopic.Links)
+                {
+                    UnitOfWork.link.UpdateLink(link);
+                }
+            }
+            UnitOfWork.Commit();
         }
     }
 }

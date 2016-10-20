@@ -8,5 +8,6 @@ namespace LinkManagement.DAL.Interfaces
         void AddRating(int userID, int linkID, int rating);
         void CountOneMoreVisitor(int linkID);
         void UpdateOverallRating(int linkID);
+        void UpdateLink(Link updatedLink);
     }
 }

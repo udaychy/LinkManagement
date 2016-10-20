@@ -49,3 +49,22 @@ input[type='text']:focus {
 #editor-div .topic-body {
     border-top:5px solid #11b2ad;
 }
+.topic-body img {
+    display:block;
+    margin:auto;
+}
+#save-btn {
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    z-index: 2;
+    right: 10px;
+    margin-top: -40px;
+    font-size: 17px;
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    background-color: #01b001;
+}
+}
+

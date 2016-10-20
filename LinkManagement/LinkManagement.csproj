@@ -219,6 +219,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Editor.css" />
     <Content Include="Content\Home.css" />
     <Content Include="Content\Icons\AngularJs.png" />
     <Content Include="Content\Icons\AspDotNet.png" />

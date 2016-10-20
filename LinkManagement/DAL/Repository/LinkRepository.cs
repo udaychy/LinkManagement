@@ -19,6 +19,14 @@ namespace LinkManagement.DAL.Repository
                                      .FirstOrDefault();
         }
 
+
+        public void UpdateLink(Link updatedLink)
+        {
+            var linkToBeUpdated = LinkManagerContext.Links.Find(updatedLink.LinkID);
+            LinkManagerContext.Entry(linkToBeUpdated).CurrentValues.SetValues(updatedLink);
+        }
+
+
         public void UpdateLinkStatus(int userID, int linkID)
         {
 

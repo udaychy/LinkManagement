@@ -21,6 +21,7 @@ namespace LinkManagement.Controllers
             return Json(new Editor().AddNewTopic(newTopic), JsonRequestBehavior.AllowGet);
         }
 
+
         public string GetTopicContents(int topicID)
         {
             return JsonConvert.SerializeObject(new Editor().GetTopicContents(topicID), Formatting.Indented,
@@ -28,6 +29,12 @@ namespace LinkManagement.Controllers
                                      {
                                          PreserveReferencesHandling = PreserveReferencesHandling.Objects
                                      });
+        }
+
+        public void UpdateTopicContent(string updatedTopic)
+        {
+            var updatedTopicObject = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(updatedTopic.ToString());
+            new Editor().UpdateTopicContents(updatedTopicObject);
         }
     }
 }

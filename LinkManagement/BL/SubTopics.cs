@@ -10,6 +10,7 @@ namespace LinkManagement.BL
         public List<Topic> GetImmediateChildrenWithSubTopicCount(int parentID, int? userID)
         {
             var topicList = UnitOfWork.topic.GetImmediateChildren(parentID, userID).ToList();
+            topicList.ForEach(t => t.Links = t.Links.OrderBy(l => l.Order).ToList());
             topicList.ForEach(topics => topics.SubTopicCount = UnitOfWork.topic.ChildCount(topics.TopicID));
             
             return topicList;
