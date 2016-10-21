@@ -14,14 +14,23 @@
     <br/>
     <button ng-click="SaveChanges()" ng-show="showEditor" id="save-btn">save</button>
     <div id="editor-div">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <ul>
                 <li>Add Link </li>
                 <li>Add Video Link</li>
-                <li>Add Image</li>
+            </ul>
+            <hr/>
+            <ul>
+                <li><i class="fa fa-picture-o" aria-hidden="true"></i></li>
+                <li ng-click="MakeBold()"><b>Bold</b></li>
+                <li ng-click="MakeItalic()"><em>Italic</em></li>
+                <li ng-click="AddCode()"><code>{Code}</code></li>
+                <li ng-click="MakeBlock()"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                    <i class="fa fa-quote-right" aria-hidden="true"></i>
+                </li>
             </ul>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-7">
            
             <div ng-show="showEditor" id="{{selectedTopicContent.TopicID}}">
                 <!--Topic Heading-->
@@ -89,20 +98,24 @@
                             <input type="text" ng-model="link.Link1" />
                             <span class="input-label">url(optional)</span>
                             <select ng-model="link.LinkType">
-                            <option value="video">video url</option>
-                            <option value="url">url to another page</option>
-                        </select>
+                                <option value="video">video url</option>
+                                <option value="url">url to another page</option>
+                            </select>
 
                             <textarea ng-model="link.LinkDetail"></textarea>
                             <span class="input-label">About the Link</span>
 
                         </div>
                         <br/>
-                        <textarea ng-model="link.Description"></textarea>
-                        <span class="input-label">Description</span>
+                        
+                        <textarea id="description-{{link.LinkID}}" ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-focus="selectedText = link.Description;FocusedTextarea(link.LinkID)"></textarea>
+                        <span class="input-label">Description</span>{{selectedText}}
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="preview-div"></div>
         </div>
     </div>
 </div>
@@ -133,8 +146,5 @@
         </div>
     </div>
 </div>
-<script>
-    $(".topic-body").sortable({
-        connectWith: ".topic-body"
-    });
-</script>
+<script src="/Scripts/RangyInputs.js"></script>
+<script src="/Scripts/Custom/Editor.js"></script>

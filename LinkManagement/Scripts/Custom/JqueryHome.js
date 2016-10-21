@@ -57,5 +57,5 @@
     });
     
     
-     //SyntaxHighlighter.all()
+    SyntaxHighlighter.all();
 });

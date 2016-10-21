@@ -30,7 +30,8 @@ namespace LinkManagement.Controllers
                                          PreserveReferencesHandling = PreserveReferencesHandling.Objects
                                      });
         }
-
+    
+        [ValidateInput(false)]
         public void UpdateTopicContent(string updatedTopic)
         {
             var updatedTopicObject = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(updatedTopic.ToString());

@@ -6,6 +6,20 @@ linkApp.controller("SubTopicController", function ($scope, $http, $routeParams, 
     AjaxService.Get("/SubTopics/GetImmediateChildrenWithSubTopicCount", { parentID: parentID })
         .then(function (response) {
             $scope.subTopicList = response.data;
+            
+            $scope.subTopicList.forEach(function (value, index) {
+                if (value.Links != null) {
+                    value.Links.forEach(function (v, i) {
+                       
+                        if (v.Description != null) {
+                            v.Description = v.Description.replace("*b*", "<span class='badge'>").replace("*/b*", "</span>")
+                                .replace("*i*", "<em>").replace("*/i*", "</em>")
+                                 .replace("*code*", "<pre><xmp>").replace("*/code*", "</xmp></pre>")
+                                    .replace("*blockquote*", "<blockquote>").replace("*/blockquote*", "</blockquote>");
+                        }
+                    })
+                }
+            });
 
             if ($scope.subTopicList.length < 1) {
                 window.history.back();

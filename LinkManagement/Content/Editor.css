@@ -2,16 +2,19 @@
     border:1px solid #aaa;
     background-color:black;
     color:white;
-    font-weight:800;
-    padding:20px;
+    font-size:15px;
     height:480px;
+    
 }
 #editor-div > div:first-child > ul {
     list-style:none;
+    padding:0px;
 }
 #editor-div > div:first-child > ul > li {
     padding-top:10px;
     color:#eee;
+    cursor:pointer;
+    
 }
 #editor-div > div:nth-child(2) {
     border: 2px solid #aaa;

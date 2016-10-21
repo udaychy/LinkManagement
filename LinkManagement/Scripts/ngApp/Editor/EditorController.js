@@ -67,7 +67,6 @@
 
     $scope.SaveChanges = function () {
 
-
         var i = 0;
         $(".link-div").each(function () {
            
@@ -90,4 +89,60 @@
             });
     }
 
+    //--------------------Editor Controls---------------------------------
+    var focussedTextareaID;
+    $scope.FocusedTextarea = function (id) {
+        focussedTextareaID = "description-" + id;
+    }
+
+
+    $scope.MakeBold = function () {
+        
+        if(focussedTextareaID != null)
+        {
+            var sel = $("#" + focussedTextareaID).getSelection();
+            if (sel.text == "") {
+                sel.text = "strong text";
+            }
+            $("#" + focussedTextareaID).replaceSelectedText("<b>"+sel.text+"</b>");
+        }
+    }
+
+    $scope.MakeItalic = function () {
+
+        if (focussedTextareaID != null) {
+            var sel = $("#" + focussedTextareaID).getSelection();
+            if (sel.text == "") {
+                sel.text = "Italic text";
+            }
+            $("#" + focussedTextareaID).replaceSelectedText("<em>" + sel.text + "</em>");
+        }
+    }
+
+    $scope.AddCode = function () {
+
+        if (focussedTextareaID != null) {
+            var sel = $("#" + focussedTextareaID).getSelection();
+            if (sel.text == "") {
+                sel.text = "code here";
+            }
+            $("#" + focussedTextareaID).replaceSelectedText("<pre><xmp>" + sel.text + "</xmp></pre>");
+        }
+    }
+
+    $scope.MakeBlock = function () {
+
+        if (focussedTextareaID != null) {
+            var sel = $("#" + focussedTextareaID).getSelection();
+            if (sel.text == "") {
+                sel.text = "write here";
+            }
+            $("#" + focussedTextareaID).replaceSelectedText("<blockquote>" + sel.text + "</blockquote>");
+        }
+    }
+
+    $scope.ShowPreview = function (previewContent) {
+
+        $("#preview-div").html(previewContent);
+    };
 });

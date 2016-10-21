@@ -64,7 +64,7 @@
                             <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
                             <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
                             <br/>
-                            <p>{{link.LinkDetail}}</p>
+                            <p ng-bind-html="link.LinkDetail"></p>
                             <img ng-src="Resources/Images/{{link.Link1 | trustUrl}}" />
 
                         </div>
@@ -75,7 +75,7 @@
                             <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
                             <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
                             <br/>
-                            <p>{{link.LinkDetail}}</p>
+                            <p ng-bind-html="link.LinkDetail"></p>
                             <div ng-class="link.LinkUserMappings[0].Status ? 'video-seen' : ''">
                             <iframe width="100%" height="350" ng-src="{{link.Link1 | trustUrl}}" frameborder="0" allowfullscreen></iframe>
                             </div>
@@ -93,7 +93,7 @@
                             <span class="copy-link-parent pull-right">
                                 <a class="copy-link pull-right" data-clipboard-text="{{link.Link1}}" data-toggle="popover" data-content="copied" data-placement="bottom" >copy link</a>
                             </span>
-                            <p>{{link.LinkDetail}}</p>
+                            <p ng-bind-html="link.LinkDetail"></p>
                             <span>
                                 <i ng-hide="link.LinkUserMappings[0].Note == null || link.LinkUserMappings[0].Note == ''" ng-click="showNote=!showNote;editable=false" class="fa fa-file-text" aria-hidden="true"></i>
                                 <i ng-show="link.LinkUserMappings[0].Note == null || link.LinkUserMappings[0].Note == ''" data-toggle="tooltip" title="Add Note" ng-click="showNote=!showNote;editable=true" class="fa fa-pencil-square" aria-hidden="true"></i>
@@ -142,7 +142,7 @@
 
                             </div>
                         </div>
-                        <p>{{link.Description}}</p>
+                        <p ng-bind-html="link.Description"></p>
                     </div>
                 </div>
             </div>

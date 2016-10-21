@@ -12,12 +12,14 @@ ul::-webkit-scrollbar-thumb {
     background-color:#11b2ad;   
 }
 
-#list-div {
-    /*background-color: #c9e6e6;
-    border-radius:10px;
-  
-   margin-left:20px;*/
-   
+strong {
+    background-color:#ddd;
+    border-radius:4px;
+}
+
+blockquote {
+    font-family: monospace;
+    background-color: #fffafa;
 }
 
 #parent-heading {
@@ -127,7 +129,7 @@ ul::-webkit-scrollbar-thumb {
     
 }
 #sub-topic-list p {
-    font-size:18px;
+    font-size:17px;
     padding-top:10px;
 }
 #sub-topic-list .read {
