@@ -1,4 +1,4 @@
-﻿$(".topic-body").sortable({
-    connectWith: ".topic-body"
-});
+﻿//$(".topic-body").sortable({
+//    connectWith: ".topic-body"
+//});
 

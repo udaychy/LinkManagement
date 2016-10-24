@@ -1,8 +1,10 @@
-﻿linkApp.controller("EditorController", function ($scope, $http, AjaxService, $rootScope) {
+﻿linkApp.controller("EditorController", function ($scope, AjaxService, $rootScope) {
     $scope.topics = [];
     $scope.newTopic = {};
+    $scope.newLink = [];
     var selectedTopicID = 0;
     var parentIDOfNewTopic = 0;
+    var tmpList = [];
 
     $scope.GetSubTopics = function (topicID, selectedTopic, index) {
         if (topicID == undefined) {
@@ -47,9 +49,33 @@
             });
     }
 
+    $scope.AddLink = function () {
+        var newLink = {
+            LinkHeading: "",
+            LinkDetail: "",
+            TopicID: selectedTopicID,
+            Link: "",
+            Description: "",
+            LinkType:"url"
+        };
+        $scope.selectedTopicContent.Links.push(newLink);
+    }
+
+    $scope.AddVideoLink = function () {
+        var newVideoLink = {
+            LinkHeading: "",
+            LinkDetail: "",
+            TopicID: selectedTopicID,
+            Link: "",
+            Description: "",
+            LinkType: "video"
+        };
+        $scope.selectedTopicContent.Links.push(newVideoLink);
+    }
+    
     $scope.StartEditing = function () {
         $scope.showEditor = true;
-
+        
         if (selectedTopicID == 0) {
             var len = $scope.topics.length;
             selectedTopicID = $scope.topics[len-1][0].ParentID;
@@ -59,7 +85,8 @@
         AjaxService.Get("Editor/GetTopicContents", params)
             .then(function (response) {
                 $scope.selectedTopicContent = response.data;
-                
+                tmpList = $scope.selectedTopicContent.Links;
+
             }, function (response) {
                 alert("error occured");
             });
@@ -90,59 +117,79 @@
     }
 
     //--------------------Editor Controls---------------------------------
-    var focussedTextareaID;
-    $scope.FocusedTextarea = function (id) {
-        focussedTextareaID = "description-" + id;
+   
+    var focussedEvent = null;
+    $scope.FocusedTextarea = function (event) {
+        focussedEvent = event;
     }
 
 
     $scope.MakeBold = function () {
         
-        if(focussedTextareaID != null)
+        if(focussedEvent != null)
         {
-            var sel = $("#" + focussedTextareaID).getSelection();
+            var sel = $(focussedEvent.target).getSelection();
             if (sel.text == "") {
                 sel.text = "strong text";
             }
-            $("#" + focussedTextareaID).replaceSelectedText("<b>"+sel.text+"</b>");
+            $(focussedEvent.target).replaceSelectedText("<b>" + sel.text + "</b>");
         }
     }
 
     $scope.MakeItalic = function () {
 
-        if (focussedTextareaID != null) {
-            var sel = $("#" + focussedTextareaID).getSelection();
+        if (focussedEvent != null) {
+            var sel = $(focussedEvent.target).getSelection();
             if (sel.text == "") {
                 sel.text = "Italic text";
             }
-            $("#" + focussedTextareaID).replaceSelectedText("<em>" + sel.text + "</em>");
+            $(focussedEvent.target).replaceSelectedText("<em>" + sel.text + "</em>");
         }
     }
 
     $scope.AddCode = function () {
 
-        if (focussedTextareaID != null) {
-            var sel = $("#" + focussedTextareaID).getSelection();
+        if (focussedEvent != null) {
+            var sel = $(focussedEvent.target).getSelection();
             if (sel.text == "") {
                 sel.text = "code here";
             }
-            $("#" + focussedTextareaID).replaceSelectedText("<pre><xmp>" + sel.text + "</xmp></pre>");
+            $(focussedEvent.target).replaceSelectedText("<pre><xmp>" + sel.text + "</xmp></pre>");
         }
     }
 
     $scope.MakeBlock = function () {
 
-        if (focussedTextareaID != null) {
-            var sel = $("#" + focussedTextareaID).getSelection();
+        if (focussedEvent != null) {
+            var sel = $(focussedEvent.target).getSelection();
             if (sel.text == "") {
                 sel.text = "write here";
             }
-            $("#" + focussedTextareaID).replaceSelectedText("<blockquote>" + sel.text + "</blockquote>");
+            $(focussedEvent.target).replaceSelectedText("<blockquote>" + sel.text + "</blockquote>");
         }
     }
 
     $scope.ShowPreview = function (previewContent) {
-
-        $("#preview-div").html(previewContent);
+        $scope.currentPreview = previewContent;
     };
+
+
+    //sortable contents
+    $scope.sortedOrder = null;
+
+    $scope.sortableOptions = {
+        update: function (e, ui) {
+            var logEntry = tmpList.map(function (i) {
+                return i.Order;
+            }).join(', ');
+        },
+        stop: function (e, ui) {
+            // this callback has the changed model
+            $scope.sortedOrder = tmpList.map(function (i) {
+                return i.Order;
+            }).join(', ');
+            alert($scope.sortedOrder);
+        }
+    };
+
 });

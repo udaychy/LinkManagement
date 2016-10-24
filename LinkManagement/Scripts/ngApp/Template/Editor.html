@@ -16,8 +16,8 @@
     <div id="editor-div">
         <div class="col-sm-1">
             <ul>
-                <li>Add Link </li>
-                <li>Add Video Link</li>
+                <li ng-click="AddLink()">Add Link </li>
+                <li ng-click="AddVideoLink()">Add Video Link</li>
             </ul>
             <hr/>
             <ul>
@@ -29,9 +29,16 @@
                     <i class="fa fa-quote-right" aria-hidden="true"></i>
                 </li>
             </ul>
+            <ul ui-sortable="sortableOptions" ng-model="list" class="list">
+                <li ng-repeat="item in list" class="item">
+                {{item.text}}
+                </li>
+            </ul>
         </div>
         <div class="col-sm-7">
-           
+           <li ng-repeat="entry in sortingLog" >
+                {{entry}}
+            </li>
             <div ng-show="showEditor" id="{{selectedTopicContent.TopicID}}">
                 <!--Topic Heading-->
                 <h3>
@@ -44,7 +51,7 @@
 
                 <br/><br/>
                 <!--Topic Body-->
-                <div class="topic-body">
+                <div ui-sortable="sortableOptions" ng-model="selectedTopicContent.Links" class="topic-body">
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
                         
@@ -108,14 +115,17 @@
                         </div>
                         <br/>
                         
-                        <textarea id="description-{{link.LinkID}}" ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-focus="selectedText = link.Description;FocusedTextarea(link.LinkID)"></textarea>
-                        <span class="input-label">Description</span>{{selectedText}}
+                        <textarea ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-focus="FocusedTextarea($event);ShowPreview(link.Description)"></textarea>
+                        <span class="input-label">Description</span>
+                        <div ng-bind-html="link.Description"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
-            <div id="preview-div"></div>
+            <div id="preview-div" ng-bind-html="currentPreview">
+                
+            </div>
         </div>
     </div>
 </div>
@@ -147,4 +157,6 @@
     </div>
 </div>
 <script src="/Scripts/RangyInputs.js"></script>
+<script src="/Scripts/sortable.js"></script>
 <script src="/Scripts/Custom/Editor.js"></script>
+

@@ -14,7 +14,8 @@ namespace LinkManagement.BL
 
         public int AddNewTopic(Topic newTopic)
         {
-            //validate newTopic data
+            //ToDo:
+            //ToDo: validate newTopic data
             UnitOfWork.topic.AddTopic(newTopic);
             UnitOfWork.Commit();
             return newTopic.TopicID;

@@ -1,4 +1,20 @@
-﻿#editor-div > div:first-child {
+﻿strong {
+    background-color:#ddd;
+    border-radius:4px;
+}
+
+blockquote {
+    font-family: monospace;
+    font-size:15px;
+    background-color: #fffafa;
+}
+
+#preview-div {
+    border: 1px dotted #111;
+    height: 480px;
+    padding: 10px;
+}
+#editor-div > div:first-child {
     border:1px solid #aaa;
     background-color:black;
     color:white;
