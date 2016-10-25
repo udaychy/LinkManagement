@@ -4,10 +4,36 @@
     <div>Choose what/where to edit/add </div>
 
     <div ng-init="GetSubTopics(0);addTopic = true">
-        <span>Home</span>
-        <select ng-repeat="subTopics in topics" ng-if="subTopics.length > 0" ng-model="selectedTopic" ng-options="t.TopicName for t in subTopics" ng-change="GetSubTopics(selectedTopic.TopicID, selectedTopic, $index)">
-        <option value="">Nothing Selected</option>
-    </select>
+       <span>Home</span>
+
+       <!-- <div class="dropdown dropdown-scroll" ng-repeat="subTopics in topics">
+         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >{{selectedValue}} <span class="caret"></span>
+         </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
+                <li role="presentation">
+                    <div class="input-group input-group-sm search-control"> 
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Query" ng-model="query">
+                    </div>
+                </li>
+                <li role="presentation" ng-repeat='topic in subTopics| filter:query'> <span ng-click="alert('hi')"> {{topic.TopicName}} </span>
+                </li>
+            </ul>
+        </div>
+
+        <ui-select ng-repeat="subTopics in topics" ng-model="selectedTopic" theme="selectize" title="Choose a topic" ng-change="GetSubTopics(selectedTopic.TopicID, selectedTopic, $index)">
+         <ui-select-match placeholder="Select or search a topic in the list...">{{$select.selected.TopicName}}</ui-select-match>
+            <ui-select-choices repeat="topic in subTopics | filter: $select.search">
+             <span ng-bind-html="topic.TopicName | highlight: $select.search"></span>
+            </ui-select-choices>
+            
+        </ui-select>-->
+      
+       <select ng-repeat="subTopics in topics" ng-if="subTopics.length > 0" ng-model="selectedTopic" ng-options="t.TopicName for t in subTopics" ng-change="GetSubTopics(selectedTopic.TopicID, selectedTopic, $index)">
+         <option value="">Nothing Selected</option>
+       </select>
         <button data-toggle="modal" ng-click="showEditor= true" data-target="#new-topic-form" class="btn btn-sm btn-primary"><i class="fa fa-plus" aria-hidden="true" ></i>Add Topic</button> &nbsp &nbsp<button ng-click="StartEditing()" class="btn btn-md btn-danger"> Start Editing</button>
     </div>
 
@@ -36,9 +62,6 @@
             </ul>
         </div>
         <div class="col-sm-7">
-           <li ng-repeat="entry in sortingLog" >
-                {{entry}}
-            </li>
             <div ng-show="showEditor" id="{{selectedTopicContent.TopicID}}">
                 <!--Topic Heading-->
                 <h3>
@@ -51,10 +74,19 @@
 
                 <br/><br/>
                 <!--Topic Body-->
-                <div ui-sortable="sortableOptions" ng-model="selectedTopicContent.Links" class="topic-body">
+                <div ui-sortable="sortableOptions" ng-model="selectedTopicContent.Links" class="topic-body" >
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
-                        
+                        <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-hide="isCollapse">{{link.LinkHeading}}
+                            <span class="pull-right" ng-click="isCollapse = true"> 
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> 
+                            </span>
+                        </div>
+
+                        <div ng-show="isCollapse">
+                            <span class="pull-right" ng-click="isCollapse = false">
+                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                            </span>
                         <h4>
                             <input type="text" ng-model="link.LinkHeading" />
                             <span class="input-label">*Link heading</span>
@@ -114,15 +146,27 @@
 
                         </div>
                         <br/>
-                        
-                        <textarea ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-focus="FocusedTextarea($event);ShowPreview(link.Description)"></textarea>
+                        <!--Description Div-->
+                        <div class="description-div">
+                            <div class="editor-controls" ng-class="enableControls ? '' : 'disable-controls'">
+                                <span><i class="fa fa-picture-o" aria-hidden="true"></i></span>
+                                <span ng-click="MakeBold(enableControls)"><b>B</b></span>
+                                <span ng-click="MakeItalic(enableControls)"><em>I</em></span>
+                                <span ng-click="AddCode(enableControls)"><code>{}</code></span>
+                                <span ng-click="MakeBlock(enableControls)"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                                    <i class="fa fa-quote-right" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <textarea ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-blur="enableControls=false" ng-focus="enableControls=true;FocusedTextarea($event);ShowPreview(link.Description)"></textarea>
+                        </div>
                         <span class="input-label">Description</span>
-                        <div ng-bind-html="link.Description"></div>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
+            <span class="preview-span">preview</span>
             <div id="preview-div" ng-bind-html="currentPreview">
                 
             </div>
