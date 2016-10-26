@@ -39,7 +39,7 @@
 
         <!--Topic main content-->
         <div id="sub-topic-list" ng-class="subTopicList.length <= 5 ? 'col-sm-12':'col-sm-8'" >
-            <div ng-repeat="topic in subTopicList" id="{{topic.TopicID}}">
+            <div ng-repeat="topic in subTopicList" id="topicID-{{topic.TopicID}}">
                 <span class="progress-count-span pull-right" ng-show="IsLogedIn">{{CountReadLinks(topic.TopicID)}}/{{topic.Links.length}} completed</span>
                 <!--Topic Heading-->
                 <h3 class="topic-heading">
@@ -85,7 +85,7 @@
                         <div ng-if="link.LinkType == 'url'" class="link-div" >
                             
                             <a href="{{link.Link1}}" target="_blank" ng-click="link.NoOfTimesVisited = link.NoOfTimesVisited + 1; CountOneMoreVisitor(link.LinkID)">
-                                <h4>#{{link.LinkHeading}}</h4>
+                                <h4><span class="fa fa-link"></span>{{link.LinkHeading}}</h4>
                             </a>
                             <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
                             <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>

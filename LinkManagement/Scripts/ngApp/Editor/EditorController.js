@@ -30,6 +30,29 @@
         };
     }
 
+    $scope.GetSubTopicsList = function (topicID) {
+        AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
+               .then(function (response) {
+                   $scope.subTopicList = response.data;
+               },
+               function (response) {
+                   alert("error occured");
+               });
+    };
+
+    $scope.BringTopicContent = function (topicID) {
+        var params = { topicID: topicID };
+        AjaxService.Get("Editor/GetTopicContents", params)
+            .then(function (response) {
+                $scope.selectedTopicContent = response.data;
+                tmpLinksList = $scope.selectedTopicContent.Links;
+
+            }, function (response) {
+                alert("error occured");
+            });
+    }
+    
+
     $scope.AddNewTopic = function () {
 
         var len = $scope.topics.length;
@@ -80,7 +103,8 @@
             Link: "",
             Description: "",
             LinkType: "video",
-            Order: tmpLinksList.length + 1
+            Order: tmpLinksList.length + 1,
+            IsDeleted: false
         };
         $scope.selectedTopicContent.Links.push(newVideoLink);
 
@@ -110,23 +134,13 @@
 
     $scope.SaveChanges = function () {
 
-        var i = 0;
-        //$(".link-div").each(function () {
-           
-        //    var order = $(".link-div").index(this) + 1;
-        //    var linkID = $(".link-div").attr("id");
-
-        //    $scope.selectedTopicContent.Links.forEach(function (value, index) {
-        //        if (value.LinkID == linkID) {
-        //            value.Order = order;
-        //        }
-        //    });
-        //});
-
-       
-
+        $scope.selectedTopicContent.Links.forEach(function (value, index) {
+            value.Order = index + 1;
+        });
+        
         var params = { updatedTopic: $scope.selectedTopicContent }
-        AjaxService.Get("Editor/UpdateTopicContent", params)
+
+        AjaxService.Post("Editor/UpdateTopicContent", params)
             .then(function (response) {
                 alert("updated");
             }, function () {
@@ -134,6 +148,9 @@
             });
     }
 
+    $scope.DeleteLink = function (index) {
+        $scope.selectedTopicContent.Links[index].IsDeleted = true;
+    }
     //--------------------Editor Controls---------------------------------
    
     var focussedEvent = null;
@@ -210,8 +227,7 @@
             // this callback has the changed model
             $scope.sortedOrder = tmpLinksList.map(function (i) {
                 return i.Order;
-            });
-            alert($scope.sortedOrder);
+            });           
         }
     };
 

@@ -40,26 +40,17 @@
     <br/>
     <button ng-click="SaveChanges()" ng-show="showEditor" id="save-btn">save</button>
     <div id="editor-div">
-        <div class="col-sm-1">
+        <div class="col-sm-1" ng-init="GetSubTopicsList(0);">
             <ul>
                 <li ng-click="AddLink()">Add Link </li>
                 <li ng-click="AddVideoLink()">Add Video Link</li>
             </ul>
             <hr/>
             <ul>
-                <li><i class="fa fa-picture-o" aria-hidden="true"></i></li>
-                <li ng-click="MakeBold()"><b>Bold</b></li>
-                <li ng-click="MakeItalic()"><em>Italic</em></li>
-                <li ng-click="AddCode()"><code>{Code}</code></li>
-                <li ng-click="MakeBlock()"><i class="fa fa-quote-left" aria-hidden="true"></i>
-                    <i class="fa fa-quote-right" aria-hidden="true"></i>
+                <li ng-repeat="topic in subTopicList" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
+                    <i ng-if="topic.SubTopicCount > 0" class="fa fa-link"></i>{{topic.TopicName}}
                 </li>
-            </ul>
-            <ul ui-sortable="sortableOptions" ng-model="list" class="list">
-                <li ng-repeat="item in list" class="item">
-                {{item.text}}
-                </li>
-            </ul>
+             </ul>
         </div>
         <div class="col-sm-7">
             <div ng-show="showEditor" id="{{selectedTopicContent.TopicID}}">
@@ -77,15 +68,17 @@
                 <div ui-sortable="sortableOptions" ng-model="selectedTopicContent.Links" class="topic-body" >
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
-                        <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-hide="isCollapse">{{link.LinkHeading}}
+                        <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''" ng-hide="isCollapse" ng-click="isCollapse = true">
+                            {{link.LinkHeading}}
                             <span class="pull-right" ng-click="isCollapse = true"> 
                                 <i class="fa fa-chevron-right" aria-hidden="true"></i> 
                             </span>
                         </div>
 
-                        <div ng-show="isCollapse">
+                        <div ng-show="isCollapse" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''">
                             <span class="pull-right" ng-click="isCollapse = false">
                                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                <button class="btn btn-sm btn-danger" ng-click="IsLinkDeleted=true; DeleteLink($index)">delete</button>
                             </span>
                         <h4>
                             <input type="text" ng-model="link.LinkHeading" />

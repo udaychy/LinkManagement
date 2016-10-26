@@ -31,8 +31,7 @@ namespace LinkManagement
         public string LinkType { get; set; }
         public Nullable<double> OverallRating { get; set; }
     
-        public virtual Topic Topic { get; set; }
-        public virtual Topic Topic1 { get; set; }
         public virtual ICollection<LinkUserMapping> LinkUserMappings { get; set; }
+        public virtual Topic Topic { get; set; }
     }
 }

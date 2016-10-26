@@ -75,13 +75,13 @@
   </EntityType>
   <Association Name="FK_Link_Topic1">
     <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />
-    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="0..1" />
+    <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Topic">
         <PropertyRef Name="TopicID" />
       </Principal>
       <Dependent Role="Link">
-        <PropertyRef Name="LinkID" />
+        <PropertyRef Name="TopicID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

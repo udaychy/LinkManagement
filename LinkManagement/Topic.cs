@@ -27,8 +27,7 @@ namespace LinkManagement
         public string About { get; set; }
         public int Order { get; set; }
     
-        public virtual ICollection<Link> Links { get; set; }
         public virtual User User { get; set; }
-        public virtual Link Link { get; set; }
+        public virtual ICollection<Link> Links { get; set; }
     }
 }

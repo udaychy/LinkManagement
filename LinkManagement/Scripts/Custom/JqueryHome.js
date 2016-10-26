@@ -25,7 +25,7 @@
           
             if ((elementTop >= docViewTop) && (elementTop <= docViewTop + 100)) {
 
-                var id = $(this).attr("id");
+                var id = $(this).attr("id").substring(8);
                 $("#list-div > ul >li").removeClass("active");
                 $("[list-id=" + id + "]").addClass("active");
             }

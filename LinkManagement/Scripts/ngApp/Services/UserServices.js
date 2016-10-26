@@ -1,7 +1,7 @@
-﻿linkApp.factory('LoginService', function (AjaxService) {
+﻿linkApp.factory('LoginService',['AjaxService', function (AjaxService) {
     var fac = {};
     fac.AuthenticateUser = function (data) {
-        AjaxService.Get('/User/AuthenticateUser', data);
+       return AjaxService.Get('/User/AuthenticateUser', data);
     };
 
 
@@ -16,4 +16,4 @@
 
     return fac;
 
-});   
+}]);   

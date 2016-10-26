@@ -26,6 +26,11 @@ namespace LinkManagement.DAL.Repository
             LinkManagerContext.Entry(linkToBeUpdated).CurrentValues.SetValues(updatedLink);
         }
 
+        
+        public void AddLink(Link link)
+        {
+            LinkManagerContext.Links.Add(link);
+        }
 
         public void UpdateLinkStatus(int userID, int linkID)
         {

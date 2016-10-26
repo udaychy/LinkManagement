@@ -1,5 +1,7 @@
 ﻿using LinkManagement.DAL.Interfaces;
 using LinkManagement.DAL.Repository;
+using System;
+using System.Data.Entity.Validation;
 
 namespace LinkManagement.DAL.UnitOfWork
 {
@@ -45,7 +47,15 @@ namespace LinkManagement.DAL.UnitOfWork
 
         public int Commit()
         {
-            return context.SaveChanges();
+            try
+            {
+                return context.SaveChanges();
+            }
+            catch (DbEntityValidationException  e){
+                Console.WriteLine(e);
+
+            }
+            return 0;
         }
 
 

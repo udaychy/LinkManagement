@@ -1,4 +1,4 @@
-﻿b {
+﻿strong {
     background-color:#ddd;
     border-radius:4px;
     padding:2px;
@@ -40,6 +40,7 @@ div::-webkit-scrollbar-thumb {
     border: 1px dotted #111;
     height: 480px;
     padding: 10px;
+    overflow:auto;
 }
 #editor-div > div:first-child {
     border:1px solid #aaa;
@@ -136,6 +137,9 @@ input[type='text']:focus {
     height: 70px;
     width: 70px;
     background-color: #01b001;
+}
+.LinkDeleted {
+    background-color:#ffc0b9;
 }
 
 

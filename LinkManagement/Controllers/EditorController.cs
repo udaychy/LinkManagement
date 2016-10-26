@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using LinkManagement.BL;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace LinkManagement.Controllers
 {
@@ -34,7 +35,7 @@ namespace LinkManagement.Controllers
         [ValidateInput(false)]
         public void UpdateTopicContent(string updatedTopic)
         {
-            var updatedTopicObject = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(updatedTopic.ToString());
+            var updatedTopicObject = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(updatedTopic);
             new Editor().UpdateTopicContents(updatedTopicObject);
         }
     }

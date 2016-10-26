@@ -133,7 +133,7 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
 
     $scope.scrollTo = function (idName) {
  
-        var element = document.getElementById(idName);
+        var element = document.getElementById("topicID-"+idName);
         var pos = absolutePosition(element);
 
         $('html, body').animate({

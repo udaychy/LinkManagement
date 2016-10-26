@@ -80,13 +80,13 @@
         </EntityType>
         <Association Name="FK_Link_Topic1">
           <End Role="Topic" Type="LinkManagerModel.Store.Topic" Multiplicity="1" />
-          <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="0..1" />
+          <End Role="Link" Type="LinkManagerModel.Store.Link" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Topic">
               <PropertyRef Name="TopicID" />
             </Principal>
             <Dependent Role="Link">
-              <PropertyRef Name="LinkID" />
+              <PropertyRef Name="TopicID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -134,17 +134,9 @@
           <EntitySet Name="Links" EntityType="LinkManagerModel.Link" />
           <EntitySet Name="Topics" EntityType="LinkManagerModel.Topic" />
           <EntitySet Name="Users" EntityType="LinkManagerModel.User" />
-          <AssociationSet Name="FK_Link_Topic" Association="LinkManagerModel.FK_Link_Topic">
-            <End Role="Topic" EntitySet="Topics" />
-            <End Role="Link" EntitySet="Links" />
-          </AssociationSet>
           <AssociationSet Name="FK_Topic_User" Association="LinkManagerModel.FK_Topic_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Topic" EntitySet="Topics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Link_Topic1" Association="LinkManagerModel.FK_Link_Topic1">
-            <End Role="Topic" EntitySet="Topics" />
-            <End Role="Link" EntitySet="Links" />
           </AssociationSet>
           <EntitySet Name="LinkUserMappings" EntityType="LinkManagerModel.LinkUserMapping" />
           <AssociationSet Name="FK_LinkStatus_Link1" Association="LinkManagerModel.FK_LinkStatus_Link1">
@@ -154,6 +146,10 @@
           <AssociationSet Name="FK_LinkStatus_User1" Association="LinkManagerModel.FK_LinkStatus_User1">
             <End Role="User" EntitySet="Users" />
             <End Role="LinkUserMapping" EntitySet="LinkUserMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Link_Topic1" Association="LinkManagerModel.FK_Link_Topic1">
+            <End Role="Topic" EntitySet="Topics" />
+            <End Role="Link" EntitySet="Links" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Link">
@@ -167,13 +163,12 @@
           <Property Name="NoOfTimesVisited" Type="Int32" Nullable="false" />
           <Property Name="TopicID" Type="Int32" Nullable="false" />
           <Property Name="Link1" Type="String" MaxLength="250" Unicode="true" FixedLength="false" Nullable="false" />
-          <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Link" ToRole="Topic" />
           <Property Type="String" Name="Description" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Order" Nullable="false" />
-          <NavigationProperty Name="Topic1" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Link" ToRole="Topic" />
           <Property Type="String" Name="LinkType" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LinkUserMappings" Relationship="LinkManagerModel.FK_LinkStatus_Link1" FromRole="Link" ToRole="LinkUserMapping" />
           <Property Type="Double" Name="OverallRating" />
+          <NavigationProperty Name="Topic" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Link" ToRole="Topic" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -182,13 +177,12 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="TopicID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="TopicName" Type="String" Nullable="false" MaxLength="80" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic" FromRole="Topic" ToRole="Link" />
           <NavigationProperty Name="User" Relationship="LinkManagerModel.FK_Topic_User" FromRole="Topic" ToRole="User" />
           <Property Type="Int32" Name="ParentID" Nullable="false" />
           <Property Type="String" Name="Icon" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="About" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Order" Nullable="false" />
-          <NavigationProperty Name="Link" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Topic" ToRole="Link" />
+          <NavigationProperty Name="Links" Relationship="LinkManagerModel.FK_Link_Topic1" FromRole="Topic" ToRole="Link" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -204,18 +198,6 @@
           <Property Type="Guid" Name="AccessToken" />
           <NavigationProperty Name="LinkUserMappings" Relationship="LinkManagerModel.FK_LinkStatus_User1" FromRole="User" ToRole="LinkUserMapping" />
         </EntityType>
-        <Association Name="FK_Link_Topic">
-          <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="1" />
-          <End Role="Link" Type="LinkManagerModel.Link" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Topic">
-              <PropertyRef Name="TopicID" />
-            </Principal>
-            <Dependent Role="Link">
-              <PropertyRef Name="TopicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Topic_User">
           <End Role="User" Type="LinkManagerModel.User" Multiplicity="1" />
           <End Role="Topic" Type="LinkManagerModel.Topic" Multiplicity="*" />
@@ -225,18 +207,6 @@
             </Principal>
             <Dependent Role="Topic">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Link_Topic1">
-          <End Type="LinkManagerModel.Topic" Role="Topic" Multiplicity="1" />
-          <End Type="LinkManagerModel.Link" Role="Link" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Topic">
-              <PropertyRef Name="TopicID" />
-            </Principal>
-            <Dependent Role="Link">
-              <PropertyRef Name="LinkID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -274,6 +244,18 @@
             </Principal>
             <Dependent Role="LinkUserMapping">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Link_Topic1">
+          <End Type="LinkManagerModel.Topic" Role="Topic" Multiplicity="1" />
+          <End Type="LinkManagerModel.Link" Role="Link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Link">
+              <PropertyRef Name="TopicID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

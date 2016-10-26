@@ -18,8 +18,8 @@ namespace LinkManagement
         public LinkManagerContext()
             : base("name=LinkManagerContext")
         {
-            this.Configuration.ProxyCreationEnabled = false;
             this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -27,18 +27,42 @@ namespace LinkManagement.BL
              return UnitOfWork.topic.GetTopicContents(topicID);
         }
 
+
         public void UpdateTopicContents(Topic updatedTopic)
         {
             UnitOfWork.topic.UpdateTopic(updatedTopic);
-            
             if (updatedTopic.Links != null)
-            {
-                foreach (var link in updatedTopic.Links)
+            { 
+                foreach (LinkManagement.Link link in updatedTopic.Links)
                 {
-                    UnitOfWork.link.UpdateLink(link);
+                    
+                    if (link.IsDeleted)
+                    {
+                        var linkToBeDeleted = UnitOfWork.link.Get(link.LinkID);
+                        UnitOfWork.link.Remove(linkToBeDeleted);
+                    }
+                    else if (link.LinkID == 0 && !link.IsDeleted)
+                    {
+                        link.Link1 = link.Link1 ?? "#";       
+                        UnitOfWork.link.Add(link);
+                    }
+                    else
+                    {
+                        UnitOfWork.link.UpdateLink(link);
+                    }
                 }
             }
             UnitOfWork.Commit();
+        }
+
+        public void DeleteLinks(List<int> ids)
+        {
+            ids.ForEach(id =>
+            {
+                var linkToBeDeleted = UnitOfWork.link.Find(l => l.LinkID == id).FirstOrDefault();
+                UnitOfWork.link.Remove(linkToBeDeleted);
+                return;
+            });
         }
     }
 }
