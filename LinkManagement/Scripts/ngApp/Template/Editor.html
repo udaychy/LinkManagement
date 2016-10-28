@@ -38,22 +38,42 @@
     </div>
 
     <br/>
-    <button ng-click="SaveChanges()" ng-show="showEditor" id="save-btn">save</button>
+   
+    <div class="bread-crumbs">
+        <span ng-click="GetSubTopicsList(0);BringTopicContent(0,0)">Home</span>
+        <span ng-repeat="topic in breadCrumbs" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID, $index)">{{topic.TopicName}}</span>
+    </div>
+
     <div id="editor-div">
         <div class="col-sm-1" ng-init="GetSubTopicsList(0);">
-            <ul>
-                <li ng-click="AddLink()">Add Link </li>
-                <li ng-click="AddVideoLink()">Add Video Link</li>
-            </ul>
-            <hr/>
-            <ul>
-                <li ng-repeat="topic in subTopicList" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
+            <span class="topic-list-heading-span">contents</span>
+            <input class="search-input" type="text" ng-model="searchKeyword.TopicName"/>
+            <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <span ng-if="subTopicList.length == 0"> no more subtopics found</span>
+            <ul  ui-sortable="sortableTopics" ng-model="subTopicList">
+                <li ng-repeat="topic in subTopicList | filter:searchKeyword" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
                     <i ng-if="topic.SubTopicCount > 0" class="fa fa-link"></i>{{topic.TopicName}}
                 </li>
              </ul>
         </div>
         <div class="col-sm-7">
-            <div ng-show="showEditor" id="{{selectedTopicContent.TopicID}}">
+            <div class="controls-menu">
+                <span ng-click="AddLink()">
+                    Add Link
+                </span>  
+                <span ng-click="">
+                    Add Heading
+                </span>  
+                <span ng-click="AddVideoLink()">
+                    Add Video Link
+                </span>
+                <span ng-click="">
+                    Delete topic
+                </span>
+                 <button class="pull-right btn btn-primary" ng-click="SaveChanges()" ng-show="showEditor" id="save-btn">save changes</button>
+            </div>
+
+            <div ng-show="showEditor" class="topic-content-div">
                 <!--Topic Heading-->
                 <h3>
                     <input type="text" ng-model="selectedTopicContent.TopicName" />
@@ -65,7 +85,7 @@
 
                 <br/><br/>
                 <!--Topic Body-->
-                <div ui-sortable="sortableOptions" ng-model="selectedTopicContent.Links" class="topic-body" >
+                <div ui-sortable="sortableLinks" ng-model="selectedTopicContent.Links" class="topic-body" >
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
                         <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''" ng-hide="isCollapse" ng-click="isCollapse = true">

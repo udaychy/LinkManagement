@@ -36,6 +36,43 @@ div::-webkit-scrollbar-track {
 div::-webkit-scrollbar-thumb {
     background-color:#11b2ad;   
 }
+.bread-crumbs > span {
+    background-color:#ddd;
+    padding:2px;
+    border-radius: 0px 7px 7px 0px;
+    font-size:13px;
+    cursor:pointer;
+}
+.bread-crumbs > span:last-child {
+   background-color: #aaa;
+    color: white;
+    padding: 3px;
+    display: inline-block;
+    font-weight: 800;
+    margin: 0px 0px 2px 10px;
+    transform: scale(1.1);
+}
+.bread-crumbs > span:hover {
+    color:white;
+}
+.controls-menu {
+    padding: 0px 15px;
+}
+.controls-menu > span {
+    font-size: 13px;
+    padding: 5px 3px 4px 3px;
+    display: inline-block;
+    border-radius: 0px 0px 10px 10px;
+    color: white;
+    background-color: #11b2ad;
+    cursor: pointer;
+}
+.controls-menu > span:hover {
+    transform:scale(1.2);
+    background-color:#19dcd6;
+    transition:0.1s linear ease-in-out;
+}
+
 #preview-div {
     border: 1px dotted #111;
     height: 480px;
@@ -47,25 +84,60 @@ div::-webkit-scrollbar-thumb {
     background-color:black;
     color:white;
     font-size:15px;
+    padding:0px;
     height:480px;
+    overflow-y: auto;
+    overflow-x: hidden;
     
+}
+
+#editor-div > div:first-child  .topic-list-heading-span {
+    display:block;
+    padding:4px;
+    background-color:#eee;
+    text-align: center;
+    font-weight:700;
+}
+#editor-div > div:first-child .search-input{
+    padding-left:15px;
+    margin-top:4px;
+    width:100%;
+    color:#ccc;
+}
+#editor-div > div:first-child .search-icon {
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 0px;
+    color: #ccc;
 }
 #editor-div > div:first-child > ul {
     list-style:none;
     padding:0px;
+    font-size: 13px;
 }
 #editor-div > div:first-child > ul > li {
-    padding-top:10px;
-    color:#eee;
-    cursor:pointer;
+    padding: 4px 0px 0px 2px;
+    color: #eee;
+    margin-top: 5px;
+    cursor: pointer;
+    background-color: #aaa;
+    word-wrap: break-word;
     
+}
+#editor-div > div:first-child > ul > li:hover {
+    color:white;
 }
 #editor-div > div:nth-child(2) {
     border: 2px solid #aaa;
-    padding-left:20px;
+    padding:0px;
     height:480px;
-    overflow:auto;
     
+}
+#editor-div > div:nth-child(2) > .topic-content-div{
+    height: 445px;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
 }
 #editor-div textarea,input[type='text'] {
     width:90%;
@@ -126,17 +198,7 @@ input[type='text']:focus {
     margin:auto;
 }
 #save-btn {
-    border-radius: 50%;
-    color: white;
-    font-weight: 700;
-    z-index: 2;
-    right: 10px;
-    margin-top: -40px;
-    font-size: 17px;
-    position: absolute;
-    height: 70px;
-    width: 70px;
-    background-color: #01b001;
+    border-radius:0px;
 }
 .LinkDeleted {
     background-color:#ffc0b9;

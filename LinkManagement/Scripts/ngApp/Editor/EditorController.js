@@ -1,10 +1,12 @@
 ﻿linkApp.controller("EditorController", function ($scope, AjaxService, $rootScope) {
-    $scope.topics = [];
+    $scope.topics = [];// array of all the topics selected 
     $scope.newTopic = {};
     $scope.newLink = [];
+    $scope.breadCrumbs = [];
     var selectedTopicID = 0;
     var parentIDOfNewTopic = 0;
-    var tmpLinksList = [];
+    var tmpLinksList = [];// for the sortable ui of links inside topic
+    var tmpTopicsList = [];// for the sortable ui of topics
 
     $scope.GetSubTopics = function (topicID, selectedTopic, index) {
         if (topicID == undefined) {
@@ -34,29 +36,47 @@
         AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
                .then(function (response) {
                    $scope.subTopicList = response.data;
+                   tmpTopicsList = $scope.subTopicList;
                },
                function (response) {
                    alert("error occured");
                });
     };
 
-    $scope.BringTopicContent = function (topicID) {
+    $scope.BringTopicContent = function (topicID, index) {
+       
+        if (topicID == 0) {
+            $scope.showEditor = false;
+            $scope.selectedTopicContent = null;
+        }
         var params = { topicID: topicID };
-        AjaxService.Get("Editor/GetTopicContents", params)
-            .then(function (response) {
-                $scope.selectedTopicContent = response.data;
-                tmpLinksList = $scope.selectedTopicContent.Links;
 
-            }, function (response) {
-                alert("error occured");
-            });
+        if (index != undefined) {
+            $scope.breadCrumbs.splice(index);
+        }
+
+        if (topicID > 0) {
+            AjaxService.Get("Editor/GetTopicContents", params)
+                .then(function (response) {
+                    $scope.showEditor = true;
+                    $scope.selectedTopicContent = response.data;
+                    tmpLinksList = $scope.selectedTopicContent.Links;
+                    $scope.breadCrumbs.push({
+                        TopicName: $scope.selectedTopicContent.TopicName,
+                        TopicID: $scope.selectedTopicContent.TopicID
+                    });
+
+                }, function (response) {
+                    alert("error occured");
+                });
+        }
     }
     
 
     $scope.AddNewTopic = function () {
 
         var len = $scope.topics.length;
-        $scope.newTopic.ParentID = parentIDOfNewTopic;
+        $scope.newTopic.ParentID = parentIDOfNewTopic;//change
         $scope.newTopic.UserID = 1;
         $scope.newTopic.Order = $scope.topics[len - 1].length + 1; // initially setting order to last
         $scope.topics[len - 1].push($scope.newTopic);
@@ -73,12 +93,16 @@
     }
 
     $scope.AddLink = function () {
-        
-        
+
+        if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined){
+            alert("choose a topic first");
+            return;
+        }
+
         var newLink = {
             LinkHeading: "",
             LinkDetail: "",
-            TopicID: selectedTopicID,
+            TopicID: $scope.selectedTopicContent.TopicID,
             Link: "",
             Description: "",
             LinkType: "url",
@@ -94,12 +118,15 @@
     }
 
     $scope.AddVideoLink = function () {
-        var len = $scope.topics.length;
 
+        if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined) {
+            alert("choose a topic first");
+            return;
+        }
         var newVideoLink = {
             LinkHeading: "",
             LinkDetail: "",
-            TopicID: selectedTopicID,
+            TopicID: $scope.selectedTopicContent.TopicID,
             Link: "",
             Description: "",
             LinkType: "video",
@@ -113,15 +140,16 @@
         }, 500);
     }
     
+
     $scope.StartEditing = function () {
         $scope.showEditor = true;
-        
+
         if (selectedTopicID == 0) {
             var len = $scope.topics.length;
-            selectedTopicID = $scope.topics[len-1][0].ParentID;
+            selectedTopicID = $scope.topics[len - 1][0].ParentID;
         }
 
-        var params = {topicID : selectedTopicID};
+        var params = { topicID: selectedTopicID };
         AjaxService.Get("Editor/GetTopicContents", params)
             .then(function (response) {
                 $scope.selectedTopicContent = response.data;
@@ -217,7 +245,7 @@
     //sortable contents
     $scope.sortedOrder = null;
 
-    $scope.sortableOptions = {
+    $scope.sortableLinks = {
         update: function (e, ui) {
             var logEntry = tmpLinksList.map(function (i) {
                 return i.Order;
@@ -228,6 +256,20 @@
             $scope.sortedOrder = tmpLinksList.map(function (i) {
                 return i.Order;
             });           
+        }
+    };
+
+    $scope.sortableTopics = {
+        update: function (e, ui) {
+            var logEntry = tmpTopicsList.map(function (i) {
+                return i.Order;
+            });
+        },
+        stop: function (e, ui) {
+            // this callback has the changed model
+            $scope.topicSortedOrder = tmpTopicsList.map(function (i) {
+                return i.Order;
+            });
         }
     };
 
