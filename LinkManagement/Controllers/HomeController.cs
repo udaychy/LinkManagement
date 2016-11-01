@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using LinkManagement.BL;
+using Newtonsoft.Json;
 
 namespace LinkManagement.Controllers
 {
@@ -11,9 +12,13 @@ namespace LinkManagement.Controllers
         }
 
 
-        public JsonResult GetRootTopicList()
+        public string GetRootTopicList()
         {
-            return Json(new Home().GetRootTopicList(), JsonRequestBehavior.AllowGet);
+            return JsonConvert.SerializeObject(new Home().GetRootTopicList(), Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                                    });
         }
     }
 }

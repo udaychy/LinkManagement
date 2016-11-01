@@ -38,5 +38,10 @@ namespace LinkManagement.Controllers
             var updatedTopicObject = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(updatedTopic);
             new Editor().UpdateTopicContents(updatedTopicObject);
         }
+
+        public void DeleteTopic(int topicID)
+        {
+            new Editor().DeleteTopic(topicID);
+        }
     }
 }

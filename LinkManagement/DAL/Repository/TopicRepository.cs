@@ -69,5 +69,10 @@ namespace LinkManagement.DAL.Repository
             var topicToBeUpdated = LinkManagerContext.Topics.Find(updatedTopic.TopicID);
             LinkManagerContext.Entry(topicToBeUpdated).CurrentValues.SetValues(updatedTopic);
         }
+
+        public Topic GetTopicWithChildLinks(int topicID)
+        {
+            return LinkManagerContext.Topics.Include("Links").Where(t => t.TopicID == topicID).FirstOrDefault();
+        }
     }
 }

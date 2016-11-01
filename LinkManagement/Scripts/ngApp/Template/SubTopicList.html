@@ -82,15 +82,17 @@
                         </div>
 
                         <!--Url-->
-                        <div ng-if="link.LinkType == 'url'" class="link-div" >
+                        <div ng-if="link.LinkType == 'url' || link.LinkType == 'none'" class="link-div" >
                             
-                            <a href="{{link.Link1}}" target="_blank" ng-click="link.NoOfTimesVisited = link.NoOfTimesVisited + 1; CountOneMoreVisitor(link.LinkID)">
+                            <a ng-if="link.LinkType == 'url'" href="{{link.Link1}}" target="_blank" ng-click="link.NoOfTimesVisited = link.NoOfTimesVisited + 1; CountOneMoreVisitor(link.LinkID)">
                                 <h4><span class="fa fa-link"></span>{{link.LinkHeading}}</h4>
                             </a>
+
+                            <h4 ng-if="link.LinkType == 'none'">#{{link.LinkHeading}}</h4>
                             <input type="checkbox" id="{{link.LinkID}}" ng-model="link.LinkUserMappings[0].Status" ng-click="updateLinkStatus(link.LinkID)"/>
                             <label for="{{link.LinkID}}"><i class="fa fa-check-circle" aria-hidden="true" ng-class="link.LinkUserMappings[0].Status ? 'read' : 'not-read'" data-toggle="popover" data-content="mark as read/unread" data-placement="bottom" data-trigger="hover"></i></label>
                             
-                            <span class="copy-link-parent pull-right">
+                            <span  ng-show="link.LinkType == 'url'" class="copy-link-parent pull-right">
                                 <a class="copy-link pull-right" data-clipboard-text="{{link.Link1}}" data-toggle="popover" data-content="copied" data-placement="bottom" >copy link</a>
                             </span>
                             <p ng-bind-html="link.LinkDetail"></p>
@@ -104,7 +106,7 @@
                                     <i class="fa fa-pencil" ng-hide="editable" ng-click="editable=true" aria-hidden="true"></i>
 
                                 </div>
-                                <i class="fa fa-eye" data-toggle="tooltip" title="no. of times visited" aria-hidden="true">
+                                <i ng-show="link.LinkType == 'url'" class="fa fa-eye" data-toggle="tooltip" title="no. of times visited" aria-hidden="true">
                                      {{link.NoOfTimesVisited}}
                                  </i>
                                 

@@ -9,5 +9,7 @@ namespace LinkManagement.DAL.Interfaces
          void AddTopic(Topic newTopic);
          Topic GetTopicContents(int topicID);
          void UpdateTopic(Topic updatedTopic);
+         Topic GetTopicWithChildLinks(int topicID);
+        
     }
 }

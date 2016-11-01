@@ -55,14 +55,27 @@ namespace LinkManagement.BL
             UnitOfWork.Commit();
         }
 
-        public void DeleteLinks(List<int> ids)
+        public void DeleteLinks(List<LinkManagement.Link> links)
         {
-            ids.ForEach(id =>
+            links.ForEach(link =>
             {
-                var linkToBeDeleted = UnitOfWork.link.Find(l => l.LinkID == id).FirstOrDefault();
+                var linkToBeDeleted = UnitOfWork.link.Find(l => l.LinkID == link.LinkID).FirstOrDefault();
                 UnitOfWork.link.Remove(linkToBeDeleted);
                 return;
             });
+        }
+
+        public void DeleteTopic(int topicID)
+        {
+
+            var topicToBeDeleted = UnitOfWork.topic.GetTopicWithChildLinks(topicID);
+            if (topicToBeDeleted.Links.Count > 0)
+            {
+                DeleteLinks(topicToBeDeleted.Links.ToList());
+            }
+            UnitOfWork.Commit();
+            UnitOfWork.topic.Remove(topicToBeDeleted);
+            UnitOfWork.Commit();
         }
     }
 }

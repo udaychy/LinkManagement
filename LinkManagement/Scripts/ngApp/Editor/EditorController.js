@@ -1,5 +1,4 @@
 ﻿linkApp.controller("EditorController", function ($scope, AjaxService, $rootScope) {
-    $scope.topics = [];// array of all the topics selected 
     $scope.newTopic = {};
     $scope.newLink = [];
     $scope.breadCrumbs = [];
@@ -7,30 +6,8 @@
     var parentIDOfNewTopic = 0;
     var tmpLinksList = [];// for the sortable ui of links inside topic
     var tmpTopicsList = [];// for the sortable ui of topics
+    $scope.notification = {};// object contains notification messages 
 
-    $scope.GetSubTopics = function (topicID, selectedTopic, index) {
-        if (topicID == undefined) {
-            $scope.topics.splice(index + 1);
-            selectedTopicID = 0;
-        }
-        else {
-            if(selectedTopic != null)
-            {
-                selectedTopicID = selectedTopic.TopicID;
-            }
-
-            parentIDOfNewTopic = topicID;
-            AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
-                .then(function (response) {
-
-                    $scope.topics.splice(index + 1);
-                    $scope.topics.push(response.data);
-                },
-                function (response) {
-                    alert("error occured");
-                });
-        };
-    }
 
     $scope.GetSubTopicsList = function (topicID) {
         AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
@@ -74,28 +51,50 @@
     
 
     $scope.AddNewTopic = function () {
+        
+        if ($scope.newTopic.TopicName == "" || $scope.newTopic.TopicName == null) {
+            ShowMessage("Topic name cannot be empty", "alert");
+            return;
+        }
 
-        var len = $scope.topics.length;
-        $scope.newTopic.ParentID = parentIDOfNewTopic;//change
+        if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined) {
+            $scope.newTopic.ParentID = 0;
+        }
+        else {
+            $scope.newTopic.ParentID = $scope.selectedTopicContent.TopicID;
+        }
         $scope.newTopic.UserID = 1;
-        $scope.newTopic.Order = $scope.topics[len - 1].length + 1; // initially setting order to last
-        $scope.topics[len - 1].push($scope.newTopic);
-
+        $scope.newTopic.Order = $scope.subTopicList.length + 1;
+        
         AjaxService.Get('Editor/AddNewTopic', $scope.newTopic)
             .then(function (response) {
 
                 $scope.newTopic.TopicID = response.data;
-                alert("Topic Added");
+                var newTopic = angular.copy($scope.newTopic);
+                $scope.subTopicList.push(newTopic);
+
+                $scope.showTopicInput = false;
+                $scope.newTopic = null;
+
+                ShowMessage(newTopic.TopicName + " is succesfully added", "notify");
+                
             },
             function (response) {
                 alert("error occured");
             });
     }
 
+
+    $scope.CancelAddingTopic = function () {
+        $scope.showTopicInput = false;
+        $scope.newTopic = {};
+    }
+
+
     $scope.AddLink = function () {
 
         if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined){
-            alert("choose a topic first");
+            ShowMessage("Please choose a topic first", "alert");
             return;
         }
 
@@ -111,56 +110,18 @@
         //** tmpLinksList automatically sinks with $scope.selectedTopicContent.Links
         $scope.selectedTopicContent.Links.push(newLink);
         
-        $("#editor-div > div:nth-child(2)").animate({
+        $("#editor-div > div:nth-child(2) > .topic-content-div").animate({
             scrollTop: 12000
         }, 500);
        
     }
 
-    $scope.AddVideoLink = function () {
-
-        if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined) {
-            alert("choose a topic first");
-            return;
-        }
-        var newVideoLink = {
-            LinkHeading: "",
-            LinkDetail: "",
-            TopicID: $scope.selectedTopicContent.TopicID,
-            Link: "",
-            Description: "",
-            LinkType: "video",
-            Order: tmpLinksList.length + 1,
-            IsDeleted: false
-        };
-        $scope.selectedTopicContent.Links.push(newVideoLink);
-
-        $("#editor-div > div:nth-child(2)").animate({
-            scrollTop: 12000
-        }, 500);
-    }
-    
-
-    $scope.StartEditing = function () {
-        $scope.showEditor = true;
-
-        if (selectedTopicID == 0) {
-            var len = $scope.topics.length;
-            selectedTopicID = $scope.topics[len - 1][0].ParentID;
-        }
-
-        var params = { topicID: selectedTopicID };
-        AjaxService.Get("Editor/GetTopicContents", params)
-            .then(function (response) {
-                $scope.selectedTopicContent = response.data;
-                tmpLinksList = $scope.selectedTopicContent.Links;
-
-            }, function (response) {
-                alert("error occured");
-            });
-    }
 
     $scope.SaveChanges = function () {
+        
+        if (!IsValidatedSelectedTopic()) {
+            return;
+        }
 
         $scope.selectedTopicContent.Links.forEach(function (value, index) {
             value.Order = index + 1;
@@ -170,11 +131,23 @@
 
         AjaxService.Post("Editor/UpdateTopicContent", params)
             .then(function (response) {
-                alert("updated");
+                ShowMessage("Changes saved successfully", "notify");
             }, function () {
                 alert("error occured");
             });
     }
+
+
+    $scope.DeleteTopic = function () {
+        var params = { topicID: $scope.selectedTopicContent.TopicID }
+        AjaxService.Post("Editor/DeleteTopic", params)
+            .then(function (response) {
+                ShowMessage("Topic Deleted successfully", "notify");
+            }, function () {
+                alert("error occured");
+            });
+    }
+
 
     $scope.DeleteLink = function (index) {
         $scope.selectedTopicContent.Links[index].IsDeleted = true;
@@ -225,7 +198,7 @@
         }
     }
 
-    $scope.MakeBlock = function () {
+    $scope.MakeBlock = function (isControlsEnabled) {
 
         if (focussedEvent != null && isControlsEnabled) {
             var sel = $(focussedEvent.target).getSelection();
@@ -261,7 +234,7 @@
 
     $scope.sortableTopics = {
         update: function (e, ui) {
-            var logEntry = tmpTopicsList.map(function (i) {
+            var orderList = $scope.subTopicList.map(function (i) {
                 return i.Order;
             });
         },
@@ -270,7 +243,42 @@
             $scope.topicSortedOrder = tmpTopicsList.map(function (i) {
                 return i.Order;
             });
+            alert($scope.subTopicList.map(function (i) { return i.Order}));
         }
     };
+
+    var ShowMessage = function (msg, msgType) {
+        $scope.notification.message = msg;
+       
+        if (msgType == "notify") {
+            $scope.notification.showOkButton = false;
+            $scope.notification.showUndoButton = false;
+            setTimeout(function () { $("#message-modal").modal('hide') }, 2000);
+        }
+        else if (msgType == "confirm") {
+            $scope.notification.showOkButton = true;
+            $scope.notification.showUndoButton = true;
+        }
+        else if (msgType == "alert") {
+            $scope.notification.showOkButton = true;
+            $scope.notification.showUndoButton = false;
+        }
+        $("#message-modal").modal('show');
+    }
+
+    var IsValidatedSelectedTopic = function ()
+    {
+        if ($scope.selectedTopicContent.TopicName == "" || $scope.selectedTopicContent.TopicName == null) {
+            ShowMessage("Topic Name cannot be empty", "alert");
+            return false;
+        }
+        $scope.selectedTopicContent.Links.forEach(function (link) {
+            if (link.LinkHeading == null || link.LinkHeading == "") {
+                ShowMessage("Link Heading cannot be empty", "alert");
+                return false;
+            }
+        });
+        return true;
+    }
 
 });
