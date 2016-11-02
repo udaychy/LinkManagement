@@ -4,8 +4,7 @@
         return $http({
             method: "GET",
             url: url,
-            params: params
-
+            params: params,
         });
     }
 
@@ -13,8 +12,7 @@
         return $http({
             method: "POST",
             url: url,
-            params: params
-
+            params: params,
         });
     }
 

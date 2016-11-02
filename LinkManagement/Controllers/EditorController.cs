@@ -43,5 +43,16 @@ namespace LinkManagement.Controllers
         {
             new Editor().DeleteTopic(topicID);
         }
+
+        public void UpdateTopicOrder(string[] topicOrder)
+        {
+            List<Topic> topicList = new List<Topic>();
+            foreach (var topic in topicOrder)
+            {
+                topicList.Add(new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Topic>(topic));
+            }
+
+            new Editor().UpdateTopicOrder(topicList);
+        }
     }
 }

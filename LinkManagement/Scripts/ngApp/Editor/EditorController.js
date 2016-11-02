@@ -8,6 +8,9 @@
     var tmpTopicsList = [];// for the sortable ui of topics
     $scope.notification = {};// object contains notification messages 
 
+    $scope.editorOptions = {
+        language: 'en'
+    };
 
     $scope.GetSubTopicsList = function (topicID) {
         AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
@@ -74,7 +77,7 @@
                 $scope.subTopicList.push(newTopic);
 
                 $scope.showTopicInput = false;
-                $scope.newTopic = null;
+                $scope.newTopic = {};
 
                 ShowMessage(newTopic.TopicName + " is succesfully added", "notify");
                 
@@ -94,7 +97,7 @@
     $scope.AddLink = function () {
 
         if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined){
-            ShowMessage("Please choose a topic first", "alert");
+            ShowMessage("No topic selected! Please choose a topic first", "alert");
             return;
         }
 
@@ -131,6 +134,7 @@
 
         AjaxService.Post("Editor/UpdateTopicContent", params)
             .then(function (response) {
+                $scope.BringTopicContent($scope.selectedTopicContent.TopicID, $scope.breadCrumbs.length - 1)
                 ShowMessage("Changes saved successfully", "notify");
             }, function () {
                 alert("error occured");
@@ -139,12 +143,27 @@
 
 
     $scope.DeleteTopic = function () {
+        if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined) {
+            ShowMessage("No topic selected! Please choose a topic first", "alert");
+            return;
+        }
+
         var params = { topicID: $scope.selectedTopicContent.TopicID }
         AjaxService.Post("Editor/DeleteTopic", params)
             .then(function (response) {
+                if ($scope.breadCrumbs.length > 1) {
+                    $scope.breadCrumbs.splice($scope.breadCrumbs.length - 2);
+                }
+                else {
+                    $scope.breadCrumbs = [];
+                }
+                $scope.GetSubTopicsList($scope.selectedTopicContent.ParentID);
+                $scope.BringTopicContent($scope.selectedTopicContent.ParentID);
+                
                 ShowMessage("Topic Deleted successfully", "notify");
+
             }, function () {
-                alert("error occured");
+                ShowMessage("Some error occured", "alert");
             });
     }
 
@@ -152,68 +171,7 @@
     $scope.DeleteLink = function (index) {
         $scope.selectedTopicContent.Links[index].IsDeleted = true;
     }
-    //--------------------Editor Controls---------------------------------
-   
-    var focussedEvent = null;
-    $scope.FocusedTextarea = function (event) {
-        focussedEvent = event;
-        
-    }
-
-
-    $scope.MakeBold = function (isControlsEnabled) {
-        
-        if (focussedEvent != null && isControlsEnabled)
-        {
-            var sel = $(focussedEvent.target).getSelection();
-            if (sel.text == "") {
-                sel.text = "strong text";
-            }
-            $(focussedEvent.target).replaceSelectedText("<b>" + sel.text + "</b>");
-            $(focussedEvent.target).setSelection(sel.end + 3, sel.end + 14);
-        }
-    }
-
-    $scope.MakeItalic = function (isControlsEnabled) {
-
-        if (focussedEvent != null && isControlsEnabled) {
-            var sel = $(focussedEvent.target).getSelection();
-            if (sel.text == "") {
-                sel.text = "Italic text";
-            }
-            $(focussedEvent.target).replaceSelectedText("<em>" + sel.text + "</em>");
-            $(focussedEvent.target).setSelection(sel.end + 4, sel.end + 15);
-        }
-    }
-
-    $scope.AddCode = function (isControlsEnabled) {
-
-        if (focussedEvent != null && isControlsEnabled) {
-            var sel = $(focussedEvent.target).getSelection();
-            if (sel.text == "") {
-                sel.text = "code here";
-            }
-            $(focussedEvent.target).replaceSelectedText("<pre><xmp>" + sel.text + "</xmp></pre>");
-            $(focussedEvent.target).setSelection(sel.end + 10, sel.end + 19);
-        }
-    }
-
-    $scope.MakeBlock = function (isControlsEnabled) {
-
-        if (focussedEvent != null && isControlsEnabled) {
-            var sel = $(focussedEvent.target).getSelection();
-            if (sel.text == "") {
-                sel.text = "write here";
-            }
-            $(focussedEvent.target).replaceSelectedText("<blockquote>" + sel.text + "</blockquote>");
-            $(focussedEvent.target).setSelection(sel.end + 12, sel.end + 22);
-        }
-    }
-
-    $scope.ShowPreview = function (previewContent) {
-        $scope.currentPreview = previewContent;
-    };
-
+    
 
     //sortable contents
     $scope.sortedOrder = null;
@@ -240,10 +198,17 @@
         },
         stop: function (e, ui) {
             // this callback has the changed model
+            var order = 1;
             $scope.topicSortedOrder = tmpTopicsList.map(function (i) {
-                return i.Order;
+                return { TopicID: i.TopicID, Order: order++ };
             });
-            alert($scope.subTopicList.map(function (i) { return i.Order}));
+            var params = { topicOrder: $scope.topicSortedOrder };
+            AjaxService.Post("Editor/UpdateTopicOrder", params)
+           .then(function (response) {
+               ShowMessage("Topics are reordered", "notify");
+           }, function () {
+
+           });
         }
     };
 
@@ -272,10 +237,17 @@
             ShowMessage("Topic Name cannot be empty", "alert");
             return false;
         }
-        $scope.selectedTopicContent.Links.forEach(function (link) {
+        return $scope.selectedTopicContent.Links.every(function (link) {
             if (link.LinkHeading == null || link.LinkHeading == "") {
                 ShowMessage("Link Heading cannot be empty", "alert");
                 return false;
+            }
+            else if ((link.LinkType == "url" || link.LinkType == "video") && (link.Link1 == "" || link.Link1 == null)) {
+                ShowMessage("Url cannot be empty! You can select Url type 'none' ", "alert");
+                return false;
+            }
+            else {
+                return true;
             }
         });
         return true;

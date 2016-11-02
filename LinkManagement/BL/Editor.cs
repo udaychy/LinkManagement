@@ -43,7 +43,7 @@ namespace LinkManagement.BL
                     }
                     else if (link.LinkID == 0 && !link.IsDeleted)
                     {
-                        link.Link1 = link.Link1 ?? "#";       
+                        link.Link1 = link.Link1 ?? "";       
                         UnitOfWork.link.Add(link);
                     }
                     else
@@ -75,6 +75,12 @@ namespace LinkManagement.BL
             }
             UnitOfWork.Commit();
             UnitOfWork.topic.Remove(topicToBeDeleted);
+            UnitOfWork.Commit();
+        }
+
+        public void UpdateTopicOrder(List<Topic> topicList)
+        {
+            UnitOfWork.topic.UpdateTopicOrder(topicList);
             UnitOfWork.Commit();
         }
     }

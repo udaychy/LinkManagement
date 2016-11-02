@@ -10,6 +10,6 @@ namespace LinkManagement.DAL.Interfaces
          Topic GetTopicContents(int topicID);
          void UpdateTopic(Topic updatedTopic);
          Topic GetTopicWithChildLinks(int topicID);
-        
+         void UpdateTopicOrder(List<Topic> topicList);
     }
 }

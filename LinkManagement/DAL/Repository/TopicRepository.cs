@@ -74,5 +74,15 @@ namespace LinkManagement.DAL.Repository
         {
             return LinkManagerContext.Topics.Include("Links").Where(t => t.TopicID == topicID).FirstOrDefault();
         }
+
+        public void UpdateTopicOrder(List<Topic> topics)
+        {
+            topics.ForEach(topic =>
+            {
+              var topicToBeUpdated =  LinkManagerContext.Topics.Where(t => t.TopicID == topic.TopicID).FirstOrDefault();
+              topicToBeUpdated.Order = topic.Order;
+            }
+            );
+        }
     }
 }

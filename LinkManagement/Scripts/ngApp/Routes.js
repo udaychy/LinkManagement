@@ -21,14 +21,14 @@
            templateUrl: '/Scripts/ngApp/Template/Editor.html',
            controller: 'EditorController'
        },
-       
+
        function (localStorageServiceProvider) {
            localStorageServiceProvider
              .setPrefix('lm')
              .setStorageType('sessionStorage')
              .setNotify(true, true)
        });
-     
+
 }).filter('trustUrl', function ($sce) {
 
     return function (url) {

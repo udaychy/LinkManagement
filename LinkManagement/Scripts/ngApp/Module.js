@@ -1,1 +1,1 @@
-﻿var linkApp = angular.module("HomeModule", ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'ui.sortable', 'ngAnimate']);
+﻿var linkApp = angular.module("HomeModule", ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'ui.sortable', 'ngAnimate', 'ngCkeditor']);
