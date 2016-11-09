@@ -238,11 +238,12 @@
             return false;
         }
         return $scope.selectedTopicContent.Links.every(function (link) {
-            if (link.LinkHeading == null || link.LinkHeading == "") {
+            
+            if ((link.LinkHeading == null || link.LinkHeading == "") && (!link.IsDeleted)) {
                 ShowMessage("Link Heading cannot be empty", "alert");
                 return false;
             }
-            else if ((link.LinkType == "url" || link.LinkType == "video") && (link.Link1 == "" || link.Link1 == null)) {
+            else if (((link.LinkType == "url" || link.LinkType == "video") && (link.Link1 == "" || link.Link1 == null))&&(!link.IsDeleted)) {
                 ShowMessage("Url cannot be empty! You can select Url type 'none' ", "alert");
                 return false;
             }

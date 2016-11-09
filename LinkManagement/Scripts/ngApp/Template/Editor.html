@@ -1,54 +1,25 @@
 ﻿<link href="../../../Content/Editor.css" rel="stylesheet" />
 <br><br><br><br>
 <div class="container-fluid">
-    <div>Choose what/where to edit/add </div>
 
-    <div ng-init="GetSubTopics(0);addTopic = true">
-       <span>Home</span>
-
-       <!-- <div class="dropdown dropdown-scroll" ng-repeat="subTopics in topics">
-         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >{{selectedValue}} <span class="caret"></span>
-         </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
-                <li role="presentation">
-                    <div class="input-group input-group-sm search-control"> 
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Query" ng-model="query">
-                    </div>
-                </li>
-                <li role="presentation" ng-repeat='topic in subTopics| filter:query'> <span ng-click="alert('hi')"> {{topic.TopicName}} </span>
-                </li>
-            </ul>
-        </div>
-
-        <ui-select ng-repeat="subTopics in topics" ng-model="selectedTopic" theme="selectize" title="Choose a topic" ng-change="GetSubTopics(selectedTopic.TopicID, selectedTopic, $index)">
-         <ui-select-match placeholder="Select or search a topic in the list...">{{$select.selected.TopicName}}</ui-select-match>
-            <ui-select-choices repeat="topic in subTopics | filter: $select.search">
-             <span ng-bind-html="topic.TopicName | highlight: $select.search"></span>
-            </ui-select-choices>
-            
-        </ui-select>-->
-      
-       <select ng-repeat="subTopics in topics" ng-if="subTopics.length > 0" ng-model="selectedTopic" ng-options="t.TopicName for t in subTopics" ng-change="GetSubTopics(selectedTopic.TopicID, selectedTopic, $index)">
-         <option value="">Nothing Selected</option>
-       </select>
-        <button data-toggle="modal" ng-click="showEditor= true" data-target="#new-topic-form" class="btn btn-sm btn-primary"><i class="fa fa-plus" aria-hidden="true" ></i>Add Topic</button> &nbsp &nbsp<button ng-click="StartEditing()" class="btn btn-md btn-danger"> Start Editing</button>
-    </div>
-
-    <br/>
-   
     <div class="bread-crumbs">
         <span ng-click="GetSubTopicsList(0);BringTopicContent(0,0)">Home</span>
         <span ng-repeat="topic in breadCrumbs" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID, $index)">{{topic.TopicName}}</span>
     </div>
 
     <div id="editor-div">
-        <div class="col-sm-1" ng-init="GetSubTopicsList(0);">
-            <span class="topic-list-heading-span">contents</span>
+        <div class="col-sm-2" ng-init="GetSubTopicsList(0);">
+            <span ng-hide="selectedTopicContent != null" class="topic-list-heading-span">Main Contents</span>
+            <span ng-show="selectedTopicContent != null" class="topic-list-heading-span">Contents of<b> {{selectedTopicContent.TopicName}}</b></span>
+             <button class="btn btn-default" ng-click="showTopicInput = true" ng-hide="showTopicInput">Add New Topic</button>
+            
+            <span ng-show= "showTopicInput"  class="add-topic-span" ng-click="AddNewTopic()">Add</span>
+            <input ng-show="showTopicInput" class="new-topic-input" type="text" ng-model="newTopic.TopicName"/>
+            <span ng-show="showTopicInput" class="fa fa-times" ng-click="CancelAddingTopic()"></span>
+
             <input class="search-input" type="text" ng-model="searchKeyword.TopicName"/>
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+           
             <span ng-if="subTopicList.length == 0"> no more subtopics found</span>
             <ul  ui-sortable="sortableTopics" ng-model="subTopicList">
                 <li ng-repeat="topic in subTopicList | filter:searchKeyword" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
@@ -56,18 +27,12 @@
                 </li>
              </ul>
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-10">
             <div class="controls-menu">
                 <span ng-click="AddLink()">
                     Add Link
                 </span>  
-                <span ng-click="">
-                    Add Heading
-                </span>  
-                <span ng-click="AddVideoLink()">
-                    Add Video Link
-                </span>
-                <span ng-click="">
+                <span ng-click="DeleteTopic()">
                     Delete topic
                 </span>
                  <button class="pull-right btn btn-primary" ng-click="SaveChanges()" ng-show="showEditor" id="save-btn">save changes</button>
@@ -80,7 +45,7 @@
                     <span class="input-label">*Topic Heading</span>
                 </h3>
 
-                <textarea ng-model="selectedTopicContent.About"></textarea>
+                <textarea rows="3" ng-model="selectedTopicContent.About"></textarea>
                 <span class="input-label">About the topic</span>
 
                 <br/><br/>
@@ -89,27 +54,28 @@
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
                         <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''" ng-hide="isCollapse" ng-click="isCollapse = true">
-                            {{link.LinkHeading}}
+                            <span ng-show ="link.LinkHeading == ''"> No Topic Name</span>{{link.LinkHeading}}
                             <span class="pull-right" ng-click="isCollapse = true"> 
                                 <i class="fa fa-chevron-right" aria-hidden="true"></i> 
                             </span>
                         </div>
 
                         <div ng-show="isCollapse" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''">
-                            <span class="pull-right" ng-click="isCollapse = false">
-                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                <button class="btn btn-sm btn-danger" ng-click="IsLinkDeleted=true; DeleteLink($index)">delete</button>
-                            </span>
-                        <h4>
-                            <input type="text" ng-model="link.LinkHeading" />
-                            <span class="input-label">*Link heading</span>
-                        </h4>
+                            <div class="link-heading-div" ng-click="isCollapse = false">
+                                <span>
+                                    <button class="btn btn-sm btn-danger" ng-click="IsLinkDeleted=true; DeleteLink($index)">delete</button>
+                                </span>
+                                <i class="pull-right fa fa-chevron-up" aria-hidden="true"></i>
+                            </div>
+                            <h4>
+                                <input type="text" ng-model="link.LinkHeading" />
+                                <span class="input-label">*Link heading</span>
+                            </h4>
                         <!--Image link-->
                         <div ng-if="link.LinkType == 'image'">
 
-
                             <br/>
-                            <textarea rows="2" ng-model="link.LinkDetail"></textarea>
+                            <textarea rows="3" ng-model="link.LinkDetail"></textarea>
                             <span class="input-label">About the image</span>
                             <i class="fa fa-picture-o" aria-hidden="true" data-toggle="modal" data-target="#image-preview{{link.LinkID}}">Preview Image</i>
                             <input type="file"/>
@@ -133,86 +99,72 @@
                         <!--Video Link-->
                         <div ng-if="link.LinkType == 'video'">
 
-                            <input type="text" ng-model="link.Link1" />
+                            <input class="link-input" type="text" ng-model="link.Link1" />
                             <span class="input-label">*Embeded url</span>
-                            <select ng-model="link.LinkType">
-                            <option value="video">video url</option>
-                            <option value="url">url to another page</option>
-                        </select>
-
-                            <textarea rows="2" ng-model="link.LinkDetail"></textarea>
+                            <select class="url-type-dropdown" ng-model="link.LinkType">
+                                <option value="video">video url</option>
+                                <option value="url">url to another page</option>
+                                <option value="none">none</option>
+                            </select>
+                            <span class="input-label">*url type</span>
+                            <textarea rows="3" ng-model="link.LinkDetail"></textarea>
                             <span class="input-label">About the video</span>
                         </div>
 
                         <!--Url-->
                         <div ng-if="link.LinkType == 'url'">
 
-                            <input type="text" ng-model="link.Link1" />
-                            <span class="input-label">url(optional)</span>
-                            <select ng-model="link.LinkType">
+                            <input class="link-input" type="text" ng-model="link.Link1" />
+                            <span class="input-label">*url</span>
+                            <select class="url-type-dropdown" ng-model="link.LinkType">
                                 <option value="video">video url</option>
                                 <option value="url">url to another page</option>
+                                <option value="none">none</option>
                             </select>
-
-                            <textarea ng-model="link.LinkDetail"></textarea>
+                            <span class="input-label">*url type</span>
+                            <textarea rows="3" ng-model="link.LinkDetail"></textarea>
                             <span class="input-label">About the Link</span>
 
                         </div>
                         <br/>
-                        <!--Description Div-->
-                        <div class="description-div">
-                            <div class="editor-controls" ng-class="enableControls ? '' : 'disable-controls'">
-                                <span><i class="fa fa-picture-o" aria-hidden="true"></i></span>
-                                <span ng-click="MakeBold(enableControls)"><b>B</b></span>
-                                <span ng-click="MakeItalic(enableControls)"><em>I</em></span>
-                                <span ng-click="AddCode(enableControls)"><code>{}</code></span>
-                                <span ng-click="MakeBlock(enableControls)"><i class="fa fa-quote-left" aria-hidden="true"></i>
-                                    <i class="fa fa-quote-right" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <textarea ng-model="link.Description" ng-change="ShowPreview(link.Description)" ng-blur="enableControls=false" ng-focus="enableControls=true;FocusedTextarea($event);ShowPreview(link.Description)"></textarea>
+                            <!--no url-->
+                        <div ng-if="link.LinkType == 'none'">
+
+                            <input class="link-input" ng-disabled="link.LinkType == 'none'" type="text" ng-model="link.Link1" />
+                            <span ng-hide="link.LinkType == 'none'" class="input-label">*url</span>
+                            <select class="url-type-dropdown" ng-model="link.LinkType">
+                                <option value="video">video url</option>
+                                <option value="url">url to another page</option>
+                                <option value="none">none</option>
+                            </select>
+                            <span class="input-label">*url type</span>
+                            <textarea rows="3" ng-model="link.LinkDetail"></textarea>
+                            <span class="input-label">About the Link</span>
+
                         </div>
-                        <span class="input-label">Description</span>
-                            </div>
+                            <textarea ckeditor="editorOptions" ng-model="link.Description" class="description"></textarea>
+                       </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <span class="preview-span">preview</span>
-            <div id="preview-div" ng-bind-html="currentPreview">
-                
+       
+    </div>
+</div>
+
+<!--Modal for showing messages-->
+<div id="message-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>{{notification.message}}</p>
+                <button ng-show="notification.showOkButton" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                <button ng-show="notification.showUndoButton" type="button" class="btn btn-primary">Undo</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--Modal for adding topic-->
-<div id="new-topic-form" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Adding New Topic</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label">Topic Name: </label>
-                    <input class="form-control" type="text" ng-model="newTopic.TopicName" maxlength="30" />
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label class="control-label">About: </label>
-                    <textarea class="form-control" rows="10" cols="50" ng-model="newTopic.About"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" ng-click="AddNewTopic()">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="/Scripts/RangyInputs.js"></script>
 <script src="/Scripts/sortable.js"></script>
 <script src="/Scripts/Custom/Editor.js"></script>

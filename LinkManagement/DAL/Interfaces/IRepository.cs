@@ -13,5 +13,6 @@ namespace LinkManagement.DAL.Interfaces
         void Add(TEntity entity);
 
         void Remove(TEntity entity);
+        void RemoveRange(List<TEntity> entities);
     }
 }

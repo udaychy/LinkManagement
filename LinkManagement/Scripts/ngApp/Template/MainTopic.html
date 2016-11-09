@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-sm-3" ng-repeat="topic in rootTopicList | filter:searchKeyword">
             <a ng-href="#/SubTopics/{{topic.TopicID}}">
-                <img ng-src="/Scripts/ngApp/Images/{{topic.Icon}}" />
+                <img ng-src="{{topic.Icon == null ? '/Scripts/ngApp/Images/default.png' : ('/Scripts/ngApp/Images/' + topic.Icon)}}" />
                 <h3>{{topic.TopicName}} <span class="arrow">>>></span></h3>
                 <p>{{topic.About}}</p>
             </a>

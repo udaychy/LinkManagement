@@ -320,12 +320,11 @@
     <Content Include="Resources\Images\1.png" />
     <Content Include="Resources\Images\2.png" />
     <Content Include="Resources\jquery.min.js" />
-    <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\Custom\Editor.js" />
     <Content Include="Scripts\Custom\JqueryHome.js" />
     <Content Include="Scripts\Custom\jquery.bootstrap-autohidingnavbar.js" />
-    <Content Include="Scripts\selectng.js" />
+    <Content Include="Scripts\ngApp\Images\default.png" />
     <Content Include="Scripts\sortable.js" />
     <Content Include="Scripts\ngApp\Editor\EditorController.js" />
     <Content Include="Scripts\ngApp\Home\HomeController.js" />
@@ -352,7 +351,6 @@
     <Content Include="Scripts\ngApp\Template\SignUp.html" />
     <Content Include="Scripts\ngApp\Template\SubTopicList.html" />
     <Content Include="Scripts\ngApp\User\UserController.js" />
-    <Content Include="Scripts\RangyInputs.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -365,6 +363,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Bundles\ngApp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -374,9 +373,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\angular.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

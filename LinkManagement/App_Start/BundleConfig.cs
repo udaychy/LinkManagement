@@ -38,6 +38,17 @@ namespace LinkManagement
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Bundles/ngApp").Include(
+                "~/Scripts/ngApp/Module.js",
+                "~/Scripts/ngApp/Routes.js",
+                "~/Scripts/ngApp/Services/AjaxService.js",
+                "~/Scripts/ngApp/Services/UserServices.js",
+                "~/Scripts/ngApp/Home/HomeController.js",
+                "~/Scripts/ngApp/SubTopics/SubTopicController.js",
+                "~/Scripts/ngApp/User/UserController.js",
+                "~/Scripts/ngApp/Editor/EditorController.js"
+                ));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace LinkManagement.BL
                     if (link.IsDeleted)
                     {
                         var linkToBeDeleted = UnitOfWork.link.Get(link.LinkID);
-                        UnitOfWork.link.Remove(linkToBeDeleted);
+                        if (linkToBeDeleted != null)
+                            UnitOfWork.link.Remove(linkToBeDeleted);
                     }
                     else if (link.LinkID == 0 && !link.IsDeleted)
                     {
@@ -55,25 +56,15 @@ namespace LinkManagement.BL
             UnitOfWork.Commit();
         }
 
-        public void DeleteLinks(List<LinkManagement.Link> links)
-        {
-            links.ForEach(link =>
-            {
-                var linkToBeDeleted = UnitOfWork.link.Find(l => l.LinkID == link.LinkID).FirstOrDefault();
-                UnitOfWork.link.Remove(linkToBeDeleted);
-                return;
-            });
-        }
-
+       
         public void DeleteTopic(int topicID)
         {
 
-            var topicToBeDeleted = UnitOfWork.topic.GetTopicWithChildLinks(topicID);
+            var topicToBeDeleted = UnitOfWork.topic.GetTopicContents(topicID);
             if (topicToBeDeleted.Links.Count > 0)
             {
-                DeleteLinks(topicToBeDeleted.Links.ToList());
+                UnitOfWork.link.RemoveRange(topicToBeDeleted.Links.ToList());
             }
-            UnitOfWork.Commit();
             UnitOfWork.topic.Remove(topicToBeDeleted);
             UnitOfWork.Commit();
         }

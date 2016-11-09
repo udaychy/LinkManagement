@@ -45,5 +45,10 @@ namespace LinkManagement.DAL.Repository
         {
             context.Set<TEntity>().Remove(entity);
         }
+
+        public void RemoveRange(List<TEntity> entities)
+        {
+            context.Set<TEntity>().RemoveRange(entities);
+        }
     }
 }
