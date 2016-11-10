@@ -44,7 +44,7 @@ div::-webkit-scrollbar-thumb {
     cursor:pointer;
 }
 .bread-crumbs > span:last-child {
-   background-color: #aaa;
+   background-color: #e42a38;
     color: white;
     padding: 3px;
     display: inline-block;
@@ -55,7 +55,15 @@ div::-webkit-scrollbar-thumb {
 .bread-crumbs > span:hover {
     color:white;
 }
+@media (max-width: 767px) {
+ .bread-crumbs {
+    margin-top:20px;
+    
+    }
+   
+}
 .controls-menu {
+    background-color: #d8d7d7;
     padding: 0px 15px 7px;
     box-shadow: 0px 5px 10px #aaa;
 }
@@ -76,8 +84,9 @@ div::-webkit-scrollbar-thumb {
 
 
 #editor-div > div:first-child {
-    border:1px solid #aaa;
-    background-color:black;
+    
+    background-color:#d8d7d7;
+    border: 2px solid #aaa;
     color:white;
     font-size:15px;
     padding:0px;
@@ -93,6 +102,7 @@ div::-webkit-scrollbar-thumb {
     background-color:#11b2ad;
     text-align: center;
     font-weight:700;
+    margin-bottom: 5px;
 }
 #editor-div > div:first-child .search-input{
     padding-left:25px;
@@ -105,9 +115,11 @@ div::-webkit-scrollbar-thumb {
     margin-top: -35px;
     margin-left: 0px;
     padding: 3px;
-    height: 32px;
-    border-radius: 4px;
-    background-color: #eee;
+    height: 33px;
+    background-color: #11b2ad;
+}
+#editor-div > div:first-child .add-new-topic-btn {
+    width:100%;
 }
 #editor-div > div:first-child .add-topic-span {
     position: absolute;
@@ -128,15 +140,14 @@ div::-webkit-scrollbar-thumb {
 }
 #editor-div > div:first-child > ul {
     list-style:none;
-    padding:0px;
+    padding-left:10px;
     font-size: 13px;
 }
 #editor-div > div:first-child > ul > li {
-    padding: 4px 0px 0px 2px;
-    color: #eee;
+    
+    color: #333;
     margin-top: 5px;
     cursor: pointer;
-    background-color: #aaa;
     word-wrap: break-word;
     
 }

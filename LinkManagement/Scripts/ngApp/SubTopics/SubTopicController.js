@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../angular.js" />
-linkApp.controller("SubTopicController", function ($scope, $routeParams, $location, AjaxService) {
+linkApp.controller("SubTopicController", function ($scope, $routeParams, $location, AjaxService, $rootScope) {
 
+    $scope.notification = {};
     var parentID = parseInt($routeParams.parentID);
 
     AjaxService.Get("/SubTopics/GetImmediateChildrenWithSubTopicCount", { parentID: parentID })
@@ -25,6 +26,7 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
                $scope.error = response.data;
          });
 
+    
 
     $scope.CountReadLinks = function (topicID) {
         var countRead = 0;
@@ -46,7 +48,7 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
         AjaxService.Get( "/SubTopics/UpdateLinkStatus", { linkID: linkID })
             .then(function (response) {
                 if (response.data == true) {
-                    alert("Progress Updated");
+                    $scope.ShowMessage("Progress Updated", "notify");
                 }
                 else {
                     window.location.href = "#/SignIn";
@@ -68,7 +70,7 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
         AjaxService.Get("/SubTopics/AddNote", params)
             .then(function (response) {
                 if (response.data == true) {
-                    alert("Note Updated");
+                    $scope.ShowMessage("Note Updated", "notify");
                 }
                 else {
                     window.location.href = "#/SignIn";
@@ -90,7 +92,7 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
         AjaxService.Get("/SubTopics/AddRating", params)
             .then(function (response) {
                 if (response.data == true) {
-                    alert("Rating Updated");
+                    $scope.ShowMessage("Rating Updated", "notify");
                 }
                 else {
                     window.location.href = "#/SignIn";
@@ -106,7 +108,6 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
 
         AjaxService.Get("/SubTopics/CountOneMoreVisitor", {linkID: linkID})
             .then(function (response) {
-            alert("count Updated")
         },
         function (response) {
             alert("some error occured");
@@ -145,5 +146,25 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
             $("[list-id=" + idName + "]").addClass("active");
         },500);
     };
+
+
+    $scope.ShowMessage = function (msg, msgType) {
+        $scope.notification.message = msg;
+
+        if (msgType == "notify") {
+            $scope.notification.showOkButton = false;
+            $scope.notification.showUndoButton = false;
+            setTimeout(function () { $("#message-modal").modal('hide') }, 2000);
+        }
+        else if (msgType == "confirm") {
+            $scope.notification.showOkButton = true;
+            $scope.notification.showUndoButton = true;
+        }
+        else if (msgType == "alert") {
+            $scope.notification.showOkButton = true;
+            $scope.notification.showUndoButton = false;
+        }
+        $("#message-modal").modal('show');
+    }
 
 });

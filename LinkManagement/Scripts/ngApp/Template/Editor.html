@@ -1,6 +1,6 @@
 ﻿<link href="../../../Content/Editor.css" rel="stylesheet" />
-<br><br><br><br>
-<div class="container-fluid">
+<br><br><br>
+<div ng-init = "AuthorizeUser()"  class="container-fluid">
 
     <div class="bread-crumbs">
         <span ng-click="GetSubTopicsList(0);BringTopicContent(0,0)">Home</span>
@@ -11,7 +11,7 @@
         <div class="col-sm-2" ng-init="GetSubTopicsList(0);">
             <span ng-hide="selectedTopicContent != null" class="topic-list-heading-span">Main Contents</span>
             <span ng-show="selectedTopicContent != null" class="topic-list-heading-span">Contents of<b> {{selectedTopicContent.TopicName}}</b></span>
-             <button class="btn btn-default" ng-click="showTopicInput = true" ng-hide="showTopicInput">Add New Topic</button>
+             <button class="btn btn-primary add-new-topic-btn" ng-click="showTopicInput = true" ng-hide="showTopicInput">Add New Topic</button>
             
             <span ng-show= "showTopicInput"  class="add-topic-span" ng-click="AddNewTopic()">Add</span>
             <input ng-show="showTopicInput" class="new-topic-input" type="text" ng-model="newTopic.TopicName"/>
@@ -20,12 +20,13 @@
             <input class="search-input" type="text" ng-model="searchKeyword.TopicName"/>
             <span class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
            
-            <span ng-if="subTopicList.length == 0"> no more subtopics found</span>
+            <span ng-if="subTopicList.length == 0">&nbsp no more subtopics found</span>
             <ul  ui-sortable="sortableTopics" ng-model="subTopicList">
-                <li ng-repeat="topic in subTopicList | filter:searchKeyword" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
-                    <i ng-if="topic.SubTopicCount > 0" class="fa fa-link"></i>{{topic.TopicName}}
+                <li ng-repeat="topic in subTopicList | filter:searchKeyword as filteredSubTopic" ng-click="GetSubTopicsList(topic.TopicID);BringTopicContent(topic.TopicID)">
+                    {{topic.TopicName}}
                 </li>
              </ul>
+            <span ng-show="subTopicList.length != 0 && filteredSubTopic.length == 0"> No Match Found</span>
         </div>
         <div class="col-sm-10">
             <div class="controls-menu">
@@ -50,10 +51,10 @@
 
                 <br/><br/>
                 <!--Topic Body-->
-                <div ui-sortable="sortableLinks" ng-model="selectedTopicContent.Links" class="topic-body" >
+                <div  ui-sortable="sortableLinks" ng-model="selectedTopicContent.Links" class="topic-body" >
                     <br/>
                     <div ng-repeat="link in selectedTopicContent.Links" id="{{link.LinkID}}" class="link-div">
-                        <div ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''" ng-hide="isCollapse" ng-click="isCollapse = true">
+                        <div  ng-init="link.LinkID > 0 ? isCollapse = false : isCollapse = true" ng-class="IsLinkDeleted ? 'LinkDeleted' : ''" ng-hide="isCollapse" ng-click="isCollapse = true">
                             <span ng-show ="link.LinkHeading == ''"> No Topic Name</span>{{link.LinkHeading}}
                             <span class="pull-right" ng-click="isCollapse = true"> 
                                 <i class="fa fa-chevron-right" aria-hidden="true"></i> 
@@ -165,7 +166,6 @@
     </div>
 </div>
 
-<script src="/Scripts/RangyInputs.js"></script>
 <script src="/Scripts/sortable.js"></script>
-<script src="/Scripts/Custom/Editor.js"></script>
+
 

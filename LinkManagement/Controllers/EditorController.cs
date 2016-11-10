@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace LinkManagement.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         public string GetSubTopics(int topicID)

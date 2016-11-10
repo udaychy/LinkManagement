@@ -21,6 +21,10 @@ blockquote {
     font-family: monospace;
     background-color: #fffafa;
 }
+.modal-backdrop
+{
+    opacity:0.1 !important;
+}
 
 #parent-heading {
     height:200px;
@@ -320,9 +324,14 @@ max-height:400px;
     background-color: #0f884e;
     
 }
-.xyz {
-color:red !important;
+#message-modal > .modal-dialog{
+    margin-top:10%;
+    width: 300px;
 }
-.abc {
-color:blue !important;
+#message-modal .modal-content {
+    border:none;
+    background-color: #11b2ad;
+    color: white;
+    font-size:18px;
+    border:none;
 }

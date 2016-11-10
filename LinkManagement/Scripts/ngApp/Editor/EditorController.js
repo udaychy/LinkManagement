@@ -12,6 +12,11 @@
         language: 'en'
     };
 
+    $scope.AuthorizeUser = function () {
+        if ($rootScope.IsLogedIn == false) {
+            window.location.href = "/#/";
+        }
+    }
     $scope.GetSubTopicsList = function (topicID) {
         AjaxService.Get('Editor/GetSubtopics', { topicID: topicID })
                .then(function (response) {
@@ -56,7 +61,7 @@
     $scope.AddNewTopic = function () {
         
         if ($scope.newTopic.TopicName == "" || $scope.newTopic.TopicName == null) {
-            ShowMessage("Topic name cannot be empty", "alert");
+            $scope.ShowMessage("Topic name cannot be empty", "alert");
             return;
         }
 
@@ -79,7 +84,7 @@
                 $scope.showTopicInput = false;
                 $scope.newTopic = {};
 
-                ShowMessage(newTopic.TopicName + " is succesfully added", "notify");
+                $scope.ShowMessage(newTopic.TopicName + " is succesfully added", "notify");
                 
             },
             function (response) {
@@ -97,7 +102,7 @@
     $scope.AddLink = function () {
 
         if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined){
-            ShowMessage("No topic selected! Please choose a topic first", "alert");
+            $scope.ShowMessage("No topic selected! Please choose a topic first", "alert");
             return;
         }
 
@@ -135,7 +140,7 @@
         AjaxService.Post("Editor/UpdateTopicContent", params)
             .then(function (response) {
                 $scope.BringTopicContent($scope.selectedTopicContent.TopicID, $scope.breadCrumbs.length - 1)
-                ShowMessage("Changes saved successfully", "notify");
+                $scope.ShowMessage("Changes saved successfully", "notify");
             }, function () {
                 alert("error occured");
             });
@@ -144,7 +149,7 @@
 
     $scope.DeleteTopic = function () {
         if ($scope.selectedTopicContent == null || $scope.selectedTopicContent == undefined) {
-            ShowMessage("No topic selected! Please choose a topic first", "alert");
+            $scope.ShowMessage("No topic selected! Please choose a topic first", "alert");
             return;
         }
 
@@ -160,10 +165,10 @@
                 $scope.GetSubTopicsList($scope.selectedTopicContent.ParentID);
                 $scope.BringTopicContent($scope.selectedTopicContent.ParentID);
                 
-                ShowMessage("Topic Deleted successfully", "notify");
+                $scope.ShowMessage("Topic Deleted successfully", "notify");
 
             }, function () {
-                ShowMessage("Some error occured", "alert");
+                $scope.ShowMessage("Some error occured", "alert");
             });
     }
 
@@ -205,14 +210,14 @@
             var params = { topicOrder: $scope.topicSortedOrder };
             AjaxService.Post("Editor/UpdateTopicOrder", params)
            .then(function (response) {
-               ShowMessage("Topics are reordered", "notify");
+               $scope.ShowMessage("Topics are reordered", "notify");
            }, function () {
 
            });
         }
     };
 
-    var ShowMessage = function (msg, msgType) {
+    $scope.ShowMessage = function (msg, msgType) {
         $scope.notification.message = msg;
        
         if (msgType == "notify") {
@@ -234,17 +239,17 @@
     var IsValidatedSelectedTopic = function ()
     {
         if ($scope.selectedTopicContent.TopicName == "" || $scope.selectedTopicContent.TopicName == null) {
-            ShowMessage("Topic Name cannot be empty", "alert");
+            $scope.ShowMessage("Topic Name cannot be empty", "alert");
             return false;
         }
         return $scope.selectedTopicContent.Links.every(function (link) {
             
             if ((link.LinkHeading == null || link.LinkHeading == "") && (!link.IsDeleted)) {
-                ShowMessage("Link Heading cannot be empty", "alert");
+                $scope.ShowMessage("Link Heading cannot be empty", "alert");
                 return false;
             }
             else if (((link.LinkType == "url" || link.LinkType == "video") && (link.Link1 == "" || link.Link1 == null))&&(!link.IsDeleted)) {
-                ShowMessage("Url cannot be empty! You can select Url type 'none' ", "alert");
+                $scope.ShowMessage("Url cannot be empty! You can select Url type 'none' ", "alert");
                 return false;
             }
             else {

@@ -20,10 +20,10 @@
             </a>
         </div>
         <div id="suggestion-block" class="col-sm-3">
-            <a href="#">
+            <a href="{{IsLogedIn ? '#/' : '#/SignIn'}}">
                 <img ng-src="/Scripts/ngApp/Images/help.jpg" />
-                <h3>Tell us what more you wanna learn</h3>
-                <p>You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
+                <h3>Tell us what more you wanna learn<span ng-show="IsLogedIn" class="smiley">:)</span></h3>
+                <p ng-hide="IsLogedIn">You have to <b>sign in</b> to do that<b><span class="smiley">:)</span></b></p>
             </a>
         </div>
     </div>

@@ -342,7 +342,6 @@
     <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\ngApp\Routes.js" />
     <Content Include="Scripts\ngApp\Services\AjaxService.js" />
-    <Content Include="Scripts\ngApp\Services\TopicServices.js" />
     <Content Include="Scripts\ngApp\Services\UserServices.js" />
     <Content Include="Scripts\ngApp\SubTopics\SubTopicController.js" />
     <Content Include="Scripts\ngApp\Template\Editor.html" />

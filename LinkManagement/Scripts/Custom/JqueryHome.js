@@ -47,15 +47,10 @@
         
     });
 
-    //pop over on hovering on sign up
-    $('#sign-up').popover({ title: "Hey! You will be our 5th User", content: "You can create your own link repository and can contribute to our Tutorial", trigger: "hover", placement: "bottom" });
-
     // copy link
     $(document).on("click", ".copy-link-parent", function () {
         $(this).children("a").popover("show");
         setTimeout(function () { $('.popover').fadeOut('slow') }, 2000);
     });
-    
-    
-    SyntaxHighlighter.all();
+   
 });

@@ -1,16 +1,10 @@
-﻿@import url(//fonts.googleapis.com/css?family=Amatic+SC|Nunito|Bad+Script|Shadows+Into+Light|Chewy|Handlee);
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
-
+﻿
 body {
     background-color:white !important;
-    /*background-image:url("/Content/Images/bkg1.jpg");
-    background-attachment:fixed;*/
-   
 }
 /******* Nav Bar *******/
 .top-nav-bar {
     top:0px;
-
     position:fixed;
     width:100%;
     background-color:white;
@@ -46,7 +40,7 @@ body {
     transition:0.3s ease-in-out;
    
 }
-#home ~ div, #home {
+#home ~ div, #home ~ a, #home {
   
     display:inline-block;
     color:#8fafae;
@@ -241,7 +235,9 @@ body {
     cursor:pointer;
     text-align:center;
     font-size:15px;
-    color:#403737
+    color:#403737;
+    height: 100%;
+    display: block;
 }
 
 #main-topic-list img {
