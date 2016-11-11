@@ -41,5 +41,13 @@ namespace LinkManagement
                 HttpContext.Current.User = userPrincipal;
             }
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception someException = Server.GetLastError();
+
+            ErrorLog.Error someError = new ErrorLog.Error();
+            someError.LogError(someException);
+
+        }
     }
 }

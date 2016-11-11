@@ -45,18 +45,20 @@ linkApp.controller("SubTopicController", function ($scope, $routeParams, $locati
 
     $scope.updateLinkStatus = function (linkID) {
         
-        AjaxService.Get( "/SubTopics/UpdateLinkStatus", { linkID: linkID })
-            .then(function (response) {
-                if (response.data == true) {
-                    $scope.ShowMessage("Progress Updated", "notify");
-                }
-                else {
-                    window.location.href = "#/SignIn";
-                }
-        },
-        function (response) {
-            alert("some error occured");
-        });
+        if (!$rootScope.IsLogedIn) {
+            window.location.href = "/LearningPath#/SignIn";
+        }
+        else {
+            AjaxService.Get("/SubTopics/UpdateLinkStatus", { linkID: linkID })
+                .then(function (response) {
+                    if (response.data == true) {
+                        $scope.ShowMessage("Progress Updated", "notify");
+                    }
+                },
+            function (response) {
+                alert("some error occured");
+            });
+        }
     }
 
 
